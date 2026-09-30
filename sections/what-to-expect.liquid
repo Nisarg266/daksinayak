@@ -1,0 +1,514 @@
+{% schema %}
+{
+  "name": "What To Expect",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "What To Expect"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Authentic South Indian taste"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Experience rich, traditional flavors crafted from time-honored recipes."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Optional)",
+          "info": "If empty, uses image_1.png, image_2.png based on order."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What To Expect (Animated)",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Authentic South Indian taste",
+            "description": "Experience rich, traditional flavors crafted from time-honored recipes."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Fresh, Pure, Vegetarian",
+            "description": "Enjoy wholesome, made-to-order vegetarian dishes using the freshest ingredients."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Reliable catering service",
+            "description": "On-time delivery and seamless service you can count on for every event."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="wte-container" id="wte-section-{{ section.id }}">
+  <h2 class="wte-heading font-tasman-regular">{{ section.settings.heading }}</h2>
+  
+  <div class="wte-cards-wrapper">
+    {% for block in section.blocks %}
+      {% assign img_index = forloop.index %}
+      {% assign asset_name = 'image_' | append: img_index | append: '.png' %}
+      {% assign card_image = asset_name | asset_url %}
+      
+      {% if block.settings.custom_image != blank %}
+        {% assign card_image = block.settings.custom_image | image_url %}
+      {% endif %}
+
+      {% comment %} REMOVED onclick="setActiveCard(this)" - Handled in JS now {% endcomment %}
+      <div class="wte-card {% if forloop.first %}active{% endif %}">
+        
+        <div class="wte-deco wte-deco-tl">
+          <svg width="141" height="144" viewBox="0 0 141 144" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M90.3049 -8.30083C94.1062 -4.49951 98.038 -0.86133 101.823 2.95631L81.3481 23.1376L61.1016 2.64632L81.3481 -17.225C82.0659 -17.3555 89.1791 -9.44285 90.3049 -8.31714V-8.30083Z" fill="#DB222C" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M49.4714 -7.25392C53.1585 -3.56681 56.9762 -0.0428254 60.647 3.67692L40.7757 23.2545L21.1328 3.36694L40.7757 -15.9007C41.4772 -16.0312 48.362 -8.34701 49.4714 -7.25392Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M8.71342 73.2108C12.6289 77.1264 16.7076 80.8951 20.6231 84.8595L-0.537016 105.71L-21.4688 84.5332L-0.537016 64.0094C0.197144 63.8788 7.55508 72.0525 8.71342 73.2272V73.2108Z" fill="#DB222C" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M9.04426 33.4693C12.6498 37.0748 16.3859 40.5336 19.9914 44.1717L0.527987 63.3415L-18.707 43.8618L0.527987 24.9857C1.2132 24.8715 7.96749 32.3762 9.04426 33.453V33.4693Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M9.54777 -9.22821C13.6754 -5.1006 17.9498 -1.15244 22.0611 3.0078L-0.175779 24.9184L-22.168 2.66519L-0.175779 -18.9028C0.607325 -19.0333 8.32417 -10.4518 9.54777 -9.22821Z" fill="#1F743B" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M42.1806 23.252L53.503 35.7001C63.1776 49.0128 47.7765 65.2786 34.0885 56.4687L20.6289 44.4774L42.1806 23.2683V23.252Z" fill="#1F743B" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M80.9896 24.1836C84.4646 28.8822 95.7381 40.9225 95.9339 46.4694C96.3907 59.7822 77.7593 66.4549 69.0962 55.0347C62.8314 46.7794 68.3294 40.5472 73.3054 33.6787C75.671 30.4158 78.3792 27.2508 81.0059 24.1836H80.9896Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M-1.69007 105.709C1.78496 110.408 13.0584 122.448 13.2542 127.995C13.711 141.308 -4.92038 147.98 -13.5835 136.56C-19.8483 128.305 -14.3503 122.073 -9.37428 115.204C-7.00865 111.941 -4.30041 108.776 -1.67375 105.709H-1.69007Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M20.8678 85.2814C20.721 84.7593 21.0146 84.6941 21.2104 84.4004C22.3688 82.6874 32.957 75.0358 35.29 73.5511C40.0539 70.5166 43.3821 68.722 49.0759 71.2834C60.6593 76.4878 60.2841 93.9608 48.3744 98.5779C43.1047 100.617 41.0328 99.4915 36.5462 96.7996C30.9666 93.4714 26.2517 88.8543 20.8678 85.2814Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M102.329 3.40055C102.182 2.87848 102.476 2.81322 102.671 2.51956C103.83 0.806515 114.418 -6.84508 116.751 -8.32971C121.515 -11.3642 124.843 -13.1589 130.537 -10.5975C142.12 -5.39307 141.745 12.08 129.835 16.697C124.566 18.7363 122.494 17.6106 118.007 14.9187C112.428 11.5905 107.713 6.97347 102.329 3.40055Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M81.595 6.1882C85.3148 6.1882 85.3311 0.396484 81.595 0.396484C77.859 0.396484 77.859 6.1882 81.595 6.1882Z" fill="#EEE9D7"/>
+            <path d="M40.7239 47.073C44.4437 47.073 44.46 41.2812 40.7239 41.2812C36.9879 41.2812 36.9879 47.073 40.7239 47.073Z" fill="#EEE9D7"/>
+            <path d="M-0.369828 6.58078C3.34992 6.58078 3.36624 0.789062 -0.369828 0.789062C-4.10589 0.789062 -4.10589 6.58078 -0.369828 6.58078Z" fill="#EEE9D7"/>
+            <path d="M-0.81514 88.5769C2.90461 88.5769 2.92092 82.7852 -0.81514 82.7852C-4.5512 82.7852 -4.5512 88.5769 -0.81514 88.5769Z" fill="#EEE9D7"/>
+            <path d="M40.3997 6.09249C44.1195 6.09249 44.1358 0.300781 40.3997 0.300781C36.6636 0.300781 36.6636 6.09249 40.3997 6.09249Z" fill="#EEE9D7"/>
+            <path d="M0.231735 47.6628C3.95148 47.6628 3.9678 41.8711 0.231735 41.8711C-3.50433 41.8711 -3.50433 47.6628 0.231735 47.6628Z" fill="#EEE9D7"/>
+            <path d="M122.185 5.73116C125.905 5.73116 125.921 -0.0605469 122.185 -0.0605469C118.449 -0.0605469 118.449 5.73116 122.185 5.73116Z" fill="#EEE9D7"/>
+            <path d="M81.1185 46.7976C84.8382 46.7976 84.8545 41.0059 81.1185 41.0059C77.3824 41.0059 77.3824 46.7976 81.1185 46.7976Z" fill="#EEE9D7"/>
+            <path d="M40.7239 87.1745C44.4437 87.1745 44.46 81.3828 40.7239 81.3828C36.9879 81.3828 36.9879 87.1745 40.7239 87.1745Z" fill="#EEE9D7"/>
+            <path d="M-1.57686 129.495C2.14289 129.495 2.1592 123.703 -1.57686 123.703C-5.31292 123.703 -5.31292 129.495 -1.57686 129.495Z" fill="#EEE9D7"/>
+          </svg>
+        </div>
+
+        <div class="wte-content">
+          <h3 class="wte-title font-tasman-regular">{{ block.settings.title }}</h3>
+          <p class="wte-desc">{{ block.settings.description }}</p>
+        </div>
+
+        <div class="wte-food-img">
+          <img src="{{ card_image }}" alt="{{ block.settings.title }}">
+        </div>
+
+        <div class="wte-deco wte-deco-br">
+           <svg width="142" height="141" viewBox="0 0 142 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M67.0436 129.822C70.8612 133.639 74.8257 137.31 78.627 141.16L58.0216 161.472L37.6445 140.85L58.0216 120.865C58.7394 120.734 65.9016 128.696 67.0273 129.838L67.0436 129.822Z" fill="#DB222C" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M107.719 128.647C111.472 132.399 115.355 135.988 119.091 139.773L98.8768 159.694L78.875 139.463L98.8768 119.853C99.5783 119.723 106.61 127.537 107.719 128.663V128.647Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M151.048 128.272C155.175 132.399 159.45 136.348 163.561 140.508L141.324 162.418L119.332 140.165L141.324 118.597C142.107 118.467 149.824 127.048 151.048 128.272Z" fill="#1F743B" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M150.624 86.6055C154.441 90.4232 158.389 94.0777 162.191 97.9116L141.618 118.174L121.273 97.5853L141.618 77.6324C142.336 77.5019 149.482 85.4472 150.607 86.5892L150.624 86.6055Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M150.444 46.4697C154 50.0263 157.704 53.4523 161.26 57.0416L142.042 75.9829L123.035 56.7479L142.042 38.1165C142.711 38.0023 149.383 45.4255 150.444 46.486V46.4697Z" fill="#DB222C" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M109.528 85.7549C109.821 85.9833 109.968 86.5543 110.327 86.8806C113.508 89.5888 118.321 93.2596 121.046 96.18C121.29 96.441 121.698 96.5878 121.584 97.0446L99.1188 118.988C95.138 112.739 85.4961 106.589 84.713 98.8066C83.2936 84.7107 98.6294 76.8634 109.511 85.7712L109.528 85.7549Z" fill="#1F743B" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M12.9775 125.203C16.1588 124.746 17.5945 125.073 20.3191 126.459C26.5839 129.657 32.5714 135.596 38.3305 139.691C34.056 143.117 29.7979 146.706 25.2461 149.773C19.3402 153.754 15.441 156.756 8.37671 152.449C-2.81516 145.613 0.317257 127.047 12.9775 125.22V125.203Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M96.622 42.4747C99.8033 42.0179 101.239 42.3442 103.964 43.7309C110.228 46.9286 116.216 52.8672 121.975 56.9621C117.701 60.3882 113.442 63.9775 108.891 67.0446C102.985 71.0254 99.0855 74.0273 92.0212 69.7202C80.8294 62.8844 83.9618 44.3183 96.622 42.491V42.4747Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M56.1318 117.783C53.293 114.341 44.4505 103.296 43.7163 99.4782C42.819 94.7469 46.0819 88.8084 49.9812 86.247C61.2709 78.8564 77.553 89.771 72.1365 101.73C69.2162 108.158 62.935 114.276 58.9216 120.1L58.2201 120.443C57.5185 119.562 56.8496 118.648 56.1318 117.783Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M139.483 35.4415C136.645 31.9991 127.802 20.954 127.068 17.1364C126.171 12.4051 129.433 6.4666 133.333 3.90519C144.622 -3.48536 160.905 7.42916 155.488 19.3878C152.568 25.8158 146.287 31.9338 142.273 37.7582L141.572 38.1008C140.87 37.2198 140.201 36.3062 139.483 35.4415Z" stroke="#EFE7D3" stroke-width="3" stroke-miterlimit="10"/>
+            <path d="M142.138 59.9304C145.858 59.9304 145.874 54.1387 142.138 54.1387C138.402 54.1387 138.402 59.9304 142.138 59.9304Z" fill="#EEE9D7"/>
+            <path d="M18.1497 143.395C21.8695 143.395 21.8858 137.604 18.1497 137.604C14.4136 137.604 14.4136 143.395 18.1497 143.395Z" fill="#EEE9D7"/>
+            <path d="M99.9349 61.612C103.655 61.612 103.671 55.8203 99.9349 55.8203C96.1988 55.8203 96.1988 61.612 99.9349 61.612Z" fill="#EEE9D7"/>
+            <path d="M140.685 20.8562C144.405 20.8562 144.421 15.0645 140.685 15.0645C136.949 15.0645 136.949 20.8562 140.685 20.8562Z" fill="#EEE9D7"/>
+            <path d="M59.5364 101.991C63.2562 101.991 63.2725 96.1992 59.5364 96.1992C55.8004 96.1992 55.8004 101.991 59.5364 101.991Z" fill="#EEE9D7"/>
+            <path d="M98.4661 100.815C102.186 100.815 102.202 95.0234 98.4661 95.0234C94.73 95.0234 94.73 100.815 98.4661 100.815Z" fill="#EEE9D7"/>
+            <path d="M141.13 144.081C144.85 144.081 144.866 138.289 141.13 138.289C137.394 138.289 137.394 144.081 141.13 144.081Z" fill="#EEE9D7"/>
+            <path d="M141.294 102.985C145.014 102.985 145.03 97.1934 141.294 97.1934C137.558 97.1934 137.558 102.985 141.294 102.985Z" fill="#EEE9D7"/>
+            <path d="M100.911 143.364C104.631 143.364 104.647 137.572 100.911 137.572C97.1754 137.572 97.1754 143.364 100.911 143.364Z" fill="#EEE9D7"/>
+            <path d="M56.6028 142.663C60.3226 142.663 60.3389 136.871 56.6028 136.871C52.8668 136.871 52.8668 142.663 56.6028 142.663Z" fill="#EEE9D7"/>
+           </svg>
+        </div>
+        
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .wte-container {
+    max-width: 1440px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: sans-serif;
+  }
+
+  .wte-heading {
+    color: #e8202b;
+    font-size: 56px;
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: bold;
+  }
+
+  .wte-cards-wrapper {
+    display: flex;
+    gap: 24px;
+    height: 398px;
+    justify-content: center;
+  }
+
+  .wte-card {
+    flex: 1;
+    position: relative;
+    border: 1px solid rgba(25,25,25,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 2s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 2s ease;
+    border-radius: 4px;
+  }
+
+  .wte-card.active {
+    flex: 2.07;
+    background-color: #ffcb05;
+    border-color: #ffcb05;
+  }
+
+  .wte-content {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    width: 340px;
+    z-index: 10;
+    pointer-events: none;
+    transition: all 2s ease;
+  }
+
+  .wte-card:not(.active) .wte-content {
+    width: auto;
+    right: 28px;
+  }
+
+  .wte-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4d4d4d;
+    margin: 0 0 8px 0;
+    transition: color 0.4s ease;
+  }
+  
+  .wte-desc {
+    font-size: 18px;
+    color: #4d4d4d;
+    
+    opacity: 0;
+    transform: translateY(10px);
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    
+    line-height: 1.4;
+    max-width: 300px;
+    
+    transition: all 1.6s ease;
+  }
+
+  .wte-card.active .wte-title {
+    color: #e8202b;
+  }
+
+  .wte-card.active .wte-desc {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 150px;
+    margin-top: 8px;
+    transition-delay: 0.4s;
+    margin-bottom: 0;
+  }
+
+  .wte-food-img {
+    position: absolute;
+    right: 0;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 340px;
+    height: 330px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .wte-food-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateX(120%) rotate(180deg);
+    transition: transform 2s cubic-bezier(0.215, 0.61, 0.355, 1);
+    filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.15));
+  }
+
+  .wte-card.active .wte-food-img img {
+    transform: translateX(0) rotate(0deg); 
+  }
+
+  .wte-deco {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    z-index: 1;
+    pointer-events: none;
+    transition: transform 2s ease;
+  }
+
+  .wte-deco svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .wte-deco-tl {
+    top: 0;
+    left: 0;
+    transform: translate(-100%, -100%);
+  }
+
+  .wte-card.active .wte-deco-tl {
+    transform: translate(0, 0);
+  }
+
+  .wte-deco-br {
+    bottom: 0;
+    right: 0;
+    transform: translate(100%, 100%);
+  }
+
+  .wte-card.active .wte-deco-br {
+    transform: translate(0, 0);
+  }
+
+  /* RESPONSIVE MOBILE STYLES 
+    Switches from Flex-width to Fixed-height stacking.
+  */
+  @media (max-width: 1023px) {
+    .wte-heading {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .wte-cards-wrapper {
+      flex-direction: column;
+      height: auto;
+      gap: 15px;
+    }
+
+    .wte-desc {
+      transition: all 0.8s ease;
+    }
+
+    .wte-food-img img {
+      width: 200px;
+      transition: transform 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .wte-card {
+      width: 100%;
+      flex: none; /* Disable flex-grow */
+      height: 110px; /* Compact height for inactive cards */
+      
+      /* IMPORTANT: Override desktop transition to animate Height instead of Flex */
+      transition: height 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 1.6s ease;
+    }
+
+    .wte-card.active {
+      flex: none;
+      height: 400px; /* Expanded height for active card */
+    }
+    
+    .wte-content {
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      width: auto;
+      transition: all 0.8s ease;
+    }
+    
+    .wte-title {
+        font-size: 20px;
+    }
+
+    /* Resize Image for mobile */
+    .wte-food-img {
+        width: 190px;
+        height: 180px;
+        top: 40%;
+        right: 0px;
+    }
+    
+    /* Resize Deco for mobile */
+    .wte-deco {
+      width: 90px;
+      height: 90px;
+      transition: transform 1.6s ease;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .catering-title {
+      font-size: 28px;
+    }
+    
+    .catering-description {
+      font-size: 14px;
+    }
+
+    .wte-cards-wrapper {
+      height: 258px;
+    }
+
+    .wte-title {
+      font-size: 20px;
+    }
+
+    .wte-food-img {
+      position: absolute;
+      right: -10px;
+      top: 35%;
+      transform: translateY(-50%);
+      width: 140px;
+      height: auto;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .wte-deco {
+      width: 80px;
+      height: 80px;
+    }
+
+    .wte-desc {
+      font-size: 14px;
+    }
+
+    .wte-container {
+      padding: 0 70px;
+    }
+
+    .wte-heading {
+      font-size: 36px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .catering-title {
+      font-size: 28px;
+    }
+    
+    .catering-description {
+      font-size: 14px;
+    }
+
+    .wte-cards-wrapper {
+      height: 358px;
+    }
+
+    .wte-title {
+      font-size: 22px;
+    }
+
+    .wte-food-img {
+      position: absolute;
+      right: -10px;
+      top: 35%;
+      transform: translateY(-50%);
+      width: 240px;
+      height: auto;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .wte-deco {
+      width: 130px;
+      height: 130px;
+    }
+
+    .wte-desc {
+      font-size: 16px;
+    }
+
+    .wte-container {
+      padding: 0 110px;
+    }
+
+    .wte-heading {
+      font-size: 42px;
+    }
+  }
+
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionContainer = document.querySelector('#wte-section-{{ section.id }}');
+    if (!sectionContainer) return;
+
+    const cardsWrapper = sectionContainer.querySelector('.wte-cards-wrapper');
+    const cards = sectionContainer.querySelectorAll('.wte-card');
+    let autoPlayInterval;
+    const delay = 3000;
+
+    // 1. Core Activation Function
+    function setActiveCard(cardToActivate) {
+      cards.forEach(card => card.classList.remove('active'));
+      cardToActivate.classList.add('active');
+    }
+
+    // 2. Next Slide Logic
+    function nextCard() {
+      const activeCard = sectionContainer.querySelector('.wte-card.active');
+      let nextSibling = activeCard ? activeCard.nextElementSibling : cards[0];
+      
+      // If we are at the end, loop back to start
+      if (!nextSibling) {
+        nextSibling = cards[0];
+      }
+      
+      setActiveCard(nextSibling);
+    }
+
+    // 3. AutoPlay Controls
+    function startAutoPlay() {
+      stopAutoPlay(); // Ensure no duplicates
+      autoPlayInterval = setInterval(nextCard, delay);
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
+    }
+
+    // 4. Click Event (Manual Override)
+    cards.forEach(card => {
+      card.addEventListener('click', function() {
+        setActiveCard(this);
+        // Reset timer on manual click so it doesn't jump immediately
+        // startAutoPlay();
+      });
+    });
+
+    // 5. Hover Pause Events
+    cardsWrapper.addEventListener('mouseenter', stopAutoPlay);
+    cardsWrapper.addEventListener('mouseleave', startAutoPlay);
+
+    // Init
+    // startAutoPlay();
+  });
+</script>

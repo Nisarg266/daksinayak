@@ -1,0 +1,297 @@
+{% style %}
+  .tradition-section {
+    padding: 0 20px;
+    margin-top: 60px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tradition-left-content {
+    display: contents;
+  }
+
+  .tradition-heading {
+    order: 1;
+    width: 100%;
+    font-size: 48px;
+    line-height: 110%;
+    color: #E8202B;
+    margin-bottom: 24px;
+  }
+
+  .tradition-right-content {
+    order: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    .tradition-right-content img {
+      padding-left: 8%;
+    }
+
+    .tradition-heading {
+      font-size: 28px;
+    }
+
+    .tradition-text {
+      font-size: 16px !important;
+    }
+  }
+
+  .tradition-text {
+    letter-spacing: 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    .tradition-right-content {
+      margin-bottom: 24px;
+    }
+
+    .tradition-section {
+      margin-bottom: 30px;
+    }
+    
+    .tradition-right-content img {
+      transform: translateY(50px);
+    }
+  }
+
+  .tradition-right-content img {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+  }
+
+  .tradition-text {
+    order: 3;
+    width: 100%;
+    font-size: 18px;
+    line-height: 150%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .tradition-section {
+      padding: 0 48px;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 80px;
+      text-align: left;
+    }
+
+    .tradition-left-content {
+      display: block;
+      width: 55%;
+      margin-bottom: 0;
+    }
+
+    .tradition-right-content {
+      width: 40%;
+      margin-bottom: 0;
+      justify-content: flex-end;
+    }
+
+    .tradition-heading {
+      margin-bottom: 20px;
+      font-size: 42px;
+    }
+    .tradition-text {
+      margin-bottom: 24px;
+      font-size: 16px;
+      max-width: 600px;
+    }
+
+    .tradition-section {
+      margin-bottom: 50px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .tradition-section {
+      padding: 0 98px;
+      margin-top: 126px;
+    }
+
+    .tradition-heading {
+      font-size: 36px;
+      margin-bottom: 24px;
+      line-height: 105%;
+    }
+
+    .tradition-text {
+      margin-bottom: 24px;
+      max-width: 630px;
+    }
+
+    .tradition-left-content {
+      width: 51%;
+    }
+
+    .tradition-right-content {
+      width: 48%;
+    }
+
+    .tradition-section {
+      margin-bottom: 70px;
+    }
+  }
+
+  @media screen and (min-width: 1537px) {
+    .tradition-right-content {
+      min-width: 541px;
+    }
+
+    .tradition-right-content {
+      margin: 0rem -7rem 0rem 0rem;
+    }
+
+    .tradition-text {
+      font-size: 18px;
+    }
+
+    .tradition-heading {
+      font-size: 56px;
+    }
+  }
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .tradition-section {
+      align-items: end;
+      padding: 70px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    .tradition-right-content {
+      margin: 0rem -7rem -5rem 0rem;
+    }
+
+    .tradition-text {
+      font-size: 14px;
+    }
+  }
+    
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .tradition-section {
+      align-items: start;
+    }
+
+    .tradition-right-content {
+        width: 44%;
+    }
+
+    .tradition-right-content {
+      margin: 0rem -7rem 0rem 0rem;
+    }
+
+    .tradition-text {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    .tradition-section {
+      padding: 0;
+    }
+
+    .tradition-text {
+      font-size: 24px;
+    }
+  }
+{% endstyle %}
+
+<div class="container">
+  <div class="tradition-section">
+    <div class="tradition-left-content">
+      <h2 class="tradition-heading font-tasman">
+        Rooted in Tradition, <br>
+        Served with Heart
+      </h2>
+
+      <span class="tradition-text">
+        Since 2005, Dakshinayan has stood for more than just food. We've strived to build a place where tradition
+        simmers slowly and every meal feels like home. Inspired by the flavours of South India and the warmth of its
+        kitchens, our recipes are honest, our service heartfelt and our spaces familiar. <br>
+        <br>
+        From temple streets to morning filter coffee rituals, we carry forward what matters - Good food, served with
+        care.
+      </span>
+
+      {% render 'custom-cta-button',
+        label: section.settings.btn_text,
+        link: section.settings.btn_url,
+        text_color: section.settings.color_text,
+        bg_color: section.settings.color_bg,
+        hover_text: section.settings.hover_text,
+        hover_bg: section.settings.hover_bg
+      %}
+    </div>
+
+    <div class="tradition-right-content">
+      <img
+        src="{{ 'Kolam.png' | asset_url }}"
+        alt="Tradition Image"
+        width="1440"
+        height="100"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tradition Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "Get Familiar"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text Color",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "hover_text",
+      "label": "Hover Text Color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "hover_bg",
+      "label": "Hover Background Color",
+      "default": "#FFCB05"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom tradition section"
+    }
+  ]
+}
+{% endschema %}

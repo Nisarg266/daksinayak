@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_banner_aQicrP": {
+      "type": "custom-banner",
+      "name": "Custom Banner",
+      "settings": {
+        "heading": "Our Products"
+      }
+    },
+    "product-grid": {
+      "type": "custom-collection-grid",
+      "settings": {
+        "products_per_page": 36,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": false,
+        "filter_type": "horizontal",
+        "enable_sorting": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "custom_designed_border_c4TdRa": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "zomato_section_6erkWM": {
+      "type": "zomato-section",
+      "name": "Zomato Section",
+      "settings": {
+        "title": "Comfort Food, A Click Away",
+        "description": "Order your favourite Dakshinayan dishes online and enjoy homestyle South Indian flavours served hot, fresh and just the way you love them.",
+        "link": "https://www.zomato.com/ahmedabad/restaurants/dakshinayan?category=1",
+        "heading_color": "#e8202b",
+        "bg_color": "#faf8f5"
+      }
+    }
+  },
+  "order": [
+    "custom_banner_aQicrP",
+    "product-grid",
+    "custom_designed_border_c4TdRa",
+    "zomato_section_6erkWM"
+  ]
+}

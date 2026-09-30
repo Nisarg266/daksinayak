@@ -1,0 +1,261 @@
+{% comment %}
+  Renders a store card with Figma-perfect font and button sizing for desktop.
+{% endcomment %}
+
+<style>
+  .store-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    gap: 16px;
+    padding: 24px;
+    border: 1px solid rgba(25, 25, 25, 0.08);
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .store-card__image-wrapper {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 416 / 277;
+    overflow: hidden;
+  }
+
+  .store-card__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .store-card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    flex-grow: 1;
+  }
+
+  .store-card__title {
+    width: 100%;
+    font-size: 16px; /* Mobile Default */
+    font-weight: 500;
+    text-align: left;
+    color: var(--color-custom-black);
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+  }
+
+  .store-card__info-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .store-card__icon {
+    flex-shrink: 0;
+    height: 1em; 
+    width: auto; 
+    margin-top: 4px;
+  }
+
+  .store-card .store-card__text {
+    flex-grow: 1;
+    font-size: 14px; /* Mobile Default */
+    text-align: left;
+    color: #4d4d4d;
+    margin: 0;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+
+  .store-card a.store-card__text {
+    color: #4d4d4d;
+    text-decoration: none;
+  }
+
+  .view-directions-btn .cta-label {
+    font-size: 18px;
+  }
+
+  /* --- DESKTOP ONLY ADJUSTMENTS (BASED ON FIGMA) --- */
+  @media screen and (768px <= width <= 1023px) {
+    .view-directions-btn .cta-label {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .view-directions-btn .cta-label {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    .store-card__title {
+      font-size: 20px; /* Figma: 20px */
+    }
+
+    .store-card .store-card__text {
+      font-size: 18px; /* Figma: 18px */
+    }
+
+    /* Existing Hover Animations */
+    .store-card:hover .store-card__title {
+      color: var(--color-heading);
+    }
+
+    .store-card:hover .cta-snippet-btn {
+      background-color: var(--color-primary);
+      color: var(--color-custom-black);
+      border-color: var(--color-primary);
+    }
+
+    .store-card:hover .cta-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .store-card {
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .store-card__content {
+      gap: 7px;
+    }
+
+    .store-card__title {
+      font-size: 16px;
+    }
+
+    .store-card__info-row {
+      gap: 10px;
+    }
+
+    .store-card__icon {
+      margin-top: 2px;
+    }
+
+    .store-card .store-card__text {
+      font-size: 14px;
+    }
+
+    .cta-snippet-btn {
+      gap: 7px;
+    }
+
+    .featured-stores-header h2 {
+      font-size: 46px;
+    }
+
+    .featured-stores-header h2 {
+      font-size: 36px;
+    }
+
+    .view-directions-btn .cta-label {
+      font-size: 14px;
+    }
+  }
+    
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .featured-stores-header h2 {
+      font-size: 40px;
+    }
+
+    .store-card {
+      gap: 11px;
+      padding: 15px;
+    }
+
+    .store-card__content {
+      gap: 8px;
+    }
+
+    .store-card__title {
+      font-size: 18px;
+    }
+
+    .store-card__info-row {
+      gap: 10px;
+    }
+
+    .store-card .store-card__text {
+      font-size: 16px;
+    }
+
+    .featured-stores-section {
+      padding: 60px 80px;
+    }
+
+    .cta-snippet-btn {
+      gap: 8px;
+    }
+
+    .view-directions-btn .cta-label {
+      font-size: 16px;
+    }
+  }
+
+</style>
+
+<div class="store-card">
+  {%- if store.store_image != blank -%}
+    <div class="store-card__image-wrapper">
+      <img
+        src="{{ store.store_image | image_url: width: 600 }}"
+        alt="{{ store.store_name }}"
+        loading="lazy"
+        width="416"
+        height="277"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="store-card__content">
+    <h3 class="store-card__title">{{ store.store_name }}</h3>
+
+    <div class="store-card__info-row">
+      <svg class="store-card__icon" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.83301 0.5C7.2475 0.5 8.6043 1.06231 9.60449 2.0625C10.6045 3.0626 11.1669 4.41871 11.167 5.83301C11.167 6.82552 10.8328 7.97502 10.2988 9.16699C9.76772 10.3525 9.05566 11.5446 8.33594 12.6113C7.61718 13.6766 6.89687 14.6085 6.35645 15.2744C6.15409 15.5237 5.9749 15.7334 5.83301 15.9004C5.69119 15.7335 5.51272 15.5235 5.31055 15.2744C4.77015 14.6086 4.04978 13.6766 3.33105 12.6113C2.61133 11.5446 1.89927 10.3525 1.36816 9.16699C0.834156 7.97498 0.5 6.82556 0.5 5.83301C0.500086 4.41864 1.06238 3.06262 2.0625 2.0625C3.06262 1.06238 4.41864 0.500086 5.83301 0.5ZM5.83301 3.25C5.14798 3.25009 4.49123 3.52244 4.00684 4.00684C3.52244 4.49123 3.25009 5.14798 3.25 5.83301C3.25 6.51815 3.52237 7.17569 4.00684 7.66016C4.49121 8.14445 5.14806 8.41691 5.83301 8.41699C6.17226 8.41699 6.50884 8.34955 6.82227 8.21973C7.13554 8.08991 7.42037 7.89994 7.66016 7.66016C7.89994 7.42037 8.08991 7.13554 8.21973 6.82227C8.34955 6.50884 8.41699 6.17226 8.41699 5.83301C8.41691 5.14806 8.14445 4.49121 7.66016 4.00684C7.17569 3.52237 6.51815 3.25 5.83301 3.25Z" stroke="#4D4D4D"/>
+        </svg>
+      <p class="store-card__text">{{ store.address }}</p>
+    </div>
+
+    <div class="store-card__info-row">
+      <svg class="store-card__icon" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.3205 16.4999C12.6233 16.4999 11.6438 16.2477 10.177 15.4284C8.39346 14.4284 7.0139 13.5052 5.23996 11.7362C3.52961 10.0273 2.6973 8.92084 1.53242 6.80153C0.216435 4.40864 0.440766 3.15434 0.691532 2.61827C0.990164 1.97754 1.43097 1.59432 2.00073 1.21396C2.32435 1.00197 2.66682 0.82025 3.02379 0.671099C3.05952 0.655742 3.09274 0.641099 3.12239 0.627884C3.29921 0.548241 3.56712 0.427882 3.90648 0.556455C4.13295 0.641456 4.33513 0.815387 4.65163 1.12789C5.30069 1.7679 6.18766 3.19327 6.51487 3.89328C6.73455 4.36507 6.87994 4.6765 6.8803 5.02579C6.8803 5.43473 6.67454 5.75009 6.42485 6.09045C6.37805 6.15438 6.33161 6.21545 6.2866 6.27474C6.01476 6.63188 5.95511 6.7351 5.9944 6.91939C6.07406 7.28975 6.66811 8.39226 7.64438 9.3662C8.62065 10.3401 9.69159 10.8966 10.0634 10.9759C10.2556 11.0169 10.361 10.9548 10.7297 10.6734C10.7825 10.633 10.8368 10.5912 10.8936 10.5494C11.2744 10.2662 11.5752 10.0659 11.9746 10.0659H11.9767C12.3243 10.0659 12.6218 10.2166 13.1148 10.4651C13.7578 10.7894 15.2263 11.6648 15.8704 12.3145C16.1836 12.6302 16.3583 12.8316 16.4437 13.0577C16.5723 13.398 16.4512 13.6648 16.3722 13.8434C16.359 13.873 16.3444 13.9055 16.329 13.9416C16.1787 14.2979 15.9958 14.6396 15.7828 14.9623C15.4031 15.5302 15.0184 15.9699 14.3761 16.2688C14.0463 16.4248 13.6854 16.5038 13.3205 16.4999Z" stroke="#4D4D4D"/>
+      </svg>
+      <a href="tel:{{ store.phone_number }}" class="store-card__text store-card__link">{{ store.phone_number }}</a>
+    </div>
+  </div>
+
+  <a
+    href="{{ store.map_url }}"
+    target="_blank"
+    class="cta-snippet-btn view-directions-btn"
+    style="
+      width: 100%;
+      justify-content: center;
+    "
+  >
+    <span class="cta-label">View Directions</span>
+
+    <svg class="cta-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.70684 17.5785C5.82572 15.6973 3.87406 13.8925 1.99883 11.9996L12.1451 2L22.1797 12.1583L12.1451 21.9992C11.7924 22.0639 8.2653 18.1428 7.70684 17.5843V17.5785Z" stroke="currentColor" stroke-miterlimit="10"/>
+      <path d="M12.1551 10.4974C10.5033 10.4974 10.4974 13.0664 12.1551 13.0664C13.8129 13.0664 13.8129 10.4974 12.1551 10.4974Z" fill="currentColor"/>
+    </svg>
+  </a>
+</div>

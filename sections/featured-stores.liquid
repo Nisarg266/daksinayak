@@ -1,0 +1,189 @@
+{% comment %}
+  Renders a grid of selected store locations.
+{% endcomment %}
+
+<style>
+  .featured-stores-section {
+    padding: 60px 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .featured-stores-section {
+        padding: 0 20px;
+    }
+  }
+
+  .featured-stores-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .featured-stores-header h2 {
+    color: var(--color-heading);
+    font-size: 56px;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  @media screen and (max-width: 768px) {
+    .featured-stores-header h2 { font-size: 28px; }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .featured-stores-header h2 {
+      font-size: 36px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .featured-stores-header h2 {
+      font-size: 40px;
+    }
+  }
+
+  .featured-stores-grid {
+    display: grid;
+    /* Mobile First: 1 column */
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+  }
+
+  /* Tablet: 2 columns */
+  @media (min-width: 768px) {
+    .featured-stores-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Desktop: 3 columns (Matches your Figma width logic) */
+  @media (min-width: 1200px) {
+    .featured-stores-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* --- NEW BUTTON CONTAINER --- */
+  .featured-stores-footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 24px; /* Reduced for mobile */
+  }
+
+  @media (min-width: 768px) {
+    .featured-stores-footer {
+      margin-top: 36px; /* Requested 36px for Desktop */
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .featured-stores-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .featured-stores-section {
+      padding: 60px 40px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+
+}
+
+</style>
+
+<div class="featured-stores-section">
+  {%- if section.settings.title != blank -%}
+    <div class="featured-stores-header">
+      <h2 class="font-tasman">{{ section.settings.title }}</h2>
+    </div>
+  {%- endif -%}
+
+  <div class="featured-stores-grid">
+    {%- comment -%} Loop through the selected Metaobjects {%- endcomment -%}
+    {%- for store in section.settings.store_list -%}
+      {%- render 'card-store', store: store -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.btn_text != blank -%}
+    <div class="featured-stores-footer">
+      {% render 'custom-cta-button',
+        label: section.settings.btn_text,
+        link: section.settings.btn_link,
+        text_color: section.settings.btn_text_color,
+        bg_color: section.settings.btn_bg_color,
+        hover_text: section.settings.btn_hover_text,
+        hover_bg: section.settings.btn_hover_bg
+      %}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Featured Stores",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Find Comfort"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "store_list",
+      "label": "Select Stores",
+      "metaobject_type": "store_location",
+      "limit": 12
+    },
+    {
+      "type": "header",
+      "content": "Section Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "Find Dakshinayan"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Text Color",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_text",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg",
+      "label": "Hover Background Color",
+      "default": "#191919"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Stores"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,201 @@
+{%- comment -%}
+  SAFEGUARDS:
+  1. Default section_id to avoid empty IDs if the variable is missing.
+  2. Sanitize ID to ensure it is valid CSS (no spaces).
+{%- endcomment -%}
+{%- liquid
+  assign section_id = section_id | default: section.id
+  assign unique_id = section_id | append: '-' | append: card_product.id | replace: ' ', '' | replace: '--', '-'
+  assign product_form_id = 'quick-add-' | append: unique_id
+  assign modal_id = 'QuickAdd-' | append: unique_id
+-%}
+
+{%- unless skip_styles -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
+  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<style>
+    {% comment %} .figma-card-wrapper { width: 342px; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
+    .figma-card { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; width: 100%; position: relative; gap: 8px; padding: 16px; border: 1px solid rgba(25, 25, 25, 0.08); background: transparent; box-sizing: border-box; }
+    .figma-image-area { flex-grow: 0; flex-shrink: 0; width: 100%; height: 310px; position: relative; display: flex; justify-content: center; align-items: center; overflow: visible; }
+    .main-product-img { width: 143px !important; height: 200px !important; object-fit: contain; position: relative; z-index: 2; box-shadow: 4px 7px 17px 0 rgba(0,0,0,0.12); transition: all 0.4s ease; }
+    .product_bg_element { position: absolute; top: 50%; left: 50%; width: 143px; height: auto; z-index: 1; opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-20deg); transition: transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.75s ease; pointer-events: none; }
+    .figma-content-row { display: flex; justify-content: space-between; align-items: center; align-self: stretch; flex-grow: 0; flex-shrink: 0; position: relative; width: 100%; }
+    .figma-text-col { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; flex-grow: 0; flex-shrink: 0; gap: 8px; max-width: 70%; }
+    .figma-title { font-size: 20px; font-weight: 500; text-align: left; color: var(--color-custom-black); margin: 0; text-decoration: none; line-height: 1.2; transition: color 0.4s ease; }
+    .figma-price-text { font-size: 18px; text-align: left; color: var(--color-custom-black); margin: 0; }
+    .figma-price-text .price, .figma-price-text .price-item { font-size: 18px !important; color: var(--color-custom-black) !important; letter-spacing: 0 !important; }
+    .figma-svg-btn { flex-grow: 0; flex-shrink: 0; width: 56px; border: 1px solid var(--color-custom-black) !important; height: 56px; position: relative; background: transparent; border: none; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+    .figma-svg-btn svg { pointer-events: none; }
+    @media screen and (min-width: 990px) {
+      .figma-card:hover .main-product-img { transform: scale(1.1); }
+      .figma-card:hover .product_bg_element { opacity: 1; transform: translate(-50%, -50%) scale(1.8) rotate(0deg); }
+      .figma-card:hover:hover .figma-svg-btn { background-color: var(--color-primary); border: 1px solid var(--color-primary) !important; }
+      .figma-card:hover .figma-title { color: var(--color-heading); }
+    }
+    @media screen and (max-width: 990px) {
+      .figma-card-wrapper { width: 280px; }
+      .figma-image-area { height: 240px; }
+      .main-product-img { width: 110px !important; height: 155px !important; }
+      .product_bg_element { width: 110px; }
+      .figma-title { font-size: 16px; }
+      .figma-price-text, .figma-price-text .price, .figma-price-text .price-item { font-size: 15px !important; }
+      .figma-svg-btn { width: 44px; height: 44px; }
+      .figma-svg-btn svg { width: 44px; height: 44px; }
+    }
+    {% endcomment %}
+
+    .custom-dak-sold-out-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.48);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      pointer-events: none;
+      transition: background-color 0.3s ease;
+      border-radius: inherit;
+    }
+
+    .custom-dak-sold-out-text {
+      color: #ffffff !important;
+      font-family: 'Playfair Display', 'Tasman', Georgia, 'Times New Roman', serif !important;
+      font-size: clamp(20px, 3.5vw, 34px);
+      line-height: 1.1;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7), 0 0 4px rgba(0, 0, 0, 0.6);
+      user-select: none;
+      display: block;
+      text-transform: none;
+    }
+
+    .figma-card:hover .custom-dak-sold-out-overlay {
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .figma-card.is-sold-out .figma-svg-btn {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      border-color: rgba(25, 25, 25, 0.35) !important;
+      background: transparent !important;
+    }
+
+    .figma-card.is-sold-out:hover .figma-svg-btn {
+      background: transparent !important;
+      border-color: rgba(25, 25, 25, 0.35) !important;
+    }
+
+    .figma-card.is-sold-out:hover .figma-svg-btn svg {
+      fill: none !important;
+    }
+</style>
+
+{%- if card_product and card_product != empty -%}
+  <div class="figma-card-wrapper">
+    <div class="figma-card{% if card_product.available == false %} is-sold-out{% endif %}">
+      <a href="{{ card_product.url }}" class="figma-image-area">
+        {%- if card_product.featured_media -%}
+          <img
+            src="{{ card_product.featured_media | image_url: width: 533 }}"
+            alt="{{ card_product.featured_media.alt | escape }}"
+            loading="lazy"
+            height="10"
+            width="10"
+            class="main-product-img"
+          >
+
+        {%- endif -%}
+
+        {%- if card_product.available == false -%}
+          <div class="custom-dak-sold-out-overlay" aria-hidden="true">
+            <span class="custom-dak-sold-out-text">
+              {%- assign sold_out_text = 'products.product.sold_out' | t -%}
+              {%- if sold_out_text contains ' ' -%}
+                {{ sold_out_text | replace_first: ' ', '<br>' }}
+              {%- else -%}
+                {{ sold_out_text }}
+              {%- endif -%}
+            </span>
+          </div>
+        {%- elsif card_product.compare_at_price > card_product.price -%}
+          <div class="card__badge {{ settings.badge_position }}">
+            <span class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}">{{ 'products.product.on_sale' | t }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+
+      <div class="figma-content-row">
+        <div class="figma-text-col">
+          <a href="{{ card_product.url }}" class="figma-title">{{ card_product.title | escape }}</a>
+          <div class="figma-price-text">
+            {% render 'price', product: card_product, price_class: '', show_compare_at_price: false %}
+          </div>
+        </div>
+
+        {%- liquid
+          assign qty_rules = false
+          if card_product.selected_or_first_available_variant.quantity_rule.min > 1 or card_product.selected_or_first_available_variant.quantity_rule.max != null or card_product.selected_or_first_available_variant.quantity_rule.increment > 1
+            assign qty_rules = true
+          endif
+        -%}
+
+        {%- if card_product.variants.size > 1 or qty_rules -%}
+          <modal-opener data-modal="#{{ modal_id }}">
+            <button
+              id="{{ product_form_id }}-submit"
+              type="submit"
+              name="add"
+              class="figma-svg-btn quick-add__submit"
+              aria-haspopup="dialog"
+              aria-labelledby="{{ product_form_id }}-submit title-{{ unique_id }}"
+              data-product-url="{{ card_product.url }}"
+              {% if card_product.available == false %}disabled{% endif %}
+            >
+               <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.0207 39.2953C25.3018 39.2953 26.3403 38.2568 26.3403 36.9758C26.3403 35.6947 25.3018 34.6562 24.0207 34.6562C22.7397 34.6562 21.7012 35.6947 21.7012 36.9758C21.7012 38.2568 22.7397 39.2953 24.0207 39.2953Z" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.1281 39.2953C35.4092 39.2953 36.4477 38.2568 36.4477 36.9758C36.4477 35.6947 35.4092 34.6562 34.1281 34.6562C32.8471 34.6562 31.8086 35.6947 31.8086 36.9758C31.8086 38.2568 32.8471 39.2953 34.1281 39.2953Z" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.6437 18.5768L21.3846 27.255C21.8059 28.5886 22.0159 29.2554 22.4209 29.749C22.7755 30.1854 23.2377 30.5222 23.76 30.7309C24.3532 30.9668 25.0514 30.9668 26.4505 30.9668H31.7073C33.1064 30.9668 33.8046 30.9668 34.3964 30.7309C34.92 30.5222 35.3809 30.1854 35.7368 29.749C36.1405 29.2554 36.3505 28.5886 36.7732 27.255L37.3309 25.4877L37.6582 24.4431L38.1096 23.0113C38.2706 22.5006 38.3091 21.9592 38.222 21.4309C38.1348 20.9025 37.9244 20.4022 37.6078 19.9703C37.2912 19.5384 36.8773 19.1872 36.3997 18.9451C35.9221 18.703 35.3941 18.5768 34.8587 18.5768H18.6437ZM18.6437 18.5768L18.6287 18.5263C18.5711 18.3334 18.5074 18.1424 18.4377 17.9536C18.1617 17.2548 17.6935 16.6484 17.0874 16.2044C16.4812 15.7604 15.7618 15.4969 15.0123 15.4445C14.8718 15.4336 14.7177 15.4336 14.4082 15.4336" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="29" cy="25" r="1" fill="#191919"/></svg>
+            </button>
+          </modal-opener>
+          
+          <quick-add-modal id="{{ modal_id }}" class="quick-add-modal">
+            <div role="dialog" aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}" aria-modal="true" class="quick-add-modal__content global-settings-popup" tabindex="-1">
+              <button id="ModalClose-{{ unique_id }}" type="button" class="quick-add-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </button>
+              <div id="QuickAddInfo-{{ unique_id }}" class="quick-add-modal__content-info"></div>
+            </div>
+          </quick-add-modal>
+
+        {%- else -%}
+          <product-form data-section-id="{{ section.id }}">
+            {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" class="product-variant-id" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+              <button id="{{ product_form_id }}-submit" type="submit" name="add" class="figma-svg-btn" aria-haspopup="dialog" data-sold-out-message="true" {% if card_product.available == false or card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25.0207 40.2953C26.3018 40.2953 27.3403 39.2953 27.3403 37.9758C27.3403 36.6947 26.3018 35.6562 25.0207 35.6562C23.7397 35.6562 22.7012 36.6947 22.7012 37.9758C22.7012 39.2953 23.7397 40.2953 25.0207 40.2953Z" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M35.1281 40.2953C36.4092 40.2953 37.4477 39.2568 37.4477 37.9758C37.4477 36.6947 36.4092 35.6562 35.1281 35.6562C33.8471 35.6562 32.8086 36.6947 32.8086 37.9758C32.8086 39.2953 33.8471 40.2953 35.1281 40.2953Z" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.6437 19.5748L22.3846 28.253C22.8059 29.5866 23.0159 30.2535 23.4209 30.7471C23.7755 31.1835 24.2377 31.5203 24.76 31.7289C25.3532 31.9648 26.0514 31.9648 27.4505 31.9648H32.7073C34.1064 31.9648 34.8046 31.9648 35.3964 31.7289C35.92 31.5203 36.3809 31.1835 36.7368 30.7471C37.1405 30.2535 37.3505 29.5866 37.7732 28.253L38.3309 26.4857L38.6582 25.4412L39.1096 24.0094C39.2706 23.4987 39.3091 22.9572 39.222 22.4289C39.1348 21.9006 38.9244 21.4002 38.6078 20.9683C38.2912 20.5365 37.8773 20.1853 37.3997 19.9432C36.9221 19.7011 36.3941 19.5749 35.8587 19.5748H19.6437ZM19.6437 19.5748L19.6287 19.5244C19.5711 19.3315 19.5074 19.1405 19.4377 18.9516C19.1617 18.2528 18.6935 17.6464 18.0874 17.2024C17.4812 16.7584 16.7618 16.495 16.0123 16.4425C15.8718 16.4316 15.7177 16.4316 15.4082 16.4316" stroke="#191919" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="26" r="1" fill="#191919"/></svg>
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- else -%}
+  <div class="figma-card-wrapper">
+    <div class="figma-card">
+      <div class="figma-image-area" style="background: #f0f0f0;">{{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+      <div class="figma-content-row"><h3 class="figma-title">{{ 'onboarding.product_title' | t }}</h3><p class="figma-price-text">₹ 99</p></div>
+    </div>
+  </div>
+{%- endif -%}

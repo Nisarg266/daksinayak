@@ -1,0 +1,280 @@
+{% comment %}
+  Section: Custom FAQs
+  Data Source: Metaobjects
+{% endcomment %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+  .faq-section {
+    position: relative;
+    width: 100%;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .faq-heading {
+    color: {{ section.settings.heading_color }};
+    font-size: 28px;
+    margin: 0;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 768px) {
+    .faq-heading {
+      font-size: 56px;
+    }
+  }
+
+  .faq-container {
+    width: 100%;
+    max-width: 952px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 44px;
+  }
+
+  .faq-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    gap: 20px;
+
+    border: none; /* Reset first */
+    border-bottom: 1px solid transparent; /* Invisible border sits waiting */
+    transition: padding-bottom 0.4s ease, border-color 0.4s ease; /* Animate the change */
+  }
+
+  .faq-item.active .faq-toggle {
+    padding-bottom: 18px;
+    border-bottom-color: {{ section.settings.heading_color }};
+  }
+
+  .faq-item.active .faq-answer-wrapper .faq-answer-inner .faq-answer-text {
+    padding-top: 18px;
+  }
+
+  .faq-question-text {
+    font-size: 18px;
+    color: var(--color-custom-black);
+    transition: color 0.3s ease;
+    line-height: 1.4;
+    flex-grow: 1;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500;
+}
+
+  @media screen and (min-width: 768px) {
+    .faq-question-text {
+      font-size: 20px;
+    }
+  }
+
+  .faq-icon-wrapper {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-icon-svg {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+  }
+
+  .faq-icon-svg path[stroke] { stroke: #191919; }
+  .faq-icon-svg path[fill] { fill: #191919; }
+
+  /* Active Styles */
+  .faq-item.active .faq-question-text {
+    color: {{ section.settings.heading_color }};
+  }
+
+  /* --- NEW: ROTATE ICON WHEN ACTIVE --- */
+  .faq-item.active .faq-icon-svg {
+    transform: rotate(90deg);
+  }
+
+  .faq-item.active .faq-icon-svg path[stroke] { stroke: {{ section.settings.heading_color }}; fill: {{ section.settings.heading_color }}; }
+  .faq-item.active .faq-icon-svg path[fill] { fill: #F1EAD7; }
+
+  .faq-line {
+    width: 0;
+    height: 1px;
+    background-color: {{ section.settings.heading_color }};
+    margin-top: 12px;
+    margin-bottom: 16px;
+    opacity: 0;
+    transition: width 0.4s ease, opacity 0.3s ease;
+  }
+
+  .faq-item.active .faq-line {
+    width: 100%;
+    opacity: 1;
+  }
+
+  .faq-answer-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease-out;
+  }
+
+  .faq-answer-inner {
+    overflow: hidden;
+  }
+
+  .faq-answer-text {
+    font-size: 16px;
+    color: var(--color-custom-gray);
+    line-height: 1.6;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    .faq-answer-text {
+      font-size: 18px;
+    }
+  }
+
+  .faq-item.active .faq-answer-wrapper {
+    grid-template-rows: 1fr;
+  }
+</style>
+
+<div class="faq-section">
+  
+  {%- if section.settings.title != blank -%}
+    <div class="faq-header">
+      <h2 class="faq-heading font-tasman">{{ section.settings.title }}</h2>
+    </div>
+  {%- endif -%}
+
+  <div class="faq-container">
+    {%- comment -%} 
+      Renamed 'block' to 'entry' to avoid Liquid conflicts. 
+      Removed shopify_attributes since this is a metaobject list, not section blocks.
+    {%- endcomment -%}
+    {%- for entry in section.settings.faq_list -%}
+      {% assign question = entry.question.value | default: entry.question %}
+      {% assign answer = entry.answer.value | default: entry.answer %}
+
+      <div class="faq-item">
+        <button class="faq-toggle" aria-expanded="false">
+          <span class="faq-question-text">{{ question }}</span>
+          
+          <div class="faq-icon-wrapper">
+            <svg class="faq-icon-svg" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.92154 6.41778C6.80272 4.53666 8.60747 2.585 10.5004 0.709763L20.5 10.856L10.3417 20.8906L0.500791 10.856C0.436126 10.5033 4.35719 6.97623 4.91567 6.41778H4.92154Z" stroke="currentColor" stroke-miterlimit="10"/>
+              <path d="M12.0026 10.8661C12.0026 9.21422 9.43359 9.20834 9.43359 10.8661C9.43359 12.5238 12.0026 12.5238 12.0026 10.8661Z" fill="currentColor"/>
+            </svg>
+          </div>
+        </button>
+
+        <div class="faq-line"></div>
+
+        <div class="faq-answer-wrapper">
+          <div class="faq-answer-inner">
+            <div class="faq-answer-text">
+              {{ answer }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <p style="text-align: center; color: #666; width: 100%;">
+        No FAQs selected. Click on the section and select entries from the list.
+      </p>
+    {%- endfor -%}
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const toggle = item.querySelector('.faq-toggle');
+      
+      toggle.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Accordion: Close others
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current
+        if (isActive) {
+          item.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('active');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom FAQs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "FAQs"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Highlight Color (Red)",
+      "default": "#e8202b"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "faq_list",
+      "label": "Select FAQs",
+      "metaobject_type": "faqs",
+      "limit": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom FAQs"
+    }
+  ]
+}
+{% endschema %}

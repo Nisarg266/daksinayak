@@ -1,0 +1,194 @@
+<style>
+  .zomato-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 120px
+  }
+
+  .zomato-container {
+    width: 100%;
+    max-width: 756px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .zomato-heading {
+    font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+@media screen and (max-width: 768px) {
+  .zomato-heading {
+    font-size: 28px;
+  }
+}
+
+  .zomato-description {
+    font-size: 16px;
+    color: #4d4d4d;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 12px 0px 30px 0px;
+  }
+
+  .zomato-btn {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    line-height: 0;
+  }
+
+  .zomato-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .zomato-svg {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+  }
+
+  /* Tablet */
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .zomato-heading {
+      font-size: 40px;
+    }
+
+    .zomato-description {
+      font-size: 16px;
+      max-width: 85%;
+    }
+
+    .zomato-svg {
+      max-width: 230px;
+    }
+
+    .zomato-section {
+      margin-bottom: 60px;
+    }
+  }
+
+@media screen and (min-width: 1024px) and (max-width: 1180px) {
+  .zomato-heading {
+    font-size: 36px;
+  }
+
+  .zomato-description {
+    font-size: 14px;
+    margin: 8px 0px 20px 0px;
+  }
+
+  .zomato-svg {
+    max-width: 156px;
+  }
+
+  .zomato-section {
+    margin-bottom: 48px;
+  }
+}
+
+@media screen and (min-width: 1181px) and (max-width: 1536px) {
+  .zomato-heading {
+    font-size: 40px;
+  }
+
+  .zomato-description {
+    font-size: 16px;
+    margin: 10px 0px 24px 0px;
+  }
+
+  .zomato-svg {
+    max-width: 208px;
+  }
+
+  .zomato-section {
+    margin-bottom: 64px;
+  }
+}
+
+/* Desktop */
+  @media screen and (min-width: 1537px) {
+    .zomato-heading {
+      font-size: 56px;
+    }
+
+    .zomato-description {
+      font-size: 18px;
+      max-width: 100%;
+    }
+
+    .zomato-svg {
+      max-width: 261px;
+    }
+
+    .zomato-section {
+      margin-bottom: 80px;
+    }
+  }
+  
+</style>
+
+<div class="zomato-section container">
+  <div class="zomato-container">
+    
+    {%- if section.settings.title != blank -%}
+      <h2 class="zomato-heading font-tasman">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="zomato-description">{{ section.settings.description }}</p>
+    {%- endif -%}
+
+    <div class="zomato-btn" aria-label="Order on Zomato">
+      {% render 'icon-zomato' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Zomato Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Comfort Food, A Click Away"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Order your favourite Dakshinayan dishes online and enjoy homestyle South Indian flavours served hot, fresh and just the way you love them."
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#e8202b"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF8F5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zomato Section"
+    }
+  ]
+}
+{% endschema %}

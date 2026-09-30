@@ -1,0 +1,424 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* --- YOUR CUSTOM TAB STYLES --- */
+  .custom-tab-section {
+      width: 100%;
+      height: 100px;
+      position: relative;
+      margin-bottom: 20px;
+  }
+
+  .tabs-background {
+      width: 100%;
+      height: 100%;
+  }
+
+  .tabs-items {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+  }
+
+  .tab-item {
+      background-color: transparent;
+      border: none;
+      letter-spacing: 0.08em;
+      font-size: 18px;
+      padding: 5px !important;
+      color: #19191999; /* 60% Opacity Default */
+      cursor: pointer;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      font-family: inherit;
+  }
+
+  .tab-divider {
+      display: block;
+      height: 18px;
+      width: 1px;
+      background-color: #191919;
+      opacity: 0.2;
+  }
+
+  /* Active and Hover States */
+  .tab-item:hover,
+  .tab-item.active-tab {
+      color: #191919; /* Solid Black for Active/Hover */
+      opacity: 1;
+  }
+
+  /* Grid Visibility Logic */
+  .collection-tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+  }
+  
+  .collection-tab-content.active-content {
+      display: block;
+  }
+
+  @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate gradient">
+  <div class="section-{{ section.id }}-padding">
+    
+    <div class="container">
+      <div class="custom-tab-section">
+        <img
+          class="tabs-background"
+          src="{{ 'menu_background.svg' | asset_url }}"
+          alt="Tabs background image"
+          width="1440"
+          height="100"
+          loading="lazy"
+        >
+        <div class="tabs-items">
+          <button class="tab-item active-tab" onclick="openTab(event, 'tab-all-{{ section.id }}')">ALL</button>
+          <span class="tab-divider"></span>
+          <button class="tab-item" onclick="openTab(event, 'tab-masalas-{{ section.id }}')">MASALAS</button>
+          <span class="tab-divider"></span>
+          <button class="tab-item" onclick="openTab(event, 'tab-rte-{{ section.id }}')">READY TO EAT</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-width">
+      
+      {%- liquid
+        assign products_to_show = section.settings.products_to_show
+        assign columns_desktop = section.settings.columns_desktop
+        assign columns_mobile = section.settings.columns_mobile
+      -%}
+
+<div id="tab-all-{{ section.id }}" class="collection-tab-content active-content">
+        <ul class="grid product-grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down">
+          {%- assign tab_id_all = section.id | append: '-all' -%} 
+          {%- for product in section.settings.collection_all.products limit: products_to_show -%}
+            <li class="grid__item">
+              {% render 'featured-product',
+                card_product: product,
+                section_id: tab_id_all, 
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating
+              %}
+            </li>
+          {%- else -%}
+            {%- endfor -%}
+        </ul>
+      </div>
+
+      <div id="tab-masalas-{{ section.id }}" class="collection-tab-content">
+        <ul class="grid product-grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down">
+          {%- assign tab_id_masalas = section.id | append: '-masalas' -%}
+          {%- for product in section.settings.collection_masalas.products limit: products_to_show -%}
+            <li class="grid__item">
+              {% render 'featured-product',
+                card_product: product,
+                section_id: tab_id_masalas,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating
+              %}
+            </li>
+          {%- else -%}
+             <p class="center">No products found.</p>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div id="tab-rte-{{ section.id }}" class="collection-tab-content">
+        <ul class="grid product-grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down">
+          {%- assign tab_id_rte = section.id | append: '-rte' -%}
+          {%- for product in section.settings.collection_rte.products limit: products_to_show -%}
+            <li class="grid__item">
+              {% render 'featured-product',
+                card_product: product,
+                section_id: tab_id_rte,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating
+              %}
+            </li>
+          {%- else -%}
+            <p class="center">No products found.</p>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- if section.settings.show_view_all -%}
+        <div class="center collection__view-all scroll-trigger animate--slide-in">
+          <a href="{{ section.settings.collection_all.url }}" class="{% if section.settings.view_all_style == 'link' %}link underlined-link{% elsif section.settings.view_all_style == 'solid' %}button{% else %}button button--secondary{% endif %}" aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title }}">
+            {{ 'sections.featured_collection.view_all' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function openTab(evt, tabId) {
+    // 1. Get the container of this specific section to avoid conflicts with other sections
+    var sectionContainer = evt.currentTarget.closest('.isolate');
+    
+    // 2. Hide all tab content within this section
+    var tabContents = sectionContainer.querySelectorAll(".collection-tab-content");
+    tabContents.forEach(function(content) {
+      content.classList.remove("active-content");
+    });
+
+    // 3. Remove "active-tab" class from all buttons within this section
+    var tabLinks = sectionContainer.querySelectorAll(".tab-item");
+    tabLinks.forEach(function(link) {
+      link.classList.remove("active-tab");
+    });
+
+    // 4. Show the current tab, and add an "active-tab" class to the button that opened the tab
+    sectionContainer.querySelector("#" + tabId).classList.add("active-content");
+    evt.currentTarget.classList.add("active-tab");
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Kolam Tabs Collection",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections Setup"
+    },
+    {
+      "type": "collection",
+      "id": "collection_all",
+      "label": "Collection for 'ALL' Tab"
+    },
+    {
+      "type": "collection",
+      "id": "collection_masalas",
+      "label": "Collection for 'MASALAS' Tab"
+    },
+    {
+      "type": "collection",
+      "id": "collection_rte",
+      "label": "Collection for 'READY TO EAT' Tab"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.featured-collection.settings.products_to_show.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.featured-collection.settings.columns_desktop.label"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "t:sections.featured-collection.settings.columns_mobile.label",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.featured-collection.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.featured-collection.settings.columns_mobile.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "t:sections.featured-collection.settings.show_view_all.label"
+    },
+    {
+      "type": "select",
+      "id": "view_all_style",
+      "label": "t:sections.featured-collection.settings.view_all_style.label",
+      "options": [
+        {
+          "value": "link",
+          "label": "t:sections.featured-collection.settings.view_all_style.options__1.label"
+        },
+        {
+          "value": "outline",
+          "label": "t:sections.featured-collection.settings.view_all_style.options__2.label"
+        },
+        {
+          "value": "solid",
+          "label": "t:sections.featured-collection.settings.view_all_style.options__3.label"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.featured-collection.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.featured-collection.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.image_shape.options__1.label"
+        },
+        {
+          "value": "arch",
+          "label": "t:sections.all.image_shape.options__2.label"
+        },
+        {
+          "value": "blob",
+          "label": "t:sections.all.image_shape.options__3.label"
+        },
+        {
+          "value": "chevronleft",
+          "label": "t:sections.all.image_shape.options__4.label"
+        },
+        {
+          "value": "chevronright",
+          "label": "t:sections.all.image_shape.options__5.label"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.all.image_shape.options__6.label"
+        },
+        {
+          "value": "parallelogram",
+          "label": "t:sections.all.image_shape.options__7.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.all.image_shape.options__8.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.all.image_shape.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_rating.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom products"
+    }
+  ]
+}
+{% endschema %}

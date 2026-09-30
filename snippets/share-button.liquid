@@ -1,0 +1,164 @@
+{% comment %}
+  Renders share button.
+  Accepts:
+  - block: {Object} passes in the block information.
+  - share_link: {String} url to be added to the input the user will get/copy.
+
+  Usage:
+  {% render 'share-button',
+    block: block,
+    share_link: share_url
+  %}
+{% endcomment %}
+<script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  @media screen and (max-width: 767px) {
+    .share-button > details {
+      display: none !important;
+    }
+    .share-button > button.share-button__button.hidden {
+      display: none !important;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .share-button__mobile-trigger {
+      display: none !important;
+    }
+  }
+  .share-button__mobile-trigger {
+    display: none;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: rgb(var(--color-link));
+    font: inherit;
+    font-size: 1.4rem;
+    min-height: 4.4rem;
+  }
+  .share-button__toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  .share-button__toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+
+<share-button id="Share-{{ section.id }}" class="share-button quick-add-hidden" {{ block.shopify_attributes }}>
+  <button class="share-button__button hidden">
+    <span class="svg-wrapper share-icon-css">{{ 'icon-share.svg' | inline_asset_content }}</span>
+    {{ block.settings.share_label | escape }}
+  </button>
+
+  <button type="button" class="share-button__mobile-trigger" aria-label="Share" data-share-url="{{ share_link }}">
+    <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
+    {{ block.settings.share_label | escape }}
+  </button>
+
+  <details id="Details-{{ block.id }}-{{ section.id }}">
+    <summary class="share-button__button">
+      <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
+      {{ block.settings.share_label | escape }}
+    </summary>
+    <div class="share-button__fallback motion-reduce">
+      <div class="field">
+        <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status"> </span>
+        <input
+          type="text"
+          class="field__input"
+          id="ShareUrl-{{ section.id }}"
+          value="{{ share_link }}"
+          placeholder="{{ 'general.share.share_url' | t }}"
+          onclick="this.select();"
+          readonly
+        >
+        <label class="field__label" for="ShareUrl-{{ section.id }}">{{ 'general.share.share_url' | t }}</label>
+      </div>
+      <button class="share-button__close hidden">
+        <span class="svg-wrapper">
+          {{- 'icon-close.svg' | inline_asset_content -}}
+        </span>
+        <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+      </button>
+      <button class="share-button__copy">
+        <span class="svg-wrapper">
+          {{- 'icon-copy.svg' | inline_asset_content -}}
+        </span>
+        <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+      </button>
+    </div>
+  </details>
+</share-button>
+
+<div class="share-button__toast" id="ShareToast-{{ section.id }}">Link copied!</div>
+
+<script>
+  (function() {
+  const setupShare = (container) => {
+    const mobileBtn = container.querySelector('.share-button__mobile-trigger');
+    if (!mobileBtn) return;
+
+    const shareUrl = mobileBtn.getAttribute('data-share-url') || window.location.href;
+    const sectionId = container.id.split('-').pop();
+    const toast = document.getElementById(`ShareToast-${sectionId}`);
+
+    const showToast = () => {
+      if (!toast) return;
+      toast.classList.add('is-visible');
+      setTimeout(() => toast.classList.remove('is-visible'), 2000);
+    };
+
+    mobileBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      // Native Android/iOS Share Menu
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: shareUrl
+          });
+        } catch (err) {
+          // Fallback if user cancels or share fails
+          if (err.name !== 'AbortError') copyToClipboard(shareUrl);
+        }
+      } else {
+        copyToClipboard(shareUrl);
+      }
+    });
+
+    const copyToClipboard = (text) => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try { document.execCommand('copy'); showToast(); } catch(e) {}
+        document.body.removeChild(textArea);
+      }
+    };
+  };
+
+  // Initialize all share buttons on the page
+  document.querySelectorAll('share-button').forEach(setupShare);
+})();
+</script>
+

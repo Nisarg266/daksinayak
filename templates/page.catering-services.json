@@ -1,0 +1,156 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_banner_6gVPLm": {
+      "type": "custom-banner",
+      "name": "Custom Banner",
+      "settings": {
+        "heading": "Catering Services"
+      }
+    },
+    "catering_hero_LLwgPk": {
+      "type": "catering-hero",
+      "name": "Catering Hero",
+      "settings": {
+        "image": "shopify://shop_images/Catering_hero_img.jpg",
+        "title": "Dakshinayan Catering"
+      }
+    },
+    "what_to_expect_RqQ7jb": {
+      "type": "what-to-expect",
+      "blocks": {
+        "card_tQiRYz": {
+          "type": "card",
+          "settings": {
+            "title": "Authentic South Indian taste",
+            "description": "Experience rich, traditional flavors crafted from time-honored recipes.",
+            "custom_image": "shopify://shop_images/masala_dosa_f26b77f5-2132-45df-9dc6-635d0df90d38.png"
+          }
+        },
+        "card_tJadAb": {
+          "type": "card",
+          "settings": {
+            "title": "Fresh, Pure, Vegetarian",
+            "description": "Enjoy wholesome, made-to-order vegetarian dishes using the freshest ingredients.",
+            "custom_image": "shopify://shop_images/what_to_expect_2.png"
+          }
+        },
+        "card_zJVLtJ": {
+          "type": "card",
+          "settings": {
+            "title": "Reliable catering service",
+            "description": "On-time delivery and seamless service you can count on for every event.",
+            "custom_image": "shopify://shop_images/medu_vada_072d4e1c-c3e5-4cf9-88de-f0d21959f20a.png"
+          }
+        }
+      },
+      "block_order": [
+        "card_tQiRYz",
+        "card_tJadAb",
+        "card_zJVLtJ"
+      ],
+      "name": "What To Expect (Animated)",
+      "settings": {
+        "heading": "What To Expect"
+      }
+    },
+    "custom_designed_border_QnNfin": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "event_highlights_8XNfBn": {
+      "type": "event-highlights",
+      "blocks": {
+        "image_cV6cjC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/catering_1.jpg"
+          }
+        },
+        "image_ji4Rqz": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/catering_2.jpg"
+          }
+        },
+        "image_qfXFh9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/catering_3.jpg"
+          }
+        },
+        "image_36dCrR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/catering_4.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_cV6cjC",
+        "image_ji4Rqz",
+        "image_qfXFh9",
+        "image_36dCrR"
+      ],
+      "name": "Event Highlights Slider",
+      "settings": {
+        "heading": "Event Highlights"
+      }
+    },
+    "custom_designed_border_63GHbc": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "catering_form_k4fxBA": {
+      "type": "catering-form",
+      "name": "Catering Form",
+      "settings": {
+        "heading": "Get in Touch for Catering",
+        "note_label": "Note:",
+        "note_text": "Catering services are available only in Ahmedabad.\nFinal pricing depends on menu selection, guest count and service requirements"
+      }
+    },
+    "responsive_spacer_bEHhTj": {
+      "type": "responsive-spacer",
+      "name": "Responsive Spacer",
+      "settings": {
+        "desktop_mt": 60,
+        "desktop_mb": 0,
+        "tablet_mt": 40,
+        "tablet_mb": 0,
+        "mobile_mt": 24,
+        "mobile_mb": 0,
+        "show_line": false,
+        "line_color": "#e5e5e5"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_banner_6gVPLm",
+    "catering_hero_LLwgPk",
+    "what_to_expect_RqQ7jb",
+    "custom_designed_border_QnNfin",
+    "event_highlights_8XNfBn",
+    "custom_designed_border_63GHbc",
+    "catering_form_k4fxBA",
+    "responsive_spacer_bEHhTj"
+  ]
+}
