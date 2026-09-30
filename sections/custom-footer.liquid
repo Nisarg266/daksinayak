@@ -1,0 +1,251 @@
+{% comment %}
+  Section: Custom Footer
+  Design: 4-Column Grid with Flanking Rangoli Patterns & Social Icons
+{% endcomment %}
+
+<style>
+  .custom-footer-section {
+    background-color: #FFCB05; /* Exact yellow from Figma */
+    color: #191919;
+    padding: 60px 0 0 0; /* 0 bottom padding to let copyright sit flush if needed */
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #e8202b; /* Top Red Border */
+    font-family: var(--font-body-family);
+  }
+
+  .footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 20px;
+    padding-bottom: 40px; /* Space before bottom bar */
+  }
+
+  /* --- SIDE PATTERNS --- */
+  .footer-pattern {
+    width: 130px; /* Adjusted size */
+    flex-shrink: 0;
+    margin-top: 20px;
+  }
+
+  .footer-pattern svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Hide patterns on mobile to save space */
+  @media screen and (max-width: 1200px) {
+    .footer-pattern { display: none; }
+  }
+
+  /* --- CENTRAL CONTENT --- */
+  .footer-content {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  @media screen and (max-width: 768px) {
+    .footer-content {
+      grid-template-columns: 1fr; /* Stack on mobile */
+      text-align: center;
+      gap: 30px;
+    }
+  }
+
+  /* --- TYPOGRAPHY --- */
+  .footer-col h3 {
+    color: #E8202B; /* Red Heading */
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    margin-top: 0;
+    line-height: 1.2;
+  }
+
+  .footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-menu li a {
+    text-decoration: none;
+    color: #191919;
+    font-size: 16px;
+    transition: opacity 0.2s;
+  }
+
+  .footer-menu li a:hover {
+    opacity: 0.7;
+    color: #E8202B;
+  }
+
+  /* --- SOCIAL ICONS --- */
+  .social-icons-wrapper {
+    margin-top: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .social-icons-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  /* --- BOTTOM BAR --- */
+  .footer-bottom {
+    max-width: 1082px;
+    margin: 0 auto;
+    border-top: 0.5px solid #E8202B; /* Thin red line */
+    padding: 24px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #191919;
+  }
+
+  .footer-designed-by {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .footer-bottom {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+</style>
+
+<footer class="custom-footer-section">
+  <div class="footer-wrapper">
+    <div class="footer-pattern">
+      {% render 'icon-footer-left' %}
+    </div>
+
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>Products</h3>
+        <ul class="footer-menu">
+          {%- for link in linklists[section.settings.menu_1].links -%}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul class="footer-menu">
+          {%- for link in linklists[section.settings.menu_2].links -%}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Support</h3>
+        <ul class="footer-menu">
+          {%- for link in linklists[section.settings.menu_3].links -%}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <ul class="footer-menu">
+          <li><a href="tel:07940022004">07940022004</a></li>
+          <li><a href="mailto:info@dakshinayan.in">info@dakshinayan.in</a></li>
+        </ul>
+
+        <div class="social-icons-wrapper">
+          <svg width="84" height="26" viewBox="0 0 84 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_37_14250)">
+              <path d="M19.6875 13C19.6875 7.64844 15.3516 3.3125 10 3.3125C4.64844 3.3125 0.3125 7.64844 0.3125 13C0.3125 17.8352 3.85508 21.843 8.48633 22.5703V15.8004H6.02539V13H8.48633V10.8656C8.48633 8.43789 9.93164 7.09687 12.1453 7.09687C13.2055 7.09687 14.3141 7.28594 14.3141 7.28594V9.66875H13.0922C11.8891 9.66875 11.5137 10.4156 11.5137 11.1816V13H14.2004L13.7707 15.8004H11.5137V22.5703C16.1449 21.843 19.6875 17.8352 19.6875 13Z" fill="#E8202B"/>
+            </g>
+            <path d="M43.4766 4C44.5453 4.00285 45.0877 4.00855 45.5561 4.02185L45.7403 4.0285C45.9531 4.0361 46.1631 4.0456 46.4167 4.057C47.4275 4.1045 48.1171 4.26409 48.7222 4.49874C49.3492 4.74003 49.8774 5.06682 50.4056 5.59406C50.8888 6.0688 51.2626 6.64328 51.5009 7.27742C51.7355 7.88256 51.8951 8.57224 51.9426 9.58396C51.954 9.83666 51.9635 10.0466 51.9711 10.2603L51.9768 10.4446C51.991 10.912 51.9967 11.4545 51.9986 12.5232L51.9996 13.2319V14.4763C52.0019 15.1693 51.9946 15.8622 51.9777 16.5549L51.972 16.7392C51.9644 16.9529 51.9549 17.1629 51.9435 17.4156C51.896 18.4273 51.7345 19.116 51.5009 19.7221C51.2626 20.3563 50.8888 20.9307 50.4056 21.4055C49.9308 21.8887 49.3564 22.2625 48.7222 22.5008C48.1171 22.7354 47.4275 22.895 46.4167 22.9425L45.7403 22.971L45.5561 22.9767C45.0877 22.99 44.5453 22.9967 43.4766 22.9986L42.7679 22.9995H41.5245C40.8312 23.002 40.138 22.9947 39.445 22.9777L39.2607 22.972C39.0352 22.9634 38.8098 22.9536 38.5844 22.9425C37.5736 22.895 36.8839 22.7354 36.2779 22.5008C35.6441 22.2624 35.07 21.8886 34.5955 21.4055C34.1119 20.9308 33.7378 20.3563 33.4993 19.7221C33.2646 19.117 33.105 18.4273 33.0575 17.4156L33.029 16.7392L33.0243 16.5549C33.0068 15.8622 32.9989 15.1693 33.0005 14.4763V12.5232C32.9979 11.8303 33.0049 11.1374 33.0214 10.4446L33.0281 10.2603C33.0357 10.0466 33.0452 9.83666 33.0566 9.58396C33.1041 8.57224 33.2637 7.88351 33.4983 7.27742C33.7374 6.64302 34.1122 6.06851 34.5965 5.59406C35.0706 5.11104 35.6444 4.73725 36.2779 4.49874C36.8839 4.26409 37.5727 4.1045 38.5844 4.057C38.837 4.0456 39.0479 4.0361 39.2607 4.0285L39.445 4.0228C40.1377 4.00592 40.8306 3.99864 41.5235 4.00095L43.4766 4ZM42.5001 8.74989C41.2403 8.74989 40.0322 9.25032 39.1415 10.1411C38.2507 11.0319 37.7503 12.24 37.7503 13.4998C37.7503 14.7595 38.2507 15.9677 39.1415 16.8584C40.0322 17.7492 41.2403 18.2497 42.5001 18.2497C43.7598 18.2497 44.9679 17.7492 45.8586 16.8584C46.7494 15.9677 47.2498 14.7595 47.2498 13.4998C47.2498 12.24 46.7494 11.0319 45.8586 10.1411C44.9679 9.25032 43.7598 8.74989 42.5001 8.74989ZM42.5001 10.6498C42.8743 10.6498 43.2449 10.7234 43.5907 10.8666C43.9365 11.0098 44.2507 11.2196 44.5154 11.4842C44.78 11.7488 44.99 12.063 45.1333 12.4087C45.2766 12.7545 45.3503 13.125 45.3504 13.4993C45.3505 13.8736 45.2768 14.2442 45.1336 14.59C44.9905 14.9357 44.7806 15.25 44.516 15.5146C44.2514 15.7793 43.9373 15.9893 43.5916 16.1326C43.2458 16.2759 42.8753 16.3496 42.501 16.3497C41.7452 16.3497 41.0203 16.0494 40.4859 15.515C39.9514 14.9805 39.6512 14.2556 39.6512 13.4998C39.6512 12.7439 39.9514 12.019 40.4859 11.4846C41.0203 10.9501 41.7452 10.6498 42.501 10.6498M47.4883 7.32492C47.1733 7.32492 46.8713 7.45003 46.6486 7.67272C46.4259 7.89542 46.3008 8.19745 46.3008 8.51239C46.3008 8.82733 46.4259 9.12937 46.6486 9.35206C46.8713 9.57475 47.1733 9.69986 47.4883 9.69986C47.8032 9.69986 48.1052 9.57475 48.3279 9.35206C48.5506 9.12937 48.6757 8.82733 48.6757 8.51239C48.6757 8.19745 48.5506 7.89542 48.3279 7.67272C48.1052 7.45003 47.8032 7.32492 47.4883 7.32492Z" fill="#E8202B"/>
+            <g clip-path="url(#clip1_37_14250)">
+              <path d="M81.04 20.0117H78.078V15.3717C78.078 14.2647 78.055 12.8407 76.534 12.8407C74.99 12.8407 74.754 14.0448 74.754 15.2898V20.0117H71.793V10.4688H74.637V11.7688H74.676C75.073 11.0188 76.04 10.2288 77.484 10.2288C80.485 10.2288 81.04 12.2028 81.04 14.7738V20.0117ZM68.447 9.16275C67.493 9.16275 66.727 8.39175 66.727 7.44275C66.727 6.49375 67.494 5.72275 68.447 5.72275C68.9032 5.72275 69.3407 5.90396 69.6632 6.22653C69.9858 6.54909 70.167 6.98658 70.167 7.44275C70.167 7.89892 69.9858 8.33641 69.6632 8.65897C69.3407 8.98154 68.9032 9.16275 68.447 9.16275ZM69.931 20.0128H66.961V10.4688H69.931V20.0128ZM82.522 2.96875H65.476C64.66 2.96875 64 3.61375 64 4.40875V21.5287C64 22.3237 64.66 22.9688 65.476 22.9688H82.518C83.333 22.9688 84 22.3247 84 21.5287V4.40875C84 3.61475 83.333 2.96875 82.518 2.96875H82.522Z" fill="#E8202B"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_37_14250">
+                <rect width="20" height="20" fill="white" transform="translate(0 3)"/>
+              </clipPath>
+              <clipPath id="clip1_37_14250">
+                <rect width="20" height="20" fill="white" transform="translate(64 2.96875)"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-pattern">
+      {% render 'icon-footer-right' %}
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2025 Dakshinayan. All rights reserved.</div>
+    <div class="footer-designed-by">
+      Designed and Developed by
+      <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.66684 1.66684V0H3.33377H4.99945H6.66629H8.33313V1.66684H6.66629H4.99945H3.33377H1.66684ZM8.33313 6.66629V4.99936V3.33368V1.66684H10.0001V3.33368V4.99936V6.66629H8.33313ZM1.66684 4.99936V6.66629H0V4.99936V3.33368V1.66684H1.66684V3.33368V4.99936ZM1.66684 8.33313V6.66629H3.33377H4.99945H6.66629H8.33313V8.33313H6.66629H4.99945H3.33377H1.66684ZM0 8.33313H1.66684V9.99997H0V8.33313Z" fill="black"></path>
+        <path d="M1.66684 11.6645H0V14.9982H1.66684V11.6645ZM10.0001 11.6645H11.6669V9.99771H10.0001V8.33203H8.33313V9.99771H1.66684V11.6645H8.33313V14.9982H10.0001V11.6645Z" fill="black"></path>
+      </svg>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Menu Column 1 (Products)",
+      "default": "footer"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Menu Column 2 (Company)",
+      "default": "footer"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "Menu Column 3 (Support)",
+      "default": "footer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer"
+    }
+  ]
+}
+{% endschema %}

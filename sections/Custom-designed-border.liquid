@@ -1,0 +1,49 @@
+{% style %}
+  .designed-border-{{ section.id }} {
+      margin-top: 50px;
+      margin-bottom: 50px;
+      line-height: 0;
+  }
+
+  .designed-border-{{ section.id }} img {
+      width: 100%;
+      height: auto;
+      display: block;
+  }
+
+  @media screen and (min-width: 768px) {
+      .designed-border-{{ section.id }} {
+          margin-top: 50px;
+          margin-bottom: 50px;
+      }
+  }
+
+  @media screen and (min-width: 1024px) {
+      .designed-border-{{ section.id }} {
+          margin-top: 70px;
+          margin-bottom: 70px;
+      }
+  }
+{% endstyle %}
+
+<div class="designed-border-{{ section.id }}">
+  <img
+    src="{{ 'designed_border.png' | file_url }}"
+    alt="Designed Border"
+    width="1440"
+    height="100"
+    loading="lazy"
+  >
+</div>
+
+{% schema %}
+{
+  "name": "Designed Border",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom designed border"
+    }
+  ]
+}
+{% endschema %}

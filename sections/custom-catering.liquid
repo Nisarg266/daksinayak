@@ -1,0 +1,335 @@
+<style>
+  .catering-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 768px) {
+    .catering-section {
+      flex-direction: row;
+      gap: 48px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .catering-section {
+        padding: 0 20px !important;
+    }
+  }
+
+  .catering-slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #f0f0f0;
+    flex: 1;
+    max-width: 696px;
+  }
+
+  .catering-media {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+  }
+
+  .catering-media.active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .catering-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1;
+    max-width: 696px;
+    text-align: left;
+  }
+
+  .catering-heading {
+    color: {{ section.settings.heading_color }};
+    font-size: 28px;
+    margin: 0;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 768px) {
+    .catering-heading {
+      font-size: 46px;
+    }
+  }
+
+  @media screen and (min-width: 1537px) {
+    .catering-heading {
+      font-size: 56px;
+    }
+  }
+
+  .catering-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #4d4d4d;
+    margin: 0;
+  }
+  
+  @media screen and (min-width: 1537px) {
+    .catering-description {
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .catering-section {
+      gap: 28px;
+      padding-top: 36px;
+      padding-bottom: 36px;
+    }
+
+    .catering-slider-wrapper {
+      max-width: 417px;
+    }
+
+    .catering-content-wrapper {
+      max-width: 417px;
+      gap: 14px;
+    }
+
+    .catering-heading {
+      font-size: 36px;
+    }
+
+    .catering-description {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .catering-section {
+      gap: 38px;
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .catering-slider-wrapper {
+      max-width: 556px;
+    }
+
+    .catering-content-wrapper {
+      max-width: 556px;
+      gap: 19px;
+    }
+
+    .catering-heading {
+      font-size: 40px;
+    }
+
+    .catering-description {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div class="catering-section container">
+  <div class="catering-slider-wrapper" id="Slider-{{ section.id }}" data-interval="{{ section.settings.slide_interval | times: 1000 }}">
+    {%- for block in section.blocks -%}
+      {%- capture media_class -%}catering-media{% if forloop.first %} active{% endif %}{%- endcapture -%}
+      
+      {%- if block.settings.video != blank -%}
+        {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: media_class }}
+      {%- elsif block.settings.image != blank -%}
+        <img 
+          src="{{ block.settings.image | image_url: width: 800 }}" 
+          alt="{{ block.settings.image.alt | default: section.settings.title | escape }}" 
+          width="696" 
+          height="522" 
+          class="{{ media_class }}"
+          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+        >
+      {%- endif -%}
+    {%- else -%}
+       {{ 'lifestyle-1' | placeholder_svg_tag: 'catering-media active' }}
+    {%- endfor -%}
+  </div>
+
+  <div class="catering-content-wrapper">
+    {%- if section.settings.title != blank -%}
+      <h2 class="catering-heading font-tasman">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="catering-description">{{ section.settings.description }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.btn_text != blank -%}
+        {% render 'custom-cta-button',
+          label: section.settings.btn_text,
+          link: section.settings.btn_url,
+          text_color: section.settings.color_text,
+          bg_color: section.settings.color_bg,
+          hover_text: section.settings.hover_text,
+          hover_bg: section.settings.hover_bg
+        %}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const sliderContainer = document.getElementById('Slider-{{ section.id }}');
+  if (!sliderContainer) return;
+  
+  const mediaElements = sliderContainer.querySelectorAll('.catering-media');
+  if (mediaElements.length < 2) return;
+
+  const intervalTime = parseInt(sliderContainer.getAttribute('data-interval')) || 5000;
+  let currentIndex = 0;
+
+  setInterval(() => {
+    mediaElements[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % mediaElements.length;
+    mediaElements[currentIndex].classList.add('active');
+  }, intervalTime);
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom Catering Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slide_interval",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Fade Interval",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Dakshinayan Catering"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#e8202b"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description Text",
+      "default": "Some occasions deserve more than just good food, they deserve the warmth of home. Our catering menu in Ahmedabad brings your favourite Dakshinayan dishes to the table, wherever you are. Authentic recipes. Hand-served warmth. Meals that feel home-made.."
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "Enquire Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text Color",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "hover_text",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_bg",
+      "label": "Hover Background Color",
+      "default": "#191919"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#FAF8F5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slider_media",
+      "name": "Slider Media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Overrides image if selected. Keep video under 10MB for optimal performance."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Catering Section",
+      "blocks": [
+        { "type": "slider_media" },
+        { "type": "slider_media" }
+      ]
+    }
+  ]
+}
+{% endschema %}

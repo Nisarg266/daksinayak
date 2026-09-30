@@ -1,0 +1,730 @@
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+
+    --grid-desktop-horizontal-spacing: 24px;
+    --grid-desktop-vertical-spacing: 24px;
+    --grid-mobile-horizontal-spacing: 24px;
+    --grid-mobile-vertical-spacing: 24px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if section.settings.image_shape == 'blob' %}
+  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- unless section.settings.quick_add == 'none' -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- if section.settings.quick_add == 'standard' -%}
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if section.settings.quick_add == 'bulk' -%}
+  <script src="{{ 'quick-add-bulk.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quick-order-list.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Tablet: force 3 columns */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .section-{{ section.id }}-padding #product-grid .grid__item {
+      width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+      max-width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  {%- comment -%} DAKSHINAYAN TABS MENU START {%- endcomment -%}
+<style>
+  .custom-tab-section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto 36px;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    background-color: #F1EAD7;
+  }
+
+  .ccg-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .ccg-middle-block {
+    flex: 1;
+    max-height: 64px;
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid #E8202B;
+    border-bottom: 1px solid #E8202B;
+    margin: 0;
+    align-self: center;
+  }
+
+  .ccg-tabs-content-container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    max-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 80px;
+    gap: 16px;
+  }
+
+  .tabs-items {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: center;
+    width: max-content;
+  }
+
+  .tab-item {
+    background-color: transparent;
+    border: none;
+    letter-spacing: 0.08em;
+    font-size: 18px;
+    padding: 0 !important;
+    color: rgba(25, 25, 25, 0.6);
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+
+  .tab-divider {
+    display: block;
+    height: 18px;
+    width: 1px;
+    background-color: #191919;
+  }
+
+  .tab-item:hover,
+  .tab-item.active {
+    color: #E8202B;
+  }
+
+  a.tab-item {
+    text-decoration: none;
+    color: rgba(25, 25, 25, 0.6);
+  }
+
+  a.tab-item.active {
+    color: #E8202B;
+  }
+
+  .ccg-svg-css-left {
+    margin-right: -10px;
+    flex-shrink: 0;
+  }
+
+  .ccg-svg-css-right {
+    margin-left: -10px;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 750px) {
+    .custom-tab-section {
+      height: 48px;
+      padding: 0;
+    }
+
+    .ccg-middle-block {
+      max-height: 36px;
+    }
+
+    .ccg-tabs-content-container {
+      max-height: 36px;
+      padding: 16px 0;
+    }
+
+    .tab-item {
+      font-size: 12px;
+    }
+
+    .tabs-items {
+      gap: 16px;
+    }
+
+    .ccg-svg-css-left { margin-right: -6px; }
+    .ccg-svg-css-right { margin-left: -6px; }
+  }
+
+  
+    .grid-custom {
+      place-self: center;
+      max-width: 1440px !important;
+    }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .custom-tab-section {
+      height: 80px;
+      max-width: 850px;
+    }
+
+    .grid-custom {
+      max-width: 850px !important;
+    }
+
+    .ccg-middle-block {
+      max-height: 44px;
+    }
+
+    .ccg-tabs-content-container {
+      padding: 0 30px;
+    }
+
+    .tab-item {
+      font-size: 14px;
+    }
+
+    .ccg-svg-css-left { margin-right: -6px; }
+    .ccg-svg-css-right { margin-left: -6px; }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .custom-tab-section {
+      height: 100px;
+      max-width: 1280px;
+    }
+
+    .grid-custom {
+      max-width: 1280px !important;
+    }
+
+    .ccg-tabs-content-container {
+      padding: 12px 60px;
+    }
+
+    .tab-item {
+      font-size: 16px;
+    }
+  }
+
+  .full-width {
+    width: 100% !important;
+  }
+</style>
+
+  <div class="container">
+    <div class="custom-tab-section">
+      <div class="ccg-bg-wrapper">
+
+        <svg class="ccg-svg-css-left" viewBox="0 0 76 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M29.3591 61.1557C31.964 58.5389 34.4741 55.8393 37.1027 53.2344L50.9798 67.3246L36.8778 81.2491L23.2138 67.3246C23.1309 66.8273 28.5657 61.9372 29.3472 61.1675L29.3591 61.1557Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M61.614 85.9037C62.6678 84.8262 63.7453 83.7487 64.7873 82.6476L65.3201 82.541C67.2264 85.0867 69.9142 87.2535 71.8442 89.7164C72.827 90.9833 73.7387 92.2976 73.9281 93.9434C74.603 99.769 71.7968 101.379 68.3749 105.18C67.2974 106.364 66.1844 107.667 65.3201 108.969L51.8574 95.6011C55.303 92.5699 58.4171 89.1835 61.6258 85.9037H61.614Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M61.5427 57.5929C62.6439 56.4562 63.7805 55.3314 64.8699 54.171L65.4264 54.0645C67.4274 56.7286 70.2455 59.002 72.2702 61.595C73.3003 62.9212 74.2594 64.2947 74.4607 66.0234C75.1711 72.1331 72.2228 73.8263 68.6352 77.8166C67.5103 79.0598 66.3381 80.4215 65.4382 81.795L51.3125 67.7758C54.9357 64.5907 58.2037 61.0504 61.5545 57.6048L61.5427 57.5929Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M61.5427 29.13C62.6439 27.9933 63.7805 26.8685 64.8699 25.7081L65.4264 25.6016C67.4274 28.2657 70.2455 30.5391 72.2702 33.1321C73.3003 34.4583 74.2594 35.8318 74.4607 37.5605C75.1711 43.6702 72.2228 45.3634 68.6352 49.3537C67.5103 50.5969 66.3381 51.9586 65.4382 53.3321L51.3125 39.3129C54.9357 36.1278 58.2037 32.5875 61.5545 29.1419L61.5427 29.13Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M51.2989 39.7716L37.1613 53.1751L29.1216 44.1526C24.1249 36.5273 29.9505 27.6588 37.8836 30.0861C42.8566 31.6017 46.9889 37.3206 51.3107 39.7835L51.2989 39.7716Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M29.2278 89.4436C29.3818 89.2542 36.5334 81.2263 36.8413 81.2973L51.8432 96.3467C47.628 99.0345 43.472 105.547 38.2148 106.068C28.695 107.027 23.2247 96.7966 29.2278 89.4436Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M21.2723 69.1969C19.1646 70.9375 12.4037 76.3486 10.0711 76.7867C7.17022 77.3432 3.53518 75.3422 1.97223 72.9504C-2.55084 66.0473 4.12721 56.0776 11.4446 59.393C15.3875 61.1809 19.1173 65.029 22.6931 67.48L22.9062 67.9181C22.3616 68.3444 21.8051 68.7588 21.2723 69.1969Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M65.1311 25.2795C64.7877 25.3742 64.7404 25.1848 64.5391 25.0427C63.3906 24.2612 58.2163 17.1095 57.2098 15.5347C55.1614 12.3141 53.9418 10.0763 55.6824 6.21624C59.199 -1.61035 70.9922 -1.34986 74.1181 6.68986C75.5034 10.2539 74.7338 11.651 72.9222 14.6704C70.6725 18.4357 67.5466 21.6208 65.143 25.2676L65.1311 25.2795Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M73.0263 120.325C74.8379 123.356 75.6075 124.753 74.2222 128.306C71.0963 136.357 59.3031 136.606 55.7865 128.779C54.0578 124.919 55.2655 122.681 57.3139 119.461C58.3204 117.886 63.4828 110.734 64.6432 109.953C64.8445 109.822 64.8919 109.621 65.2352 109.716C67.6507 113.363 70.7647 116.548 73.0144 120.313L73.0263 120.325Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M35.6845 69.0382C38.1947 69.0382 38.2065 65.1309 35.6845 65.1309C33.1625 65.1309 33.1625 69.0382 35.6845 69.0382Z" fill="#E8202B"/>
+          <path d="M64.7528 41.8195C67.263 41.8195 67.2749 37.9121 64.7528 37.9121C62.2308 37.9121 62.2308 41.8195 64.7528 41.8195Z" fill="#E8202B"/>
+          <path d="M37.5302 41.7355C40.0404 41.7355 40.0522 37.8281 37.5302 37.8281C35.0082 37.8281 35.0082 41.7355 37.5302 41.7355Z" fill="#E8202B"/>
+          <path d="M36.8193 97.6007C39.3294 97.6007 39.3413 93.6934 36.8193 93.6934C34.2972 93.6934 34.2972 97.6007 36.8193 97.6007Z" fill="#E8202B"/>
+          <path d="M9.29191 70.0226C11.8021 70.0226 11.8139 66.1152 9.29191 66.1152C6.76988 66.1152 6.76988 70.0226 9.29191 70.0226Z" fill="#F1EAD7"/>
+          <path d="M64.0888 124.923C66.599 124.923 66.6108 121.016 64.0888 121.016C61.5668 121.016 61.5668 124.923 64.0888 124.923Z" fill="#F1EAD7"/>
+          <path d="M63.2841 98.5929C65.7943 98.5929 65.8061 94.6855 63.2841 94.6855C60.7621 94.6855 60.7621 98.5929 63.2841 98.5929Z" fill="#E8202B"/>
+          <path d="M64.7528 69.6222C67.263 69.6222 67.2749 65.7148 64.7528 65.7148C62.2308 65.7148 62.2308 69.6222 64.7528 69.6222Z" fill="#F1EAD7"/>
+          <path d="M64.4443 14.3605C66.9544 14.3605 66.9663 10.4531 64.4443 10.4531C61.9222 10.4531 61.9222 14.3605 64.4443 14.3605Z" fill="#F1EAD7"/>
+        </svg>
+
+        <div class="ccg-middle-block">
+          <div class="ccg-tabs-content-container">
+            {%- assign current_tag = current_tags | first | handleize -%}
+            <div class="tabs-items">
+              <a href="{{ collection.url }}" class="tab-item {% if current_tag == blank %}active{% endif %}">ALL</a>
+              <span class="tab-divider"></span>
+              <a href="{{ collection.url }}/masala" class="tab-item {% if current_tag == 'masala' %}active{% endif %}">MASALAS</a>
+              <span class="tab-divider"></span>
+              <a href="{{ collection.url }}/ready-to-eat" class="tab-item {% if current_tag == 'ready-to-eat' %}active{% endif %}">READY TO EAT</a>
+            </div>
+          </div>
+        </div>
+
+        <svg class="ccg-svg-css-right" viewBox="0 0 76 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M46.0745 61.1557C43.4696 58.5389 40.9594 55.8393 38.3309 53.2344L24.4538 67.3246L38.5558 81.2491L52.2198 67.3246C52.3026 66.8273 46.8679 61.9372 46.0864 61.1675L46.0745 61.1557Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M13.8235 85.9018C12.7697 84.8243 11.6922 83.7468 10.6502 82.6456L10.1174 82.5391C8.2111 85.0848 5.52331 87.2516 3.5933 89.7144C2.61054 90.9814 1.69882 92.2957 1.50938 93.9415C0.834468 99.767 3.64067 101.377 7.06257 105.178C8.14006 106.362 9.25307 107.665 10.1174 108.967L23.5801 95.5992C20.1345 92.568 17.0204 89.1816 13.8117 85.9018H13.8235Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M13.8929 57.591C12.7917 56.4543 11.655 55.3294 10.5657 54.1691L10.0092 54.0625C8.00812 56.7266 5.19008 59 3.16536 61.5931C2.13523 62.9192 1.17615 64.2927 0.974859 66.0214C0.264429 72.1311 3.21272 73.8243 6.80039 77.8146C7.92524 79.0579 9.09744 80.4195 9.99732 81.793L24.123 67.7738C20.4999 64.5887 17.2319 61.0484 13.881 57.6028L13.8929 57.591Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M13.8929 29.13C12.7917 27.9933 11.655 26.8685 10.5657 25.7081L10.0092 25.6016C8.00812 28.2657 5.19008 30.5391 3.16536 33.1321C2.13523 34.4583 1.17615 35.8318 0.974859 37.5605C0.264429 43.6702 3.21272 45.3634 6.80039 49.3537C7.92524 50.5969 9.09744 51.9586 9.99732 53.3321L24.123 39.3129C20.4999 36.1278 17.2319 32.5875 13.881 29.1419L13.8929 29.13Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M24.1367 39.7736L38.2742 53.177L46.3139 44.1546C51.3106 36.5293 45.4851 27.6607 37.552 30.088C32.5789 31.6036 28.4466 37.3226 24.1248 39.7854L24.1367 39.7736Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M46.2077 89.4436C46.0538 89.2542 38.9021 81.2263 38.5943 81.2973L23.5923 96.3467C27.8076 99.0345 31.9636 105.547 37.2208 106.068C46.7405 107.027 52.2108 96.7966 46.2077 89.4436Z" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M54.1633 69.195C56.2709 70.9355 63.0318 76.3466 65.3644 76.7847C68.2653 77.3412 71.9004 75.3402 73.4633 72.9484C77.9864 66.0454 71.3083 56.0757 63.9909 59.391C60.048 61.1789 56.3183 65.0271 52.7424 67.4781L52.5293 67.9162C53.074 68.3424 53.6305 68.7569 54.1633 69.195Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M10.3025 25.2795C10.6458 25.3742 10.6932 25.1848 10.8945 25.0427C12.043 24.2612 17.2173 17.1095 18.2238 15.5347C20.2722 12.3141 21.4918 10.0763 19.7512 6.21624C16.2346 -1.61035 4.44143 -1.34986 1.31553 6.68986C-0.0698057 10.2539 0.699824 11.651 2.51142 14.6704C4.76112 18.4357 7.88701 21.6208 10.2906 25.2676L10.3025 25.2795Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M2.40731 120.325C0.595709 123.356 -0.173921 124.753 1.21142 128.306C4.33731 136.357 16.1305 136.606 19.6471 128.779C21.3758 124.919 20.1681 122.681 18.1197 119.461C17.1132 117.886 11.9508 110.734 10.7904 109.953C10.5891 109.822 10.5417 109.621 10.1984 109.716C7.7829 113.363 4.66885 116.548 2.41915 120.313L2.40731 120.325Z" fill="#228140" stroke="#E8202B" stroke-miterlimit="10"/>
+          <path d="M39.755 69.0402C37.2448 69.0402 37.2329 65.1328 39.755 65.1328C42.277 65.1328 42.277 69.0402 39.755 69.0402Z" fill="#E8202B"/>
+          <path d="M10.6847 41.8214C8.17446 41.8214 8.16262 37.9141 10.6847 37.9141C13.2067 37.9141 13.2067 41.8214 10.6847 41.8214Z" fill="#E8202B"/>
+          <path d="M37.9073 41.7355C35.3971 41.7355 35.3853 37.8281 37.9073 37.8281C40.4293 37.8281 40.4293 41.7355 37.9073 41.7355Z" fill="#E8202B"/>
+          <path d="M38.6182 97.6027C36.1081 97.6027 36.0962 93.6953 38.6182 93.6953C41.1403 93.6953 41.1403 97.6027 38.6182 97.6027Z" fill="#E8202B"/>
+          <path d="M66.1456 70.0246C63.6354 70.0246 63.6236 66.1172 66.1456 66.1172C68.6676 66.1172 68.6676 70.0246 66.1456 70.0246Z" fill="#F1EAD7"/>
+          <path d="M11.3487 124.923C8.83853 124.923 8.82669 121.016 11.3487 121.016C13.8707 121.016 13.8707 124.923 11.3487 124.923Z" fill="#F1EAD7"/>
+          <path d="M12.1534 98.5949C9.64321 98.5949 9.63137 94.6875 12.1534 94.6875C14.6754 94.6875 14.6754 98.5949 12.1534 98.5949Z" fill="#E8202B"/>
+          <path d="M10.6847 69.6222C8.17446 69.6222 8.16262 65.7148 10.6847 65.7148C13.2067 65.7148 13.2067 69.6222 10.6847 69.6222Z" fill="#F1EAD7"/>
+          <path d="M10.9932 14.3605C8.48306 14.3605 8.47122 10.4531 10.9932 10.4531C13.5153 10.4531 13.5153 14.3605 10.9932 14.3605Z" fill="#F1EAD7"/>
+        </svg>
+
+      </div>
+    </div>
+  </div>
+  {%- comment -%} DAKSHINAYAN TABS MENU END {%- endcomment -%}
+
+  {%- paginate collection.products by section.settings.products_per_page -%}
+    {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
+    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+      <facet-filters-form class="facets facets-vertical-sort small-hide">
+        <form class="facets-vertical-form" id="FacetSortForm">
+          <div class="facet-filters sorting caption">
+            <div class="facet-filters__field">
+              <h2 class="facet-filters__label caption-large text-body">
+                <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+              </h2>
+              <div class="select">
+                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                <select
+                  name="sort_by"
+                  class="facet-filters__sort select__select caption-large"
+                  id="SortBy"
+                  aria-describedby="a11y-refresh-page-message"
+                >
+                  {%- for option in collection.sort_options -%}
+                    <option
+                      value="{{ option.value | escape }}"
+                      {% if option.value == sort_by %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{ option.name | escape }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                <span class="svg-wrapper">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-count-vertical light" role="status">
+            <h2 class="product-count__text text-body">
+              <span id="ProductCountDesktop">
+                {%- if collection.results_count -%}
+                  {{
+                    'templates.search.results_with_count'
+                    | t: terms: collection.terms, count: collection.results_count
+                  }}
+                {%- elsif collection.products_count == collection.all_products_count -%}
+                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+                {%- else -%}
+                  {{
+                    'products.facets.product_count'
+                    | t: product_count: collection.products_count, count: collection.all_products_count
+                  }}
+                {%- endif -%}
+              </span>
+            </h2>
+            {%- render 'loading-spinner' -%}
+          </div>
+        </form>
+      </facet-filters-form>
+    {%- endif -%}
+
+    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+        <aside
+          aria-labelledby="verticalTitle"
+          class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+          id="main-collection-filters"
+          data-id="{{ section.id }}"
+        >
+          {% render 'facets',
+            results: collection,
+            enable_filtering: section.settings.enable_filtering,
+            enable_sorting: section.settings.enable_sorting,
+            filter_type: section.settings.filter_type,
+            paginate: paginate
+          %}
+        </aside>
+      {%- endif -%}
+
+      <div
+        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        id="ProductGridContainer"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        {%- if collection.products.size == 0 -%}
+          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+            <div class="loading-overlay gradient"></div>
+            <div class="title-wrapper center">
+              <h2 class="title title--primary">
+                {{ 'sections.collection_template.empty' | t -}}
+                <br>
+                {{
+                  'sections.collection_template.use_fewer_filters_html'
+                  | t: link: collection.url, class: 'underlined-link link'
+                }}
+              </h2>
+            </div>
+          </div>
+        {%- else -%}
+          <div
+            class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+          >
+            <div class="loading-overlay gradient"></div>
+            <ul
+              id="product-grid"
+              data-id="{{ section.id }}"
+              class="
+                grid product-grid grid-custom full-width grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                grid--{{ section.settings.columns_desktop }}-col-desktop
+                {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
+              "
+            >
+              {% assign skip_card_product_styles = false %}
+              {%- for product in collection.products -%}
+                {% assign lazy_load = false %}
+                {%- if forloop.index > 2 -%}
+                  {%- assign lazy_load = true -%}
+                {%- endif -%}
+                <li
+                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  {% if settings.animations_reveal_on_scroll %}
+                    data-cascade
+                    style="--animation-order: {{ forloop.index }};"
+                  {% endif %}
+                >
+                  {% render 'custom-card-product',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    image_shape: section.settings.image_shape,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    skip_styles: skip_card_product_styles,
+                    quick_add: section.settings.quick_add,
+                    section_id: section.id
+                  %}
+                </li>
+                {%- assign skip_card_product_styles = true -%}
+              {%- endfor -%}
+            </ul>
+
+            {%- if paginate.pages > 1 -%}
+              {% render 'pagination', paginate: paginate, anchor: '' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endpaginate -%}
+  {% if section.settings.image_shape == 'arch' %}
+    {{ 'mask-arch.svg' | inline_asset_content }}
+  {%- endif -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Select your tab links
+    const tabLinks = document.querySelectorAll('.tab-item');
+
+    tabLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault(); // STOP the page refresh
+
+        const url = this.href;
+
+        // 2. Visual: Update active class immediately
+        tabLinks.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+
+        // 3. Add opacity to grid to show "loading" state
+        const productGrid = document.querySelector('#ProductGridContainer');
+        if(productGrid) productGrid.style.opacity = '0.5';
+
+        // 4. Fetch the new page data
+        fetch(url)
+          .then(response => response.text())
+          .then(html => {
+            // 5. Parse the HTML text into a document
+            const parser = new DOMParser();
+            const newDoc = parser.parseFromString(html, 'text/html');
+
+            // 6. Find the new grid and replace the old one
+            const newGrid = newDoc.querySelector('#ProductGridContainer');
+            if (newGrid && productGrid) {
+              productGrid.innerHTML = newGrid.innerHTML;
+              productGrid.style.opacity = '1'; // Remove loading state
+            }
+
+            // 7. Update the Browser URL (so back button works)
+            window.history.pushState({path: url}, '', url);
+          })
+          .catch(err => {
+            console.error('Fetch error:', err);
+            window.location.href = url; // Fallback to normal load if JS fails
+          });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 16,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.main-collection-product-grid.settings.columns_desktop.label"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "t:sections.main-collection-product-grid.settings.columns_mobile.label",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.all.image_shape.options__1.label"
+        },
+        {
+          "value": "arch",
+          "label": "t:sections.all.image_shape.options__2.label"
+        },
+        {
+          "value": "blob",
+          "label": "t:sections.all.image_shape.options__3.label"
+        },
+        {
+          "value": "chevronleft",
+          "label": "t:sections.all.image_shape.options__4.label"
+        },
+        {
+          "value": "chevronright",
+          "label": "t:sections.all.image_shape.options__5.label"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.all.image_shape.options__6.label"
+        },
+        {
+          "value": "parallelogram",
+          "label": "t:sections.all.image_shape.options__7.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.all.image_shape.options__8.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.all.image_shape.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "select",
+      "id": "quick_add",
+      "default": "none",
+      "label": "t:sections.main-collection-product-grid.settings.quick_add.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_1"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_2"
+        },
+        {
+          "value": "bulk",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_3"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
+        }
+      ],
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,511 @@
+{% comment %}
+  Section: Team Slider
+  Design: Linear slider with strict clipping container.
+  Update: Arrows moved structurally beneath images for mobile flow.
+{% endcomment %}
+
+<style>
+  .team-section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    font-family: var(--font-body-family);
+    background-color: transparent;
+  }
+
+  .team-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .team-heading {
+    font-size: 56px;
+    font-weight: 600;
+    color: #e8202b;
+    margin-bottom: 60px;
+    text-align: center;
+    font-family: var(--font-heading-family);
+  }
+
+  /* --- CLIPPING CONTAINER --- */
+  .team-slider-clipper {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+
+  .team-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --- IMAGES --- */
+  .team-images-viewport {
+    width: 100%;
+    height: 520px;
+    position: relative;
+  }
+
+  .team-image-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 420px;
+    height: 420px;
+    margin-left: -210px;
+    transition: transform 1.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.3s ease, filter 1.3s ease;
+    background: transparent;
+    border-radius: 4px;
+    z-index: 0;
+    pointer-events: none;
+
+    transform: translateX(200%) scale(0.8);
+    opacity: 0;
+    filter: grayscale(100%);
+  }
+
+  .team-image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+  }
+
+  /* --- STATES --- */
+  .team-image-card.state-active {
+    transform: translateX(0);
+    opacity: 1;
+    filter: grayscale(0%);
+    z-index: 10;
+    pointer-events: auto;
+  }
+
+  .team-image-card.state-prev {
+    transform: translateX(-110%) scale(0.85);
+    opacity: 0.4;
+    z-index: 5;
+  }
+
+  .team-image-card.state-next {
+    transform: translateX(110%) scale(0.85);
+    opacity: 0.4;
+    z-index: 5;
+  }
+
+  .team-image-card.state-hidden-left {
+    transform: translateX(-250%) scale(0.5);
+    opacity: 0;
+    z-index: 0;
+  }
+
+  .team-image-card.state-hidden-right {
+    transform: translateX(250%) scale(0.5);
+    opacity: 0;
+    z-index: 0;
+  }
+
+  /* --- NAVIGATION CONTROLS --- */
+  .team-nav-controls {
+    position: absolute;
+    top: 210px;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 50;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .team-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    pointer-events: auto;
+    padding: 10px;
+    transition: transform 0.2s;
+  }
+
+  .team-nav-btn:hover {
+    transform: scale(1.1);
+  }
+
+  /* --- TEXT CONTENT --- */
+  .team-content-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 852px;
+    height: 550px;
+    overflow: visible;
+    margin-top: 40px;
+  }
+
+  .team-content-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 1.3s ease-out;
+    opacity: 0;
+    transform: translateY(30px);
+    pointer-events: none;
+  }
+
+  .team-content-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  .team-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: #e8202b;
+    text-transform: uppercase;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  .team-role {
+    font-size: 24px;
+    font-weight: 500;
+    color: #191919;
+    margin: 0 0 24px 0;
+  }
+
+  .team-bio {
+    font-size: 18px;
+    color: #4d4d4d;
+    line-height: 1.6;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* --- RESPONSIVE --- */
+  @media screen and (max-width: 1200px) {
+    .team-image-card { width: 350px; height: 350px; margin-left: -175px; }
+    .team-nav-controls { top: 175px; }
+    .team-images-viewport {
+      height: 420px;
+    }
+
+    .team-content-viewport {
+      height: 400px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .team-heading { font-size: 36px; margin-bottom: 30px; }
+
+    .team-images-viewport {
+      height: 330px;
+      margin-bottom: 0;
+    }
+
+    .team-section {
+      padding-top: 0;
+    }
+
+    .team-image-card {
+      width: 280px;
+      height: 280px;
+      margin-left: -140px;
+    }
+
+    /* --- MOBILE NAV: STRUCTURAL GAP --- */
+    .team-nav-controls {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: 100px;
+      margin: 2rem auto 0px auto;
+      padding: 0;
+      justify-content: space-between;
+    }
+
+    .team-content-viewport {
+      height: 650px;
+      padding: 0 20px;
+      margin-top: 10px;
+    }
+
+    .team-name { font-size: 24px; }
+    .team-role { font-size: 18px; }
+    .team-bio { font-size: 16px; }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .team-heading {
+      font-size: 36px;
+    }
+
+    .team-name {
+      font-size: 24px;
+    }
+
+    .team-role {
+      font-size: 16px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .team-heading {
+      font-size: 40px;
+    }
+    .team-name {
+      font-size: 30px;
+    }
+
+    .team-role {
+      font-size: 18px;
+    }
+
+    .team-bio {
+      font-size: 16px;
+    }
+  }
+
+</style>
+
+<div class="team-section">
+  <div class="team-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="team-heading font-tasman">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="team-slider-clipper">
+      <div class="team-slider-wrapper">
+        <div class="team-images-viewport">
+          {%- for block in section.blocks -%}
+            <div class="team-image-card" data-index="{{ forloop.index0 }}">
+              {%- if block.settings.image != blank -%}
+                <img
+                  height="100"
+                  width="100"
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  loading="lazy"
+                  alt="{{ block.settings.name }}"
+                >
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="team-nav-controls">
+          <button class="team-nav-btn team-nav-prev" aria-label="Previous Slide">
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.7074 9.99769L5.70703 14.998L0.706679 9.99769L5.70703 4.99734L10.7074 9.99769Z" fill="#E8202B"/>
+              <path d="M13.2045 17.4987C14.5836 16.1195 14.5836 13.879 13.2045 12.4999L10.7051 10.0005L5.70633 14.9993L8.2057 17.4987C9.58483 18.8778 11.8253 18.8778 13.2045 17.4987Z" fill="#228140"/>
+              <path d="M13.2057 2.49867C11.8266 1.11954 9.58608 1.11954 8.20695 2.49867L5.70757 4.99805L10.7063 9.9968L13.2057 7.49742C14.5848 6.11829 14.5848 3.8778 13.2057 2.49867Z" fill="#228140"/>
+            </svg>
+          </button>
+
+          <button class="team-nav-btn team-nav-next" aria-label="Next Slide">
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.99769 9.99574L9.99805 14.9961L14.9984 9.99574L9.99805 4.99539L4.99769 9.99574Z" fill="#E8202B"/>
+              <path d="M2.50062 17.4987C1.12149 16.1195 1.12149 13.879 2.50062 12.4999L5 10.0005L9.99875 14.9993L7.49938 17.4987C6.12024 18.8778 3.87976 18.8778 2.50062 17.4987Z" fill="#228140"/>
+              <path d="M2.49938 2.49867C3.87851 1.11954 6.119 1.11954 7.49813 2.49867L9.99751 4.99805L4.99875 9.9968L2.49938 7.49742C1.12024 6.11829 1.12024 3.8778 2.49938 2.49867Z" fill="#228140"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="team-content-viewport">
+          {%- for block in section.blocks -%}
+            <div class="team-content-slide container" data-index="{{ forloop.index0 }}">
+              <h3 class="team-name font-tasman">{{ block.settings.name }}</h3>
+              <p class="team-role">{{ block.settings.role }}</p>
+              <div class="team-bio">{{ block.settings.bio }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('.team-image-card');
+    const texts = document.querySelectorAll('.team-content-slide');
+    const prevBtn = document.querySelector('.team-nav-prev');
+    const nextBtn = document.querySelector('.team-nav-next');
+
+    let currentIndex = 0;
+    const totalSlides = images.length;
+    let autoPlayTimer;
+
+    function render() {
+      images.forEach((img, i) => {
+        const prevState = img.dataset.lastState || '';
+        let newState = '';
+
+        const diff = i - currentIndex;
+
+        if (diff === 0) {
+          newState = 'state-active';
+        } else if (diff === -1 || (currentIndex === 0 && i === totalSlides - 1)) {
+          newState = 'state-prev';
+        } else if (diff === 1 || (currentIndex === totalSlides - 1 && i === 0)) {
+          newState = 'state-next';
+        } else {
+          newState = direction === 1 ? 'state-hidden-left' : 'state-hidden-right';
+        }
+
+        const isWrapping =
+          (prevState.includes('hidden-left') && (newState === 'state-next' || newState === 'state-active')) ||
+          (prevState.includes('hidden-right') && (newState === 'state-prev' || newState === 'state-active')) ||
+          (prevState === 'state-prev' && newState === 'state-hidden-right') ||
+          (prevState === 'state-next' && newState === 'state-hidden-left');
+
+        if (isWrapping && prevState !== newState) {
+          img.style.transition = 'none';
+          img.className = 'team-image-card';
+
+          if (newState === 'state-next' || newState === 'state-hidden-right') {
+            img.classList.add('state-hidden-right');
+          } else {
+            img.classList.add('state-hidden-left');
+          }
+
+          void img.offsetWidth;
+          img.style.transition = '';
+        }
+
+        img.className = 'team-image-card';
+        img.classList.add(newState);
+        img.dataset.lastState = newState;
+
+        texts[i].classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    let direction = 1;
+
+    function nextSlide() {
+      direction = 1;
+      currentIndex = (currentIndex + 1) % totalSlides;
+      render();
+    }
+
+    function prevSlide() {
+      direction = -1;
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      render();
+    }
+
+    function startTimer() {
+      stopTimer();
+      autoPlayTimer = setInterval(nextSlide, 5000);
+    }
+
+    function stopTimer() {
+      clearInterval(autoPlayTimer);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      stopTimer();
+      nextSlide();
+      startTimer();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      stopTimer();
+      prevSlide();
+      startTimer();
+    });
+
+    images.forEach((img, i) => {
+      img.addEventListener('click', () => {
+        if (i === currentIndex + 1) {
+          stopTimer();
+          nextSlide();
+          startTimer();
+        }
+        if (i === currentIndex - 1) {
+          stopTimer();
+          prevSlide();
+          startTimer();
+        }
+      });
+    });
+
+    render();
+    startTimer();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Team Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Meet Our Team"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Name Here"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role/Designation",
+          "default": "Director"
+        },
+        {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Bio Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team Slider",
+      "blocks": [{ "type": "team_member" }, { "type": "team_member" }, { "type": "team_member" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,140 @@
+{% schema %}
+{
+  "name": "Responsive Spacer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Desktop Settings (> 1024px)"
+    },
+    {
+      "type": "range",
+      "id": "desktop_mt",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "desktop_mb",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Tablet Settings (<= 1024px)"
+    },
+    {
+      "type": "range",
+      "id": "tablet_mt",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "tablet_mb",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings (<= 768px)"
+    },
+    {
+      "type": "range",
+      "id": "mobile_mt",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_mb",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line",
+      "label": "Show Divider Line",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Line Color",
+      "default": "#E5E5E5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Spacer"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="resp-spacer-{{ section.id }}">
+  {% if section.settings.show_line %}
+    <div class="resp-spacer-line"></div>
+  {% endif %}
+</div>
+
+<style>
+  /* Base Styles (Desktop) */
+  .resp-spacer-{{ section.id }} {
+    width: 100%;
+    display: block;
+    clear: both;
+    margin-top: {{ section.settings.desktop_mt }}px;
+    margin-bottom: {{ section.settings.desktop_mb }}px;
+    /* Prevents margin collapse issues */
+    overflow: hidden; 
+    height: auto;
+  }
+
+  /* Optional Divider Line */
+  .resp-spacer-{{ section.id }} .resp-spacer-line {
+    width: 100%;
+    height: 1px;
+    background-color: {{ section.settings.line_color }};
+    display: block;
+  }
+
+  /* Tablet Styles */
+  @media (max-width: 1024px) {
+    .resp-spacer-{{ section.id }} {
+      margin-top: {{ section.settings.tablet_mt }}px;
+      margin-bottom: {{ section.settings.tablet_mb }}px;
+    }
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .resp-spacer-{{ section.id }} {
+      margin-top: {{ section.settings.mobile_mt }}px;
+      margin-bottom: {{ section.settings.mobile_mb }}px;
+    }
+  }
+</style>

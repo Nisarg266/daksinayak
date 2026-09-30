@@ -1,0 +1,542 @@
+<style>
+  .story-section-wrapper {
+    width: 100%;
+    /* margin: 120px 0 80px 0; */
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .story-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
+  }
+
+  .story-image-col {
+    flex: 1;
+    width: 100%;
+    max-width: 696px;
+    position: relative;
+    aspect-ratio: 696 / 419;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .story-image-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .story-image-slide.active {
+    opacity: 1;
+  }
+
+  .story-image-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .story-text-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 696px;
+    position: relative;
+    overflow: hidden;
+    min-height: 650px;
+  }
+
+  .story-text-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+    opacity: 0;
+    transform: translateY(150px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .story-text-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .story-text-slide.exit-up {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+
+  .story-heading {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin: 0;
+    line-height: 1.2;
+    font-family: var(--font-heading-family);
+  }
+
+  .story-description {
+    font-size: 18px;
+    color: var(--color-custom-gray);
+    margin: 0;
+    line-height: 1.6;
+    font-family: var(--font-body-family);
+  }
+
+  .story-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+
+  .story-indicator.active {
+    background: var(--color-heading, #333);
+    transform: scale(1.3);
+  }
+
+  @media screen and (max-width: 1023px) {
+    .story-heading {
+      font-size: 32px;
+    }
+
+    .story-flex-container {
+      gap: 32px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .story-heading {
+      font-size: 32px;
+    }
+
+    .story-description {
+      font-size: 14px;
+    }
+
+    .story-flex-container {
+      gap: 29px;
+      padding: 0 100px;
+    }
+    
+    .story-text-col {
+      min-height: 450px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .story-heading {
+      font-size: 32px;
+    }
+
+    .story-description {
+      font-size: 16px;
+    }
+
+    .story-flex-container {
+      gap: 29px;
+      padding: 0 100px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .story-section-wrapper {
+      margin-top: 2rem;
+    }
+
+    .story-flex-container {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .story-image-col,
+    .story-text-col {
+      max-width: 100%;
+      aspect-ratio: auto;
+    }
+
+    .story-image-col {
+      aspect-ratio: 16/9;
+    }
+
+    .story-image-col img {
+      height: auto;
+    }
+
+    .story-text-col {
+      display: grid;
+      width: 100%;
+      min-height: auto;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .story-text-slide {
+      grid-area: 1 / 1;
+      position: relative;
+      height: auto;
+      top: auto;
+      left: auto;
+    }
+
+    .story-heading {
+      font-size: 28px;
+    }
+
+    .story-description {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div class="story-section-wrapper" id="story-scroll-section">
+  <div class="container">
+    <div class="story-flex-container">
+      <div class="story-image-col">
+        <div class="story-image-slide active" data-slide="0">
+          <img
+            src="{{ 'our_story1.png' | asset_url }}"
+            alt="Who We Are - Dakshinayan"
+            loading="lazy"
+            width="696"
+            height="419"
+          >
+        </div>
+        <div class="story-image-slide" data-slide="1">
+          <img
+            src="{{ 'our_story2.png' | asset_url }}"
+            alt="Our Cuisine - Dakshinayan"
+            loading="lazy"
+            width="696"
+            height="419"
+          >
+        </div>
+        <div class="story-image-slide" data-slide="2">
+          <img
+            src="{{ 'our_story3.png' | asset_url }}"
+            alt="Our Space - Dakshinayan"
+            loading="lazy"
+            width="696"
+            height="419"
+          >
+        </div>
+        <div class="story-image-slide" data-slide="3">
+          <img
+            src="{{ 'our_story4.png' | asset_url }}"
+            alt="Our Legacy - Dakshinayan"
+            loading="lazy"
+            width="696"
+            height="419"
+          >
+        </div>
+      </div>
+
+      <div class="story-text-col" style="position:relative;">
+        <div class="story-text-slide active" data-slide="0">
+          <h2 class="story-heading font-tasman-bold">Who We Are</h2>
+          <p class="story-description">
+            Founded in 2005, on a deep love for authentic South Indian flavours, Dakshinayan is a culinary brand
+            dedicated to preserving and celebrating the diverse traditions of Southern Indian cuisine. Since its
+            inception, Dakshinayan has been committed to bringing honest, homestyle recipes to diners in an atmosphere
+            that feels both comforting and culturally rooted.
+          </p>
+        </div>
+        <div class="story-text-slide" data-slide="1">
+          <h2 class="story-heading font-tasman-bold">Our Cuisine</h2>
+          <p class="story-description">
+            Every dish at Dakshinayan is a tribute to the rich culinary heritage of South India. From the perfectly
+            crisp dosas and fluffy idlis to the aromatic sambars and traditional thalis, our menu is a carefully curated
+            journey through the flavours of Karnataka, Tamil Nadu, Kerala, and Andhra Pradesh — made with recipes passed
+            down through generations.
+          </p>
+        </div>
+        <div class="story-text-slide" data-slide="2">
+          <h2 class="story-heading font-tasman-bold">Our Space</h2>
+          <p class="story-description">
+            Step into Dakshinayan and experience an ambiance that transports you to the heart of South India. Our
+            restaurants are designed to reflect the warmth and character of traditional Southern homes, with handcrafted
+            décor, earthy tones, and cultural motifs that create an immersive dining experience — where every meal feels
+            like a homecoming.
+          </p>
+        </div>
+        <div class="story-text-slide" data-slide="3">
+          <h2 class="story-heading font-tasman-bold">Our Legacy</h2>
+          <p class="story-description">
+            With nearly two decades of serving authentic South Indian cuisine, Dakshinayan has grown into a beloved
+            culinary destination. Our commitment to quality ingredients, traditional cooking methods, and heartfelt
+            hospitality has earned us a loyal community of food lovers who return time and again for the taste of home.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.getElementById('story-scroll-section');
+    const images = document.querySelectorAll('.story-image-slide');
+    const texts = document.querySelectorAll('.story-text-slide');
+    const dots = document.querySelectorAll('.story-indicator');
+    const totalSlides = images.length;
+
+    let currentSlide = 0;
+    let isLocked = false;
+    let isTransitioning = false;
+    let isAnimating = false;
+    let wheelAccumulator = 0;
+    const WHEEL_THRESHOLD = 80;
+    const ANIMATION_DURATION = 600;
+    const SCROLL_EASE_DURATION = 500;
+    const UNLOCK_COOLDOWN = 700;
+    let touchStartY = 0;
+    let touchDeltaY = 0;
+    const TOUCH_THRESHOLD = 40;
+    let savedScrollY = 0;
+    let cooldownTimer = null;
+    let inCooldown = false;
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function smoothScrollTo(targetY, duration, callback) {
+      const startY = window.scrollY;
+      const diff = targetY - startY;
+      if (Math.abs(diff) < 1) { if (callback) callback(); return; }
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeInOutCubic(progress);
+        window.scrollTo(0, startY + diff * easedProgress);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          if (callback) callback();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function goToSlide(index) {
+      if (index < 0 || index >= totalSlides || index === currentSlide || isAnimating) return;
+      isAnimating = true;
+
+      const goingForward = index > currentSlide;
+
+      images[currentSlide].classList.remove('active');
+      texts[currentSlide].classList.remove('active');
+      if (goingForward) {
+        texts[currentSlide].classList.add('exit-up');
+      }
+      // FIXED: Optional chaining to prevent fatal TypeError when dots aren't in HTML
+      dots[currentSlide]?.classList.remove('active'); 
+
+      images[index].classList.add('active');
+      texts[index].classList.remove('exit-up');
+      texts[index].style.transform = goingForward ? 'translateY(150px)' : 'translateY(-150px)';
+      texts[index].style.opacity = '0';
+
+      void texts[index].offsetWidth;
+
+      texts[index].classList.add('active');
+      texts[index].style.transform = '';
+      texts[index].style.opacity = '';
+      
+      // FIXED: Optional chaining here too
+      dots[index]?.classList.add('active');
+
+      currentSlide = index;
+
+      setTimeout(() => {
+        isAnimating = false;
+        texts.forEach((t, i) => {
+          if (i !== currentSlide) t.classList.remove('exit-up');
+        });
+      }, ANIMATION_DURATION);
+    }
+
+    function applyLock(scrollY) {
+      savedScrollY = scrollY;
+      isLocked = true;
+      isTransitioning = false;
+      document.documentElement.style.overflowY = 'scroll';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.position = 'fixed';
+      document.documentElement.style.top = -savedScrollY + 'px';
+      document.documentElement.style.width = '100%';
+    }
+
+    function lockScroll() {
+      if (isLocked || isTransitioning) return;
+      isTransitioning = true;
+      const rect = section.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const centeredScrollY = window.scrollY + rect.top + rect.height / 2 - viewportH / 2;
+
+      if (window.innerWidth <= 768) {
+        window.scrollTo(0, centeredScrollY);
+        applyLock(centeredScrollY);
+      } else {
+        smoothScrollTo(centeredScrollY, SCROLL_EASE_DURATION, function () {
+          applyLock(centeredScrollY);
+        });
+      }
+    }
+
+    function unlockScroll() {
+      if (!isLocked) return;
+      isLocked = false;
+      isTransitioning = false;
+      document.documentElement.style.overflowY = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.position = '';
+      document.documentElement.style.top = '';
+      document.documentElement.style.width = '';
+      window.scrollTo(0, savedScrollY);
+
+      inCooldown = true;
+      if (cooldownTimer) clearTimeout(cooldownTimer);
+      cooldownTimer = setTimeout(() => { inCooldown = false; }, UNLOCK_COOLDOWN);
+    }
+
+    function isSectionInCenter() {
+      const rect = section.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const viewportCenter = viewportH / 2;
+      const sectionCenterY = rect.top + rect.height / 2;
+      const offset = Math.abs(sectionCenterY - viewportCenter);
+      const tolerance = window.innerWidth <= 768 ? 0.4 : 0.15;
+      return offset < viewportH * tolerance;
+    }
+
+    function handleWheel(e) {
+      if (isTransitioning) { e.preventDefault(); return; }
+      if (inCooldown) return;
+      if (!isSectionInCenter() && !isLocked) return;
+
+      if (!isLocked) {
+        if (e.deltaY > 0 && currentSlide < totalSlides - 1) {
+          e.preventDefault();
+          lockScroll();
+          return;
+        } else if (e.deltaY < 0 && currentSlide > 0) {
+          e.preventDefault();
+          lockScroll();
+          return;
+        } else {
+          return;
+        }
+      }
+
+      e.preventDefault();
+
+      if (isAnimating) return;
+
+      wheelAccumulator += e.deltaY;
+
+      if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
+        const direction = wheelAccumulator > 0 ? 1 : -1;
+        wheelAccumulator = 0;
+
+        const nextSlide = currentSlide + direction;
+
+        if (nextSlide < 0) {
+          unlockScroll();
+          return;
+        }
+        if (nextSlide >= totalSlides) {
+          unlockScroll();
+          return;
+        }
+
+        goToSlide(nextSlide);
+      }
+    }
+
+    function handleTouchStart(e) {
+      touchStartY = e.touches[0].clientY;
+      touchDeltaY = 0;
+    }
+
+    function handleTouchMove(e) {
+      touchDeltaY = touchStartY - e.touches[0].clientY;
+      // You are preventing default native scroll here
+      if (Math.abs(touchDeltaY) > 10) {
+        e.preventDefault();
+      }
+    }
+
+    function handleTouchEnd(e) {
+      if (isAnimating) return;
+
+      if (Math.abs(touchDeltaY) >= TOUCH_THRESHOLD) {
+        const direction = touchDeltaY > 0 ? 1 : -1;
+        const nextSlide = currentSlide + direction;
+
+        // FIXED: Handles edge cases so mobile users don't get trapped if they swipe past ends
+        if (nextSlide >= 0 && nextSlide < totalSlides) {
+          goToSlide(nextSlide);
+        } else {
+          unlockScroll();
+        }
+      }
+
+      touchDeltaY = 0;
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    if (window.innerWidth <= 768) {
+      section.style.touchAction = 'pan-x';
+      section.addEventListener('touchstart', handleTouchStart, { passive: true });
+      section.addEventListener('touchmove', handleTouchMove, { passive: false });
+      section.addEventListener('touchend', handleTouchEnd, { passive: true });
+    } else {
+      window.addEventListener('touchstart', handleTouchStart, { passive: true });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        goToSlide(i);
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Story Static",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom Story Static"
+    }
+  ]
+}
+{% endschema %}

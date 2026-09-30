@@ -1,0 +1,754 @@
+{% schema %}
+{
+  "name": "Contact Us Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_left",
+      "label": "Left Heading",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Have questions about our products or want to learn more about Dakshinayan? We'd love to hear from you."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "info@dakshinayan.in"
+    },
+    {
+      "type": "text",
+      "id": "presence_heading",
+      "label": "Presence Heading",
+      "default": "Our Presence"
+    },
+    {
+      "type": "text",
+      "id": "locations",
+      "label": "Locations (Separated by |)",
+      "default": "Ahmedabad | Mumbai"
+    },
+    {
+      "type": "text",
+      "id": "social_heading",
+      "label": "Social Heading",
+      "default": "Connect With Us"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Heading",
+      "default": "Send Us A Message"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us Form"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="cu-section">
+  <div class="cu-container">
+    
+    <div class="cu-left">
+      <div class="cu-block">
+        <h2 class="cu-heading font-tasman">{{ section.settings.heading_left }}</h2>
+        <p class="cu-desc">{{ section.settings.subtext }}</p>
+        
+        <div class="cu-contact-links">
+          <a href="mailto:{{ section.settings.email }}" class="cu-link">
+            <span class="cu-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191919" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 6V19H3V6M22 6H3M22 6L12.5 12.5L3 6"/>
+              </svg>
+            </span>
+            {{ section.settings.email }}
+          </a>
+        </div>
+      </div>
+
+      <div class="cu-block">
+        <h2 class="cu-heading font-tasman">{{ section.settings.presence_heading }}</h2>
+        <div class="cu-locations">
+          {{ section.settings.locations | replace: '|', '<span style="margin: 0 18px;">|</span>' }}
+        </div>
+      </div>
+
+      <div class="cu-block">
+        <h2 class="cu-heading font-tasman">{{ section.settings.social_heading }}</h2>
+        <div class="cu-socials">
+          <a target="_blank" href="https://www.instagram.com/_dakshinayan_" class="cu-social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a target="_blank" href="https://www.facebook.com/dakshinayan/" class="cu-social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a target="_blank" href="https://www.linkedin.com/company/dakshinayan-foods-pvt-ltd" class="cu-social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cu-divider">
+      <svg width="71" height="602" viewBox="0 0 71 602" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <line x1="35.2148" y1="560.715" x2="35.2149" y2="40.7148" stroke="#E8202B"/>
+        <path d="M24.5624 568.717C25.7039 567.735 26.7545 566.62 27.9089 565.643C26.4 564.475 25.0121 562.811 23.4902 561.7C22.3142 560.844 21.1727 560.61 19.7243 560.757C17.2858 561.004 14.9857 564.268 13.0703 565.651L17.4328 569.638C20.2259 571.571 22.2623 570.688 24.5581 568.713L24.5624 568.717Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M54.2382 568.717C55.3797 567.735 56.4303 566.62 57.5847 565.643C56.0757 564.475 54.6879 562.811 53.166 561.7C51.9899 560.844 50.8485 560.61 49.4001 560.757C46.9616 561.004 44.6614 564.268 42.7461 565.651L47.1086 569.638C49.9017 571.571 51.9381 570.688 54.2339 568.713L54.2382 568.717Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M29.2654 567.029C31.0641 568.767 32.8886 570.527 34.618 572.339C34.7694 572.494 35.2104 573.255 35.4352 573.108L42.7421 565.628C41.6136 564.72 40.5371 563.752 39.4432 562.801C38.3147 561.824 37.7527 560.937 36.0708 560.751C32.1882 560.328 30.7355 563.605 27.9511 565.568C27.843 565.706 27.9381 565.762 28.0116 565.866C28.2753 566.247 28.9195 566.696 29.2654 567.029Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M18.4557 585.553C19.5236 585.708 20.0035 585.6 20.9201 585.133C23.0257 584.061 25.0319 582.068 26.9645 580.697C25.5291 579.547 24.1023 578.341 22.5761 577.312C20.5959 575.98 19.2815 574.968 16.9165 576.417C13.1636 578.708 14.2099 584.939 18.46 585.557L18.4557 585.553Z" fill="#DB212C" stroke="#DA222C" stroke-width="1.58" stroke-miterlimit="10"/>
+        <path d="M4.56115 570.605C5.62908 570.761 6.109 570.653 7.0256 570.186C9.13119 569.114 11.1373 567.12 13.07 565.75C11.6346 564.6 10.2078 563.393 8.68154 562.364C6.70133 561.033 5.38696 560.021 3.02195 561.469C-0.730939 563.761 0.315373 569.991 4.56547 570.61L4.56115 570.605Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M34.5658 589.323C33.6758 590.215 30.6443 594.182 30.4022 595.466C30.0996 597.057 31.1978 599.046 32.5035 599.907C36.291 602.388 41.756 598.726 39.9358 594.714C38.9586 592.557 36.8444 590.503 35.4997 588.549L35.2619 588.436C35.2619 588.436 34.8036 589.037 34.5615 589.331L34.5658 589.323Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M38.547 584.766C39.9306 583.382 41.366 582.055 42.7453 580.663L35.2827 573.308L27.9023 580.779L35.2827 588.017C35.5421 588.065 38.1363 585.181 38.547 584.77V584.766Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M43.2472 580.516C43.1996 580.689 43.2948 580.71 43.3639 580.81C43.7531 581.385 47.3071 583.949 48.0896 584.45C49.6894 585.471 50.8005 586.072 52.7202 585.211C56.6071 583.464 56.4817 577.602 52.4824 576.054C50.714 575.366 50.0223 575.751 48.5133 576.65C46.6412 577.77 45.0588 579.318 43.2515 580.52L43.2472 580.516Z" fill="#DB212C" stroke="#DA222C" stroke-width="1.58" stroke-miterlimit="10"/>
+        <path d="M57.5948 565.568C57.5473 565.741 57.6424 565.763 57.7116 565.862C58.1007 566.438 61.6547 569.001 62.4373 569.503C64.037 570.523 65.1482 571.124 67.0679 570.264C70.9548 568.517 70.8294 562.654 66.8301 561.107C65.0617 560.419 64.3699 560.804 62.861 561.703C60.9889 562.823 59.4064 564.371 57.5992 565.573L57.5948 565.568Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M50.1644 564.775C51.3794 564.775 51.3837 566.664 50.1644 566.664C48.9452 566.664 48.9452 564.775 50.1644 564.775Z" fill="#DB222C"/>
+        <path d="M20.4887 579.716C21.7036 579.716 21.7079 581.605 20.4887 581.605C19.2694 581.605 19.2694 579.716 20.4887 579.716Z" fill="#EEE9D7"/>
+        <path d="M20.4887 564.775C21.7036 564.775 21.7079 566.664 20.4887 566.664C19.2694 566.664 19.2694 564.775 20.4887 564.775Z" fill="#DB222C"/>
+        <path d="M65.3285 564.775C66.5434 564.775 66.5478 566.664 65.3285 566.664C64.1092 566.664 64.1092 564.775 65.3285 564.775Z" fill="#EEE9D7"/>
+        <path d="M35.3285 564.775C36.5434 564.775 36.5478 566.664 35.3285 566.664C34.1092 566.664 34.1092 564.775 35.3285 564.775Z" fill="#EEE9D7"/>
+        <path d="M35.3285 594.546C36.5434 594.546 36.5478 596.436 35.3285 596.436C34.1092 596.436 34.1092 594.546 35.3285 594.546Z" fill="#EEE9D7"/>
+        <path d="M5.31679 564.775C6.53172 564.775 6.53604 566.664 5.31679 566.664C4.09753 566.664 4.09753 564.775 5.31679 564.775Z" fill="#EEE9D7"/>
+        <path d="M35.3285 579.716C36.5434 579.716 36.5478 581.605 35.3285 581.605C34.1092 581.605 34.1092 579.716 35.3285 579.716Z" fill="#DB222C"/>
+        <path d="M50.7504 579.716C51.9653 579.716 51.9696 581.605 50.7504 581.605C49.5311 581.605 49.5311 579.716 50.7504 579.716Z" fill="#EEE9D7"/>
+        <path d="M24.5624 32.7128C25.7039 33.6942 26.7545 34.8097 27.9089 35.7868C26.4 36.9542 25.0121 38.6188 23.4902 39.73C22.3142 40.586 21.1727 40.8195 19.7243 40.6725C17.2858 40.4261 14.9857 37.1617 13.0703 35.7782L17.4328 31.7918C20.2259 29.8592 22.2623 30.7412 24.5581 32.7171L24.5624 32.7128Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M54.2382 32.7128C55.3797 33.6942 56.4303 34.8097 57.5847 35.7868C56.0757 36.9542 54.6879 38.6188 53.166 39.73C51.9899 40.586 50.8485 40.8195 49.4001 40.6725C46.9616 40.4261 44.6614 37.1617 42.7461 35.7782L47.1086 31.7918C49.9017 29.8592 51.9381 30.7412 54.2339 32.7171L54.2382 32.7128Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M29.2654 34.4005C31.0641 32.6624 32.8886 30.9027 34.618 29.0911C34.7694 28.9354 35.2104 28.1745 35.4352 28.3215L42.7421 35.8013C41.6136 36.7093 40.5371 37.6778 39.4432 38.6289C38.3147 39.6061 37.7527 40.4924 36.0708 40.6783C32.1882 41.102 30.7355 37.8248 27.9511 35.8618C27.843 35.7235 27.9381 35.6673 28.0116 35.5635C28.2753 35.183 28.9195 34.7334 29.2654 34.4005Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M18.4557 15.8772C19.5236 15.7215 20.0035 15.8296 20.9201 16.2966C23.0257 17.3688 25.0319 19.362 26.9645 20.7326C25.5291 21.8827 24.1023 23.0889 22.5761 24.118C20.5959 25.4496 19.2815 26.4613 16.9165 25.0129C13.1636 22.7214 14.2099 16.4911 18.46 15.8729L18.4557 15.8772Z" fill="#DB212C" stroke="#DA222C" stroke-width="1.58" stroke-miterlimit="10"/>
+        <path d="M4.56115 30.8244C5.62908 30.6688 6.109 30.7769 7.0256 31.2438C9.13119 32.3161 11.1373 34.3093 13.07 35.6798C11.6346 36.8299 10.2078 38.0362 8.68154 39.0652C6.70133 40.3969 5.38696 41.4086 3.02195 39.9602C-0.730939 37.6687 0.315373 31.4384 4.56547 30.8201L4.56115 30.8244Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M34.5658 12.1071C33.6758 11.2148 30.6443 7.24738 30.4022 5.96327C30.0996 4.37219 31.1978 2.38333 32.5035 1.52294C36.291 -0.958809 41.756 2.70328 39.9358 6.71558C38.9586 8.87306 36.8444 10.9268 35.4997 12.881L35.2619 12.9934C35.2619 12.9934 34.8036 12.3925 34.5615 12.0985L34.5658 12.1071Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M38.547 16.664C39.9306 18.0476 41.366 19.3749 42.7453 20.7671L35.2827 28.1216L27.9023 20.6504L35.2827 13.4127C35.5421 13.3651 38.1363 16.249 38.547 16.6597V16.664Z" stroke="#DB222C" stroke-miterlimit="10"/>
+        <path d="M43.2472 20.9139C43.1996 20.741 43.2948 20.7194 43.3639 20.6199C43.7531 20.0449 47.3071 17.481 48.0896 16.9795C49.6894 15.9591 50.8005 15.3581 52.7202 16.2185C56.6071 17.9652 56.4817 23.828 52.4824 25.3759C50.714 26.0633 50.0223 25.6785 48.5133 24.7792C46.6412 23.6594 45.0588 22.1116 43.2515 20.9096L43.2472 20.9139Z" fill="#DB212C" stroke="#DA222C" stroke-width="1.58" stroke-miterlimit="10"/>
+        <path d="M57.5948 35.8612C57.5473 35.6883 57.6424 35.6666 57.7116 35.5672C58.1007 34.9922 61.6547 32.4283 62.4373 31.9267C64.037 30.9064 65.1482 30.3054 67.0679 31.1658C70.9548 32.9125 70.8294 38.7753 66.8301 40.3232C65.0617 41.0106 64.3699 40.6258 62.861 39.7265C60.9889 38.6067 59.4064 37.0588 57.5992 35.8569L57.5948 35.8612Z" fill="#1F743B" stroke="#1F753C" stroke-width="1.43" stroke-miterlimit="10"/>
+        <path d="M50.1644 36.655C51.3794 36.655 51.3837 34.7656 50.1644 34.7656C48.9452 34.7656 48.9452 36.655 50.1644 36.655Z" fill="#DB222C"/>
+        <path d="M20.4887 21.7136C21.7036 21.7136 21.7079 19.8242 20.4887 19.8242C19.2694 19.8242 19.2694 21.7136 20.4887 21.7136Z" fill="#EEE9D7"/>
+        <path d="M20.4887 36.655C21.7036 36.655 21.7079 34.7656 20.4887 34.7656C19.2694 34.7656 19.2694 36.655 20.4887 36.655Z" fill="#DB222C"/>
+        <path d="M65.3285 36.655C66.5434 36.655 66.5478 34.7656 65.3285 34.7656C64.1092 34.7656 64.1092 36.655 65.3285 36.655Z" fill="#EEE9D7"/>
+        <path d="M35.3285 36.655C36.5434 36.655 36.5478 34.7656 35.3285 34.7656C34.1092 34.7656 34.1092 36.655 35.3285 36.655Z" fill="#EEE9D7"/>
+        <path d="M35.3285 6.88355C36.5434 6.88355 36.5478 4.99414 35.3285 4.99414C34.1092 4.99414 34.1092 6.88355 35.3285 6.88355Z" fill="#EEE9D7"/>
+        <path d="M5.31679 36.655C6.53172 36.655 6.53604 34.7656 5.31679 34.7656C4.09753 34.7656 4.09753 36.655 5.31679 36.655Z" fill="#EEE9D7"/>
+        <path d="M35.3285 21.7136C36.5434 21.7136 36.5478 19.8242 35.3285 19.8242C34.1092 19.8242 34.1092 21.7136 35.3285 21.7136Z" fill="#DB222C"/>
+        <path d="M50.7504 21.7136C51.9653 21.7136 51.9696 19.8242 50.7504 19.8242C49.5311 19.8242 49.5311 21.7136 50.7504 21.7136Z" fill="#EEE9D7"/>
+      </svg>
+    </div>
+
+    <div class="cu-right">
+      <div class="cu-right-wrapper">
+        <h2 class="cu-heading font-tasman">{{ section.settings.form_heading }}</h2>
+        <div class="cu-form-box">
+          {% form 'contact' %}
+            
+            {% if form.posted_successfully? %}
+              <div class="cat-success">Thanks! We've received your message.</div>
+            {% elsif form.errors %}
+              <div class="cat-error">{{ form.errors | default_errors }}</div>
+            {% endif %}
+
+            <div class="cu-form-grid">
+              
+              <input type="hidden" name="contact[Source]" value="Contact Us Page">
+
+              <div class="cu-field">
+                <label for="ContactFormName">Name *</label>
+                <input type="text" id="ContactFormName" name="contact[name]" required>
+              </div>
+
+              <div class="cu-field">
+                <label for="ContactFormPhone">Phone Number *</label>
+                <input type="tel" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" required>
+              </div>
+
+              <div class="cu-field full">
+                <label for="ContactFormEmail">Email Address *</label>
+                <input type="email" id="ContactFormEmail" name="contact[email]" required>
+              </div>
+
+              <div class="cu-field full">
+                <label for="ContactFormMessage">Message *</label>
+                <textarea id="ContactFormMessage" name="contact[body]" required></textarea>
+              </div>
+
+              <button type="submit" class="cat-submit-btn">
+                <span>Submit</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.70684 17.5785C5.82572 15.6973 3.87406 13.8925 1.99883 11.9996L12.1451 2L22.1797 12.1583L12.1451 21.9992C11.7924 22.0639 8.2653 18.1428 7.70684 17.5843V17.5785Z" stroke="currentColor" stroke-miterlimit="10"/>
+                  <path d="M12.1551 10.4955C10.5033 10.4955 10.4974 13.0645 12.1551 13.0645C13.8129 13.0645 13.8129 10.4955 12.1551 10.4955Z" fill="currentColor"/>
+                </svg>
+              </button>
+
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* --- Layout --- */
+  .cu-section {
+    background-color: #EEE9D7;
+    padding: 80px 40px;
+    font-family: sans-serif;
+    color: var(--color-custom-black);
+  }
+
+  .cu-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* --- Left Side --- */
+  .cu-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding-right: 60px;
+    justify-content: center;
+  }
+
+  .cu-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cu-heading {
+    font-size: 40px;
+    color: #E8202B;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .cu-desc {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #4D4D4D;
+    max-width: 649px;
+    margin: 0;
+  }
+
+  /* Contact Links */
+  .cu-contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cu-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 24px;
+    color: var(--color-custom-black);
+    transition: color 0.3s ease;
+  }
+
+  .cu-link:hover {
+    color: #E8202B;
+  }
+
+  .cu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Locations */
+  .cu-locations {
+    font-size: 24px;
+    color: var(--color-custom-black);
+  }
+
+  /* Socials */
+  .cu-socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .cu-social-icon {
+    color: var(--color-custom-black);
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .cu-social-icon:hover {
+    color: #E8202B;
+    transform: translateY(-3px);
+  }
+
+  /* --- Divider --- */
+  .cu-divider {
+    width: 71px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cu-divider svg {
+    height: 100%;
+    width: auto;
+    max-height: 600px;
+  }
+
+  /* --- Right Side --- */
+  .cu-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 36px;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  /* Wrapper for Heading + Form Box */
+  .cu-right-wrapper {
+    width: 100%;
+    max-width: 649px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Gap between Heading and Form Box */
+  }
+
+  /* Form Box - Border Only Here */
+  .cu-form-box {
+    width: 100%;
+    border: 1px solid rgba(25, 25, 25, 0.08);
+    padding: 24px 18.5px;
+    box-sizing: border-box;
+  }
+
+  .cu-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .cu-field {
+    width: calc(50% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cu-field.full {
+    width: 100%;
+  }
+
+  .cu-field label {
+    font-size: 14px;
+    color: #4D4D4D;
+  }
+
+  .cu-field input,
+  .cu-field textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--color-custom-black);
+    padding: 10px 12px;
+    font-size: 16px;
+    color: var(--color-custom-black);
+    border-radius: 0;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .cu-field input { height: 42px; }
+  .cu-field textarea { height: 80px; resize: none; }
+
+  .cu-field input:focus, .cu-field textarea:focus {
+    border-width: 2px;
+  }
+
+  /* Submit Button Reuse */
+  .cat-submit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--color-custom-black);
+    color: var(--color-custom-black);
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+  }
+
+  .cat-submit-btn:hover {
+    background-color: #ffcb05;
+    border-color: #ffcb05;
+    color: var(--color-custom-black);
+  }
+
+  .cat-submit-btn svg {
+    transition: transform 0.3s ease;
+  }
+
+  .cat-submit-btn:hover svg {
+    transform: rotate(90deg);
+  }
+
+  .cat-success {
+    padding: 12px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    margin-bottom: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .cat-error {
+    padding: 12px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .cat-error ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 1023px) {
+    .cu-container {
+      flex-direction: column;
+      gap: 60px;
+    }
+    
+    .cu-divider {
+      display: none;
+    }
+    
+    .cu-left, .cu-right {
+      padding: 0;
+      width: 100%;
+    }
+    
+    .cu-right-wrapper {
+      max-width: 100%;
+    }
+
+    .cu-field {
+      width: 100%;
+    }
+    
+    .cu-form-box {
+      padding: 24px;
+    }
+    
+    .cu-heading {
+      font-size: 32px;
+    }
+    
+    .cu-link {
+      font-size: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .cu-section {
+      padding: 48px 24px;
+    }
+    .cu-container {
+      max-width: 864px;
+      flex-direction: row;
+    }
+    .cu-left {
+      gap: 22px;
+      padding-right: 36px;
+    }
+    .cu-block {
+      gap: 5px;
+    }
+    .cu-heading {
+      font-size: 24px;
+    }
+    .cu-desc {
+      font-size: 14px;
+      max-width: 389px;
+    }
+    .cu-contact-links {
+      gap: 2px;
+    }
+    .cu-link {
+      gap: 10px;
+      font-size: 20px;
+    }
+    .cu-link .cu-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+    .cu-locations {
+      font-size: 20px;
+    }
+    .cu-socials {
+      gap: 7px;
+    }
+    .cu-social-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .cu-divider svg {
+      max-height: 520px;
+    }
+    .cu-right {
+      padding-left: 22px;
+      gap: 18px;
+    }
+    .cu-right-wrapper {
+      max-width: 389px;
+      gap: 14px;
+    }
+    .cu-form-box {
+      padding: 14px 11px;
+    }
+    .cu-form-grid {
+      gap: 10px;
+    }
+    .cu-field {
+      gap: 4px;
+    }
+    .cu-field input,
+    .cu-field textarea {
+      padding: 6px 7px;
+      font-size: 14px;
+    }
+    .cu-field input {
+      height: 40px;
+    }
+    .cat-submit-btn {
+      gap: 7px;
+      padding: 7px 19px;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .cu-section {
+      padding: 64px 32px;
+    }
+    .cu-container {
+      max-width: 1152px;
+      flex-direction: row;
+    }
+    .cu-left {
+      gap: 29px;
+      padding-right: 48px;
+    }
+    .cu-block {
+      gap: 6px;
+    }
+    .cu-heading {
+      font-size: 32px;
+    }
+    .cu-desc {
+      font-size: 14px;
+      max-width: 519px;
+    }
+    .cu-contact-links {
+      gap: 3px;
+    }
+    .cu-link {
+      gap: 13px;
+      font-size: 19px;
+    }
+    .cu-link .cu-icon svg {
+      width: 19px;
+      height: 19px;
+    }
+    .cu-locations {
+      font-size: 19px;
+    }
+    .cu-socials {
+      gap: 10px;
+    }
+    .cu-social-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .cu-divider {
+      width: 57px;
+    }
+    .cu-divider svg {
+      max-height: 480px;
+    }
+    .cu-right {
+      padding-left: 29px;
+      gap: 24px;
+    }
+    .cu-right-wrapper {
+      max-width: 519px;
+      gap: 19px;
+    }
+    .cu-form-box {
+      padding: 19px 15px;
+    }
+    .cu-form-grid {
+      gap: 13px;
+    }
+    .cu-field {
+      gap: 5px;
+    }
+    .cu-field input,
+    .cu-field textarea {
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+    .cu-field input {
+      height: 40px;
+    }
+    .cu-field textarea {
+      height: 72px;
+    }
+    .cat-submit-btn {
+      gap: 10px;
+      padding: 10px 26px;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+  }
+
+  /* ===== MOBILE RESPONSIVE (max-width: 767px) ===== */
+  @media screen and (max-width: 767px) {
+    .cu-section {
+      padding: 32px 16px;
+    }
+
+    .cu-container {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cu-divider {
+      display: none;
+    }
+
+    .cu-left, .cu-right {
+      padding: 0;
+      width: 100%;
+    }
+
+    .cu-left {
+      gap: 18px;
+    }
+
+    .cu-block {
+      gap: 4px;
+    }
+
+    .cu-heading {
+      font-size: 22px;
+    }
+
+    .cu-desc {
+      font-size: 13px;
+      line-height: 1.45;
+      max-width: 100%;
+    }
+
+    .cu-contact-links {
+      gap: 2px;
+    }
+
+    .cu-link {
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .cu-link .cu-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cu-locations {
+      font-size: 14px;
+    }
+
+    .cu-socials {
+      gap: 8px;
+    }
+
+    .cu-social-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cu-right-wrapper {
+      max-width: 100%;
+      gap: 12px;
+    }
+
+    .cu-form-box {
+      padding: 14px 12px;
+    }
+
+    .cu-form-grid {
+      gap: 10px;
+    }
+
+    .cu-field {
+      width: 100%;
+      gap: 3px;
+    }
+
+    .cu-field label {
+      font-size: 12px;
+    }
+
+    .cu-field input,
+    .cu-field textarea {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .cu-field input {
+      height: 36px;
+    }
+
+    .cu-field textarea {
+      height: 70px;
+    }
+
+    .cat-submit-btn {
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .cat-submit-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cat-success,
+    .cat-error {
+      font-size: 14px;
+      padding: 10px;
+      margin-bottom: 14px;
+    }
+  }
+
+</style>

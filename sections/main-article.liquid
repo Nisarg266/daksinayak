@@ -1,0 +1,450 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /* --- Breadcrumbs Styling --- */
+  .custom-breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #19191999;
+    padding-top: 2rem; /* Add a little breathing room from the header if needed */
+    font-size: 18px;
+  }
+
+  .breadcrumb-link {
+    text-decoration: none;
+    color: #4d4d4d;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb-link:hover {
+    color: #E8202B;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .breadcrumb-current {
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+
+  /* --- Layout: 2 Columns (Main + Sidebar) --- */
+  .job-layout-container {
+    display: flex;
+    gap: 88px;
+    align-items: flex-start;
+    padding-bottom: 120px;
+  }
+  
+  .job-main-column {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .job-sidebar-column {
+    width: 342px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+  }
+
+  /* Responsive: Stack columns on mobile/tablet */
+  @media screen and (max-width: 990px) {
+    .job-layout-container {
+      flex-direction: column;
+      gap: 48px;
+    }
+    .job-sidebar-column {
+      width: 100%;
+      position: static;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .breadcrumb-current {
+      white-space: nowrap;
+    }
+  }
+
+  /* Typography & Styling */
+  .job-title-custom {
+    margin-bottom: 12px;
+    color: #E8202B;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-top: 0;
+  }
+
+  .job-meta-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    row-gap: 12px;
+    margin-bottom: 24px;
+    color: #4d4d4d;
+    font-size: 1.4rem;
+  }
+
+  .job-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .job-divider {
+    border: 0;
+    border-top: 1px solid #787878;
+    opacity: 0.6;
+    margin: 32px 0;
+  }
+
+  /* Sidebar Specifics */
+  .sidebar-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #191919;
+    text-transform: capitalize;
+    margin: 0 0 12px 0;
+  }
+  
+  .sidebar-job-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-decoration: none;
+  }
+
+  .sidebar-job-title {
+    font-size: 20px;
+    color: #040404;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .sidebar-job-title:hover {
+    text-decoration: underline;
+    color: #E8202B;
+  }
+
+  .sidebar-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sidebar-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #4d4d4d;
+  }
+</style>
+
+<article class="article-template">
+  <div class="container">
+    
+    <nav class="custom-breadcrumbs" role="navigation" aria-label="breadcrumbs">
+      <a href="{{ routes.root_url }}" class="breadcrumb-link">Home</a>
+      
+      <span class="breadcrumb-separator">
+        <svg width="15" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.99574 9.99769L9.99609 14.998L14.9964 9.99769L9.99609 4.99734L4.99574 9.99769Z" fill="#DF2629" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M2.50062 17.5006C1.12149 16.1215 1.12149 13.881 2.50062 12.5019L5 10.0025L9.99875 15.0012L7.49938 17.5006C6.12024 18.8798 3.87976 18.8798 2.50062 17.5006Z" fill="#228140" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M2.49938 2.50062C3.87851 1.12149 6.119 1.12149 7.49813 2.50062L9.99751 5L4.99875 9.99875L2.49938 7.49938C1.12024 6.12024 1.12024 3.87976 2.49938 2.50062Z" fill="#228140" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M4.9998 5.54666C5.70267 5.54666 5.70267 4.45508 4.9998 4.45508C4.29694 4.45508 4.29694 5.54666 4.9998 5.54666Z" fill="#EFE7D5"/><path d="M10.1404 10.5447C10.8433 10.5447 10.8433 9.45312 10.1404 9.45312C9.43757 9.45312 9.43757 10.5447 10.1404 10.5447Z" fill="#EFE7D5"/><path d="M4.9998 15.5447C5.70267 15.5447 5.70267 14.4531 4.9998 14.4531C4.29694 14.4531 4.29694 15.5447 4.9998 15.5447Z" fill="#EFE7D5"/></svg>
+      </span>
+
+      <a href="{{ blog.url }}" class="breadcrumb-link">{{ blog.title }}</a>
+
+      <span class="breadcrumb-separator">
+        <svg width="15" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.99574 9.99769L9.99609 14.998L14.9964 9.99769L9.99609 4.99734L4.99574 9.99769Z" fill="#DF2629" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M2.50062 17.5006C1.12149 16.1215 1.12149 13.881 2.50062 12.5019L5 10.0025L9.99875 15.0012L7.49938 17.5006C6.12024 18.8798 3.87976 18.8798 2.50062 17.5006Z" fill="#228140" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M2.49938 2.50062C3.87851 1.12149 6.119 1.12149 7.49813 2.50062L9.99751 5L4.99875 9.99875L2.49938 7.49938C1.12024 6.12024 1.12024 3.87976 2.49938 2.50062Z" fill="#228140" stroke="#EFE7D5" stroke-miterlimit="10"/><path d="M4.9998 5.54666C5.70267 5.54666 5.70267 4.45508 4.9998 4.45508C4.29694 4.45508 4.29694 5.54666 4.9998 5.54666Z" fill="#EFE7D5"/><path d="M10.1404 10.5447C10.8433 10.5447 10.8433 9.45312 10.1404 9.45312C9.43757 9.45312 9.43757 10.5447 10.1404 10.5447Z" fill="#EFE7D5"/><path d="M4.9998 15.5447C5.70267 15.5447 5.70267 14.4531 4.9998 14.4531C4.29694 14.4531 4.29694 15.5447 4.9998 15.5447Z" fill="#EFE7D5"/></svg>
+      </span>
+
+      <span class="breadcrumb-current">{{ article.title }}</span>
+    </nav>
+
+    <div class="job-layout-container">
+      
+      <div class="job-main-column">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              <div>
+                {% render block %}
+              </div>
+
+            {%- when 'featured_image' -%}
+              {%- if article.image -%}
+                <div class="article-template__hero-container" {{ block.shopify_attributes }} style="margin-bottom: 32px;">
+                  <div class="media" style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+                    <img
+                      srcset="{% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}{{ article.image | image_url }} {{ article.image.width }}w"
+                      src="{{ article.image | image_url: width: 1100 }}"
+                      loading="eager"
+                      width="{{ article.image.width }}"
+                      height="{{ article.image.height }}"
+                      alt="{{ article.image.alt | escape }}">
+                  </div>
+                </div>
+              {%- endif -%}
+
+            {%- when 'title' -%}
+              <header {{ block.shopify_attributes }}>
+                <h1 class="job-title-custom font-tasman">
+                  {{ article.title | escape }}
+                </h1>
+
+                <div class="job-meta-container">
+                  {%- if article.metafields.custom.location != blank -%}
+                    <div class="job-meta-item">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M8.0026 7.66732C7.56058 7.66732 7.13665 7.49172 6.82409 7.17916C6.51153 6.8666 6.33594 6.44268 6.33594 6.00065C6.33594 5.55862 6.51153 5.1347 6.82409 4.82214C7.13665 4.50958 7.56058 4.33398 8.0026 4.33398C8.44463 4.33398 8.86855 4.50958 9.18112 4.82214C9.49368 5.1347 9.66927 5.55862 9.66927 6.00065C9.66927 6.21952 9.62616 6.43625 9.5424 6.63846C9.45865 6.84067 9.33588 7.0244 9.18112 7.17916C9.02635 7.33393 8.84262 7.45669 8.64041 7.54045C8.4382 7.62421 8.22147 7.66732 8.0026 7.66732ZM8.0026 1.33398C6.76493 1.33398 5.57794 1.82565 4.70277 2.70082C3.8276 3.57599 3.33594 4.76297 3.33594 6.00065C3.33594 9.50065 8.0026 14.6673 8.0026 14.6673C8.0026 14.6673 12.6693 9.50065 12.6693 6.00065C12.6693 4.76297 12.1776 3.57599 11.3024 2.70082C10.4273 1.82565 9.24028 1.33398 8.0026 1.33398Z" stroke="#4D4D4D"/></svg>
+                      <span>{{ article.metafields.custom.location }}</span>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if article.metafields.custom.type != blank -%}
+                    <div class="job-meta-item">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><g clip-path="url(#clip0_37_17525)"><path d="M1.33594 8.00065C1.33594 4.31865 4.3206 1.33398 8.0026 1.33398C11.6846 1.33398 14.6693 4.31865 14.6693 8.00065C14.6693 11.6827 11.6846 14.6673 8.0026 14.6673C4.3206 14.6673 1.33594 11.6827 1.33594 8.00065Z" stroke="#4D4D4D" stroke-linecap="square"/><path d="M8 4.33398V8.00065L10 10.0007" stroke="#4D4D4D" stroke-linecap="square"/></g><defs><clipPath id="clip0_37_17525"><rect width="16" height="16" fill="white"></rect></clipPath></defs></svg>
+                      <span>{{ article.metafields.custom.type }}</span>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if article.metafields.custom.experience != blank -%}
+                    <div class="job-meta-item">
+                      <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><g clip-path="url(#clip0_37_17534)"><path d="M9.03516 9.43457L9.03613 9.43555C10.613 9.94281 11.751 11.4173 11.751 13.1592C11.751 13.3467 11.599 13.4988 11.4121 13.499H0.84082C0.654854 13.499 0.500977 13.3451 0.500977 13.1592C0.500977 11.4171 1.63969 9.94271 3.21387 9.43555L3.21484 9.43457C3.28769 9.41098 3.40153 9.42923 3.5 9.53418H3.50098L5.44238 11.5986C5.8121 11.9916 6.43796 11.9917 6.80762 11.5986L8.74902 9.53418C8.84749 9.42923 8.96231 9.41098 9.03516 9.43457ZM1.23828 6.49902H0.514648L0.875977 4.69043L1.23828 6.49902ZM3.12598 2.40234L2.72461 2.32227L1.41211 2.05957L0.813477 1.93945V1.9668L0.602539 1.89453C0.543674 1.87402 0.501138 1.81711 0.500977 1.74902C0.500977 1.69363 0.531421 1.64359 0.576172 1.61621L0.625 1.59668H0.626953L6.0957 0.50293C6.11567 0.499422 6.13627 0.499476 6.15625 0.50293L11.625 1.59668H11.627C11.6975 1.61054 11.751 1.67509 11.751 1.74902C11.7508 1.82279 11.6974 1.88655 11.627 1.90039L11.625 1.90137L9.52734 2.32227L9.12598 2.40234V4.37402C9.12577 6.0309 7.78291 7.37402 6.12598 7.37402C4.46916 7.37389 3.12619 6.03082 3.12598 4.37402V2.40234Z" stroke="#4D4D4D"/></g><defs><clipPath id="clip0_37_17534"><rect width="12.25" height="14" fill="white"></rect></clipPath></defs></svg>
+                      <span>{{ article.metafields.custom.experience }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+                
+                <hr class="job-divider">
+              </header>
+
+            {%- when 'content' -%}
+              <div class="article-template__content rte" {{ block.shopify_attributes }}>
+                {{ article.content }}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+      <aside class="job-sidebar-column">
+        <p class="sidebar-title">Explore More Jobs</p>
+        <svg width="100%" height="1" viewBox="0 0 342 1" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.6; margin-bottom: 24px; display: block;" preserveAspectRatio="none">
+          <line opacity="0.6" y1="0.5" x2="342" y2="0.5" stroke="#787878"></line>
+        </svg>
+
+        <div class="sidebar-jobs-list">
+          {%- assign count = 0 -%}
+          {%- for job in blogs['career'].articles -%}
+            {%- if job.id != article.id -%}
+              <a href="{{ job.url }}" class="sidebar-job-item">
+                <p class="sidebar-job-title">{{ job.title }}</p>
+                
+                <div class="sidebar-meta-row">
+                  {%- if job.metafields.custom.location != blank -%}
+                    <div class="sidebar-meta-item">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M8.0026 7.66732C7.56058 7.66732 7.13665 7.49172 6.82409 7.17916C6.51153 6.8666 6.33594 6.44268 6.33594 6.00065C6.33594 5.55862 6.51153 5.1347 6.82409 4.82214C7.13665 4.50958 7.56058 4.33398 8.0026 4.33398C8.44463 4.33398 8.86855 4.50958 9.18112 4.82214C9.49368 5.1347 9.66927 5.55862 9.66927 6.00065C9.66927 6.21952 9.62616 6.43625 9.5424 6.63846C9.45865 6.84067 9.33588 7.0244 9.18112 7.17916C9.02635 7.33393 8.84262 7.45669 8.64041 7.54045C8.4382 7.62421 8.22147 7.66732 8.0026 7.66732ZM8.0026 1.33398C6.76493 1.33398 5.57794 1.82565 4.70277 2.70082C3.8276 3.57599 3.33594 4.76297 3.33594 6.00065C3.33594 9.50065 8.0026 14.6673 8.0026 14.6673C8.0026 14.6673 12.6693 9.50065 12.6693 6.00065C12.6693 4.76297 12.1776 3.57599 11.3024 2.70082C10.4273 1.82565 9.24028 1.33398 8.0026 1.33398Z" stroke="#4D4D4D"/></svg>
+                      <span>{{ job.metafields.custom.location }}</span>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if job.metafields.custom.experience != blank -%}
+                    <div class="sidebar-meta-item">
+                      <svg width="12" height="12" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M9.03516 9.43457L9.03613 9.43555C10.613 9.94281 11.751 11.4173 11.751 13.1592C11.751 13.3467 11.599 13.4988 11.4121 13.499H0.84082C0.654854 13.499 0.500977 13.3451 0.500977 13.1592C0.500977 11.4171 1.63969 9.94271 3.21387 9.43555L3.21484 9.43457C3.28769 9.41098 3.40153 9.42923 3.5 9.53418H3.50098L5.44238 11.5986C5.8121 11.9916 6.43796 11.9917 6.80762 11.5986L8.74902 9.53418C8.84749 9.42923 8.96231 9.41098 9.03516 9.43457ZM1.23828 6.49902H0.514648L0.875977 4.69043L1.23828 6.49902ZM3.12598 2.40234L2.72461 2.32227L1.41211 2.05957L0.813477 1.93945V1.9668L0.602539 1.89453C0.543674 1.87402 0.501138 1.81711 0.500977 1.74902C0.500977 1.69363 0.531421 1.64359 0.576172 1.61621L0.625 1.59668H0.626953L6.0957 0.50293C6.11567 0.499422 6.13627 0.499476 6.15625 0.50293L11.625 1.59668H11.627C11.6975 1.61054 11.751 1.67509 11.751 1.74902C11.7508 1.82279 11.6974 1.88655 11.627 1.90039L11.625 1.90137L9.52734 2.32227L9.12598 2.40234V4.37402C9.12577 6.0309 7.78291 7.37402 6.12598 7.37402C4.46916 7.37389 3.12619 6.03082 3.12598 4.37402V2.40234Z" stroke="#4D4D4D"/></svg>
+                      <span>{{ job.metafields.custom.experience }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </a>
+              {%- assign count = count | plus: 1 -%}
+              {%- if count == 3 -%}{%- break -%}{%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  {%- if blog.comments_enabled? -%}
+    <div class="article-template__comment-wrapper background-secondary">
+      <div id="comments" class="container">
+        {%- if article.comments_count > 0 -%}
+          {%- assign anchorId = '#Comments-' | append: article.id -%}
+          <h2 id="Comments-{{ article.id }}" tabindex="-1">
+            {{ 'blogs.article.comments' | t: count: article.comments_count }}
+          </h2>
+          {% paginate article.comments by 5 %}
+            <div class="article-template__comments">
+              {%- if comment.status == 'pending' and comment.content -%}
+                <article id="{{ comment.id }}" class="article-template__comments-comment">
+                  {{ comment.content }}
+                  <footer class="right">
+                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span>
+                  </footer>
+                </article>
+              {%- endif -%}
+              {%- for comment in article.comments -%}
+                <article id="{{ comment.id }}" class="article-template__comments-comment">
+                  {{ comment.content }}
+                  <footer class="right">
+                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span><span class="caption-with-letter-spacing">
+                      {{- comment.created_at | time_tag: format: 'date' -}}
+                    </span>
+                  </footer>
+                </article>
+              {%- endfor -%}
+              {% render 'pagination', paginate: paginate, anchor: anchorId %}
+            </div>
+          {% endpaginate %}
+        {%- endif -%}
+        {% form 'new_comment', article %}
+          {%- liquid
+            assign post_message = 'blogs.article.success'
+            if blog.moderated? and comment.status == 'unapproved'
+              assign post_message = 'blogs.article.success_moderated'
+            endif
+          -%}
+          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
+          {%- if form.errors -%}
+            <div class="form__message" role="alert">
+              <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>
+                <span class="svg-wrapper">
+                  {{- 'icon-error.svg' | inline_asset_content -}}
+                </span>
+                {{ 'templates.contact.form.error_heading' | t }}
+              </h3>
+            </div>
+            <ul class="form-status-list caption-large">
+              {%- for field in form.errors -%}
+                <li>
+                  <a href="#CommentForm-{{ field }}" class="link">
+                    {%- if form.errors.translated_fields[field] contains 'author' -%}
+                      {{ 'blogs.article.name' | t }}
+                    {%- elsif form.errors.translated_fields[field] contains 'body' -%}
+                      {{ 'blogs.article.message' | t }}
+                    {%- else -%}
+                      {{ form.errors.translated_fields[field] }}
+                    {%- endif -%}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif form.posted_successfully? -%}
+            <div class="form-status-list form__message" role="status">
+              <h3 class="form-status" tabindex="-1" autofocus>
+                <span class="svg-wrapper">
+                  {{- 'icon-success.svg' | inline_asset_content -}}
+                </span>
+                {{ post_message | t }}
+              </h3>
+            </div>
+          {%- endif -%}
+
+          <div {% if blog.moderated? == false %}class="article-template__comments-fields"{% endif %}>
+            <div class="article-template__comment-fields">
+              <div class="field field--with-error">
+                <input type="text" name="comment[author]" id="CommentForm-author" class="field__input" autocomplete="name" value="{{ form.author }}" aria-required="true" required {% if form.errors contains 'author' %}aria-invalid="true" aria-describedby="CommentForm-author-error"{% endif %} placeholder="{{ 'blogs.article.name' | t }}">
+                <label class="field__label" for="CommentForm-author">{{- 'blogs.article.name' | t }} <span aria-hidden="true">*</span></label>
+                {%- if form.errors contains 'author' -%}<small id="CommentForm-author-error"><span class="form__message"><span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>{{- 'blogs.article.name' | t }}{{ form.errors.messages.author }}.</span></small>{%- endif -%}
+              </div>
+              <div class="field field--with-error">
+                <input type="email" name="comment[email]" id="CommentForm-email" autocomplete="email" class="field__input" value="{{ form.email }}" autocorrect="off" autocapitalize="off" aria-required="true" required {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="CommentForm-email-error"{% endif %} placeholder="{{ 'blogs.article.email' | t }}">
+                <label class="field__label" for="CommentForm-email">{{- 'blogs.article.email' | t }} <span aria-hidden="true">*</span></label>
+                {%- if form.errors contains 'email' -%}<small id="CommentForm-email-error"><span class="form__message"><span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>{{- 'blogs.article.email' | t }}{{ form.errors.messages.email }}.</span></small>{%- endif -%}
+              </div>
+            </div>
+            <div class="field field--with-error">
+              <textarea rows="5" name="comment[body]" id="CommentForm-body" class="text-area field__input" aria-required="true" required {% if form.errors contains 'body' %}aria-invalid="true" aria-describedby="CommentForm-body-error"{% endif %} placeholder="{{ 'blogs.article.message' | t }}">{{ form.body }}</textarea>
+              <label class="form__label field__label" for="CommentForm-body">{{- 'blogs.article.message' | t }} <span aria-hidden="true">*</span></label>
+            </div>
+            {%- if form.errors contains 'body' -%}<small id="CommentForm-body-error"><span class="form__message"><span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>{{- 'blogs.article.message' | t }}{{ form.errors.messages.body }}.</span></small>{%- endif -%}
+          </div>
+          {%- if blog.moderated? -%}<p class="article-template__comment-warning caption">{{ 'blogs.article.moderated' | t }}</p>{%- endif -%}
+          <input type="submit" class="button" value="{{ 'blogs.article.post' | t }}">
+        {% endform %}
+      </div>
+    </div>
+  {%- endif -%}
+</article>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "featured_image",
+      "name": "t:sections.main-article.blocks.featured_image.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "image_height",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
+            },
+            {
+              "value": "small",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
+            }
+          ],
+          "default": "adapt",
+          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "t:sections.main-article.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "blog_show_date",
+          "default": true,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_author",
+          "default": false,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "t:sections.main-article.blocks.content.name",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

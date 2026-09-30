@@ -1,0 +1,405 @@
+<div class="custom-carousel" id="carousel-{{ section.id }}">
+  <div class="carousel-arrows">
+    <button class="carousel-btn prev">
+      <img height="32" width="24" src="{{ 'carousel-arrow-left.svg' | asset_url }}" alt="Previous">
+    </button>
+    <button class="carousel-btn next">
+      <img height="32" width="24" src="{{ 'carousel-arrow-right.svg' | asset_url }}" alt="Next">
+    </button>
+  </div>
+
+  <div class="carousel-wrapper">
+    <div class="carousel-track">
+      {% for block in section.blocks %}
+        <div class="carousel-slide">
+          <div class="container slide-content">
+            <div class="">
+              <h2 class="font-tasman slide-heading">
+                {{ block.settings.heading_line_1 -}}
+                <br>
+                {{ block.settings.heading_line_2 }}
+              </h2>
+
+              <p class="slide-subtext">
+                {{ block.settings.subtext }}
+              </p>
+
+              {% if block.settings.button_text != blank %}
+                <a
+                  href="{{ block.settings.button_link }}"
+                  class="slide-btn"
+                >
+                  <span>{{ block.settings.button_text }}</span>
+
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.70684 17.5785C5.82572 15.6973 3.87406 13.8925 1.99883 11.9996L12.1451 2L22.1797 12.1583L12.1451 21.9992C11.7924 22.0639 8.2653 18.1428 7.70684 17.5843V17.5785Z" stroke="#F1EAD7" stroke-miterlimit="10"/>
+                    <path d="M12.1551 10.4974C10.5033 10.4974 10.4974 13.0664 12.1551 13.0664C13.8129 13.0664 13.8129 10.4974 12.1551 10.4974Z" fill="#F1EAD7"/>
+                  </svg>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="slide-image">
+            {% if block.settings.image %}
+              <picture>
+                {% if block.settings.mobile_image %}
+                  <source media="(max-width: 767px)" srcset="{{ block.settings.mobile_image | image_url: width: 800 }}">
+                {% endif %}
+                {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy' }}
+              </picture>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.custom-carousel {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none; 
+}
+
+.carousel-wrapper.grabbing {
+  cursor: grabbing;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  width: 100%;
+  height: calc(100vh - 127px);
+  position: relative; 
+  overflow: hidden;
+  background: #000; 
+}
+
+.slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; 
+}
+
+.slide-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(90deg, black 20%, transparent 70%);
+}
+
+@media screen and (max-width: 767px) {
+  .slide-image::before {
+    background-image: linear-gradient(00deg, black 20%, transparent 60%);
+  }
+}
+
+.slide-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center; 
+  display: block;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--color-off-white);
+  text-align: left;
+}
+
+.slide-content h2 {
+  font-size: 52px;
+  line-height: 1.1;
+  margin-bottom: 22px;
+  margin-top: 0;
+}
+
+.slide-subtext {
+  font-size: 18px;
+  margin-bottom: 22px;
+  opacity: 0.9;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+}
+
+.slide-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 36px;
+  border: 1px solid var(--color-off-white);
+  color: var(--color-off-white);
+  text-decoration: none;
+  font-size: 16px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.slide-btn svg {
+  transition: 0.3s ease;
+}
+
+.slide-btn svg path {
+  transition: stroke 0.3s ease;
+}
+
+@media screen and (min-width: 769px) {
+  .slide-btn:hover svg {
+    transform: rotate(90deg)
+  }
+
+  .slide-btn:hover {
+    background: var(--color-primary);
+    color: #000;
+    border-color: var(--color-primary);
+  }
+
+  .slide-btn:hover svg path {
+    stroke: #000;
+  }
+
+  .slide-btn:hover svg path:last-child {
+    fill: #000;
+  }
+}
+
+.carousel-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  max-width: 30px;
+}
+
+.carousel-btn img {
+  width: 24px; 
+  height: auto; 
+  display: block;
+}
+
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+.carousel-btn.disabled { opacity: 0.5; pointer-events: none; }
+
+@media (max-width: 1024px) {
+  .carousel-slide {
+    height: 600px;
+  }
+  .slide-content h2 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .carousel-slide {
+    height: 500px;
+  }
+
+  .slide-content {
+    padding-left: 24px;
+    padding-right: 24px;
+    max-width: 100%;
+    justify-content: end;
+    background: rgba(0,0,0,0.3); 
+  }
+
+  .slide-content h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .slide-subtext {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .slide-btn {
+    padding: 6px 20px;
+    font-size: 12px;
+  }
+
+  .carousel-arrows {
+    position: absolute;
+    top: 0;
+    bottom: 16px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 0 20px;
+    align-items: center;
+    pointer-events: none;
+    justify-content: space-between;
+  }
+
+  .carousel-btn {
+    position: static;
+    transform: none;
+    max-width: none;
+  }
+
+  .carousel-btn img {
+    width: 20px;
+  }
+}
+
+.slide-heading {
+  color: var(--color-off-white)
+}
+
+.slide-content div  {
+  padding-bottom: 20px !important;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .slide-content div {
+    padding-left: 50px;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1180px) {
+  .slide-content div {
+    padding-left: 80px;
+   }
+
+  .slide-content h2 {
+      font-size: 40px;
+  }
+
+  .slide-subtext {
+      font-size: 20px;
+  }
+
+  .slide-btn {
+    padding: 6px 20px;
+  }
+
+  .carousel-slide {
+    height: calc(100vh - 127px);
+  }
+
+  .slide-btn {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1181px) and (max-width: 1536px) {
+  .slide-content div {
+    padding-left: 100px;
+   }
+
+  .slide-content h2 {
+      font-size: 42px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Custom Carousel",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_line_1",
+          "label": "Heading Line 1",
+          "default": "From Our Kitchen"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_2",
+          "label": "Heading Line 2",
+          "default": "To Yours"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Sub Text",
+          "default": "Introducing our ready mixes and masalas"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Carousel"
+    }
+  ]
+}
+{% endschema %}

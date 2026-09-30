@@ -1,0 +1,17 @@
+<a
+  href="{{ link }}"
+  class="cta-snippet-btn"
+  style="
+    --btn-text: {{ text_color | default: '#F1EAD7' }};
+    --btn-bg: {{ bg_color | default: 'transparent' }};
+    --btn-hover-text: {{ hover_text | default: '#000' }};
+    --btn-hover-bg: {{ hover_bg | default: '#F1EAD7' }};
+  "
+>
+  <span class="cta-label">{{ label }}</span>
+
+  <svg class="cta-icon" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.41582 16.2855C4.53471 14.4043 2.58305 12.5996 0.70781 10.7066L10.8541 0.707032L20.8887 10.8654L10.8541 20.7062C10.5014 20.7709 6.97428 16.8498 6.41582 16.2914V16.2855Z" stroke="#191919" stroke-miterlimit="10"/>
+    <path d="M10.8641 9.20446C9.21226 9.20446 9.20639 11.7734 10.8641 11.7734C12.5219 11.7734 12.5219 9.20446 10.8641 9.20446Z" fill="#191919"/>
+  </svg>
+</a>

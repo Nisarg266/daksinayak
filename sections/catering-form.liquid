@@ -1,0 +1,168 @@
+{% schema %}
+{
+  "name": "Catering Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in Touch for Catering"
+    },
+    {
+      "type": "header",
+      "content": "Footer Note"
+    },
+    {
+      "type": "text",
+      "id": "note_label",
+      "label": "Note Label",
+      "default": "Note:"
+    },
+    {
+      "type": "textarea",
+      "id": "note_text",
+      "label": "Note Text",
+      "default": "Catering services are available only in Ahmedabad.\nFinal pricing depends on menu selection, guest count and service requirements"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catering Form"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="catering-section">
+  <div class="catering-container">
+    <h2 class="cat-heading font-tasman-regular">{{ section.settings.heading }}</h2>
+
+    <div class="cat-subtext">
+      <span class="cat-line-1">Have an upcoming event in Ahmedabad? We’d love to serve you!</span><br>
+      <span class="cat-line-2">Contact our team today to discuss your menu, guest list, and service requirements</span>
+    </div>
+
+    <div class="cat-form-wrapper cat-booking-wrapper">
+      <a href="tel:+919265150631" class="cat-submit-btn cat-phone-btn">
+        <span>Call for Booking</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.70684 17.5785C5.82572 15.6973 3.87406 13.8925 1.99883 11.9996L12.1451 2L22.1797 12.1583L12.1451 21.9992C11.7924 22.0639 8.2653 18.1428 7.70684 17.5843V17.5785Z" stroke="currentColor" stroke-miterlimit="10"/>
+          <path d="M12.1551 10.4955C10.5033 10.4955 10.4974 13.0645 12.1551 13.0645C13.8129 13.0645 13.8129 10.4955 12.1551 10.4955Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="cat-note">
+      <p>
+        <strong>{{ section.settings.note_label }}</strong>
+        {{ section.settings.note_text | newline_to_br }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+.catering-section {
+  padding: 40px 20px;
+  background-color: #EEE9D7;
+  font-family: sans-serif;
+  color: #191919;
+}
+
+.catering-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.cat-heading {
+  color: var(--color-heading);
+  font-size: 56px;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.cat-subtext {
+  font-size: 18px;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #191919;
+}
+
+.cat-form-wrapper {
+  width: 100%;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.cat-booking-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.cat-phone-btn {
+  text-decoration: none;
+  width: auto;
+  min-width: 240px;
+}
+
+.cat-submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid var(--color-custom-black, #191919);
+  color: var(--color-custom-black, #191919);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cat-submit-btn svg {
+  transition: transform 0.3s ease;
+}
+
+/* Hover effects only for desktop/mouse users */
+@media (hover: hover) {
+  .cat-submit-btn:hover {
+    background-color: var(--color-primary, #ffcb05);
+    border-color: var(--color-primary, #ffcb05);
+  }
+  .cat-submit-btn:hover svg {
+    transform: rotate(90deg);
+  }
+}
+
+.cat-note {
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .cat-heading { font-size: 32px; }
+  .cat-subtext { font-size: 15px; }
+  .cat-phone-btn { min-width: 100%; }
+  .cat-form-wrapper { padding: 15px; }
+  .cat-submit-btn { 
+    font-size: 14px; 
+    padding: 8px 16px; 
+    gap: 8px;
+  }
+  .cat-submit-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+</style>

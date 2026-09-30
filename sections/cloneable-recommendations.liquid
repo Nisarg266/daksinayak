@@ -1,0 +1,359 @@
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding: 0;
+    list-style: none;
+    column-gap: var(--grid-mobile-horizontal-spacing);
+    gap: 24px;
+  }
+
+  .grid--4-col-desktop .grid__item {
+    width: calc(25% - (24px * 3 / 4));
+    max-width: calc(25% - (24px * 3 / 4));
+  }
+
+  @media screen and (max-width: 767px) {
+    .related-products__heading {
+      font-size: 28px !important;
+    }
+    .product-grid {
+      overflow-x: scroll !important;
+      display: flex;
+      margin-bottom: 2rem;
+      padding: 0;
+      list-style: none;
+      column-gap: 3rem;
+      row-gap: 3rem;
+    }
+    .product-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .grid--4-col-desktop .custom-products-mobile-grid {
+      width: calc(50% - (24px * 3 / 4));
+      max-width: calc(50% - (24px * 3 / 4));
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .related-products__heading {
+    color: var(--color-heading);
+    font-size: 56px;
+    margin: 0;
+    line-height: 1.1;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .related-products__heading {
+      font-size: 36px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .related-products__heading {
+      font-size: 46px;
+    }
+  }
+
+  .margin-bottom-custom {
+    margin-bottom: 46px;
+  }
+
+  
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding isolate">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="related-products__heading font-tasman inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    <ul
+      id="RandomProductGrid-{{ section.id }}"
+      class="product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+      role="list"
+    >
+      {%- assign random_collection = collections[section.settings.collection] -%}
+      {%- for product in random_collection.products limit: 20 -%}
+        <li class="grid__item custom-products-mobile-grid random-product-card random-product-card--hidden">
+          {% render 'custom-card-product',
+            card_product: product,
+            media_aspect_ratio: section.settings.image_ratio,
+            image_shape: section.settings.image_shape,
+            show_secondary_image: section.settings.show_secondary_image,
+            show_vendor: section.settings.show_vendor,
+            show_rating: section.settings.show_rating,
+            quick_add: 'standard',
+            section_id: section.id
+          %}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- if section.settings.show_view_all -%}
+    <div class="center margin-bottom-custom collection__view-all{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {% render 'custom-cta-button', label: section.settings.btn_text, default: 'View all', link: section.settings.btn_url, text_color: section.settings.color_text, bg_color: section.settings.color_bg, hover_text: section.settings.hover_text, hover_bg: section.settings.hover_bg %}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .random-product-card--hidden {
+    position: absolute !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .random-product-card--visible {
+    position: static !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('RandomProductGrid-{{ section.id }}');
+    const cards = Array.from(grid.querySelectorAll('.random-product-card'));
+    const limit = {{ section.settings.products_to_show }};
+
+    // Fisher-Yates Shuffle
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+
+    // Remove unwanted cards from DOM
+    cards.slice(limit).forEach(card => {
+      card.remove();
+    });
+
+    // Show the selected cards by swapping classes
+    cards.slice(0, limit).forEach(card => {
+      card.classList.remove('random-product-card--hidden');
+      card.classList.add('random-product-card--visible');
+
+      // Ensure the variant ID input is enabled
+      const variantInputs = card.querySelectorAll('input[name="id"]');
+      variantInputs.forEach(input => {
+        input.disabled = false;
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Random Products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Button Text Color",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Button Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "hover_text",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_bg",
+      "label": "Button Hover Background Color",
+      "default": "#191919"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show View All button"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection to Randomize"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Our products",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "adapt",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "default": true,
+      "label": "Enable Quick Add button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Random Products"
+    }
+  ]
+}
+{% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%\r\n        render 'custom-cta-button',\r\n        label: section.settings.btn_text
+    | default: 'View all',\r\n        link: section.settings.btn_url,\r\n        text_color:
+    section.settings.color_text,\r\n        bg_color: section.settings.color_bg,\r\n
+    \       hover_text: section.settings.hover_text,\r\n        hover_bg: section.settings.hover_bg\r\n
+    \     %}"
+  to: "{% render 'custom-cta-button', label: section.settings.btn_text, default: 'View
+    all', link: section.settings.btn_url, text_color: section.settings.color_text,
+    bg_color: section.settings.color_bg, hover_text: section.settings.hover_text,
+    hover_bg: section.settings.hover_bg %}"
+  position: 3837..4112
+{% endcomment %}

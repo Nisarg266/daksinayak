@@ -1,0 +1,235 @@
+{% comment %}
+  Section: Mission & Vision
+  Design: Centered heading with Mission (Left) and Vision (Right).
+  Logic: Swaps divider image on mobile (Horizontal) vs Desktop (Vertical).
+{% endcomment %}
+
+<style>
+  .mission-vision-section {
+    width: 100%;
+    font-family: var(--font-body-family);
+    box-sizing: border-box;
+  }
+
+  .mv-container {
+    max-width: 1075px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* --- HEADING --- */
+  .mv-heading {
+    font-size: 56px;
+    font-weight: 600;
+    color: #E8202B;
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* --- CONTENT WRAPPER --- */
+  .mv-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    position: relative;
+  }
+
+  /* --- TEXT BLOCKS --- */
+  .mv-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 464px;
+  }
+
+  .mv-block.left {
+    align-items: center;
+    text-align: right;
+  }
+
+  .mv-block.right {
+    align-items: center;
+    text-align: left;
+  }
+
+  .mv-title {
+    font-size: 32px;
+    font-weight: 400;
+    color: #E8202B;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    margin: 0;
+  }
+
+  .mv-description {
+    font-size: 18px;
+    color: #191919;
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* --- DIVIDER IMAGES --- */
+  .mv-divider {
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  /* Desktop Image Styles */
+  .mv-divider-desktop {
+    display: block; /* Show by default */
+    width: 71px;
+    height: auto;
+    max-height: 245px;
+  }
+
+  /* Mobile Image Styles */
+  .mv-divider-mobile {
+    display: none; /* Hide by default */
+    width: 100%;
+    height: auto;
+    margin: 30px 0;
+  }
+
+  /* --- MOBILE RESPONSIVE --- */
+  @media screen and (max-width: 768px) {
+
+    .mv-description {
+      font-size: 16px
+    }
+
+    .mv-title {
+      font-size: 26px;
+    }
+
+    .mv-heading {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .mv-content-wrapper {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px; /* Reduced gap since image handles spacing */
+    }
+
+    .mv-block {
+      max-width: 100%;
+      align-items: center !important;
+      text-align: center !important;
+    }
+
+    /* TOGGLE IMAGES */
+    .mv-divider-desktop {
+      display: none; /* Hide vertical image */
+    }
+
+    .mv-divider-mobile {
+      display: block;
+      margin: 10px 0;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .mv-heading {
+      font-size: 36px;
+    }
+    
+    .mv-title {
+      font-size: 28px;
+    }
+
+    .mv-description {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .mv-heading {
+      font-size: 36px;
+    }
+
+    .mv-title {
+      font-size: 24px;
+    }
+
+    .mv-description {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .mv-heading {
+      font-size: 40px;
+    }
+
+    .mv-title {
+      font-size: 28px;
+    }
+
+    .mv-description {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div class="container">
+  <div class="mission-vision-section">
+    <div class="mv-container">
+      <h2 class="mv-heading font-tasman">What We Stand For</h2>
+
+      <div class="mv-content-wrapper">
+        <div class="mv-block left">
+          <h3 class="mv-title">MISSION</h3>
+          <p class="mv-description">
+            To bring authentic South Indian cuisine to the world with warmth, tradition and genuine hospitality.
+          </p>
+        </div>
+
+        <img
+          src="{{ 'mission_vision_divider.png' | asset_url }}"
+          alt="Divider"
+          class="mv-divider mv-divider-desktop"
+          loading="lazy"
+          width="71"
+          height="245"
+        >
+
+        <img
+          src="{{ 'mission_vision_divider_mobile.png' | asset_url }}"
+          alt="Divider"
+          class="mv-divider mv-divider-mobile"
+          loading="lazy"
+          width="300"
+          height="50"
+        >
+
+        <div class="mv-block right">
+          <h3 class="mv-title">VISION</h3>
+          <p class="mv-description">
+            To become the most trusted name in South Indian culinary experiences.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mission & Vision",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Mission & Vision"
+    }
+  ]
+}
+{% endschema %}

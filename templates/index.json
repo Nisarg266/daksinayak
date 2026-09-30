@@ -1,0 +1,387 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_carousel_TVAKjz": {
+      "type": "custom-carousel",
+      "blocks": {
+        "slide_dGMHNW": {
+          "type": "slide",
+          "settings": {
+            "heading_line_1": "Flavours That Speak",
+            "heading_line_2": "For Themselves",
+            "subtext": "Signature dishes loved by all.",
+            "button_text": "Explore Menu",
+            "button_link": "shopify://pages/menu",
+            "image": "shopify://shop_images/Slider-Main-1.webp"
+          }
+        },
+        "slide_NAb9G4": {
+          "type": "slide",
+          "settings": {
+            "heading_line_1": "Find A Nearby Outlet",
+            "heading_line_2": "And Visit Us",
+            "subtext": "Experience the taste, and tradition in person",
+            "button_text": "View Outlets",
+            "button_link": "shopify://pages/outlets",
+            "image": "shopify://shop_images/banner_image_2.png"
+          }
+        },
+        "slide_MJjaL3": {
+          "type": "slide",
+          "settings": {
+            "heading_line_1": "From Our Kitchen",
+            "heading_line_2": "To Yours",
+            "subtext": "Introducing our ready mixes and masalas",
+            "button_text": "Shop Now",
+            "button_link": "shopify://collections/products",
+            "image": "shopify://shop_images/Slider-Main-3.webp"
+          }
+        }
+      },
+      "block_order": [
+        "slide_dGMHNW",
+        "slide_NAb9G4",
+        "slide_MJjaL3"
+      ],
+      "name": "Custom Carousel",
+      "settings": {}
+    },
+    "tradition_section_enQ64i": {
+      "type": "tradition-section",
+      "name": "Custom tradition section",
+      "settings": {
+        "btn_text": "Get Familiar",
+        "btn_url": "shopify://pages/about",
+        "color_text": "#191919",
+        "color_bg": "rgba(0,0,0,0)",
+        "hover_text": "#000000",
+        "hover_bg": "#ffcb05"
+      }
+    },
+    "custom_designed_border_DLx8DK": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "btn_text": "View all",
+        "color_text": "#191919",
+        "color_bg": "rgba(0,0,0,0)",
+        "hover_text": "#000000",
+        "hover_bg": "#ffcb05",
+        "collection": "products",
+        "products_to_show": 6,
+        "title": "Our Products",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "custom_designed_border_rdmBje": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "signature_dishes_gq3yh4": {
+      "type": "signature-dishes",
+      "blocks": {
+        "dish_ECaeLK": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/FILTER_COFFEE.png",
+            "title": "Filter Coffee"
+          }
+        },
+        "dish_7nTbfX": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/Molgapodi_Idli.png",
+            "title": "Molgapodi Idli"
+          }
+        },
+        "dish_C8jQQz": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/masala_dosa.png",
+            "title": "Masala Dosai"
+          }
+        },
+        "dish_jn6EDz": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/RAVA_MASALA_DOSA_34ba8699-8afa-44db-8f5c-025dbd24ff21.png",
+            "title": "Rava Masala Dosai"
+          }
+        },
+        "dish_b4VeXC": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/medu_vada.png",
+            "title": "Ulundu Vadai (2 pcs)"
+          }
+        },
+        "dish_hPdQwp": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/MIX_UTTAPAM.png",
+            "title": "Mix Oothappam"
+          }
+        },
+        "dish_79zaVw": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/PARATHA_KURMA_ee5b0942-b799-4504-b414-64d9d3d471ed.png",
+            "title": "Paratha Kurma"
+          }
+        },
+        "dish_KpN64z": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/POORI_MASALA.png",
+            "title": "Poori Masala"
+          }
+        },
+        "dish_dEGbeQ": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/Set_dosa_with_kurma.png",
+            "title": "Set Dosai with Kurma"
+          }
+        },
+        "dish_Jbbqmz": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/Appam_with_stew.png",
+            "title": "Appam with stew"
+          }
+        },
+        "dish_P76fAb": {
+          "type": "dish",
+          "settings": {
+            "image": "shopify://shop_images/RAVA_KESARI.png",
+            "title": "Rava Kesari"
+          }
+        },
+        "dish_wpfHUJ": {
+          "type": "dish",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Idli.png",
+            "title": "Idli"
+          }
+        }
+      },
+      "block_order": [
+        "dish_ECaeLK",
+        "dish_7nTbfX",
+        "dish_C8jQQz",
+        "dish_jn6EDz",
+        "dish_b4VeXC",
+        "dish_hPdQwp",
+        "dish_79zaVw",
+        "dish_KpN64z",
+        "dish_dEGbeQ",
+        "dish_Jbbqmz",
+        "dish_P76fAb",
+        "dish_wpfHUJ"
+      ],
+      "name": "Signature Dishes Slider",
+      "settings": {
+        "btn_text": "View Our Menu",
+        "menu_link": "shopify://pages/menu",
+        "color_text": "#191919",
+        "color_bg": "rgba(0,0,0,0)",
+        "hover_text": "#191919",
+        "hover_bg": "#ffcb05"
+      }
+    },
+    "custom_designed_border_fP87Nd": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "featured_stores_AtdxGf": {
+      "type": "featured-stores",
+      "name": "Featured Stores",
+      "settings": {
+        "title": "Find Comfort",
+        "store_list": [
+          "dakshinayan-satellite",
+          "dakshinayan-navrangpura",
+          "dakshinayan-thane"
+        ],
+        "btn_text": "Find Dakshinayan",
+        "btn_link": "shopify://pages/outlets",
+        "btn_text_color": "#191919",
+        "btn_bg_color": "rgba(0,0,0,0)",
+        "btn_hover_text": "#191919",
+        "btn_hover_bg": "#ffcb05"
+      }
+    },
+    "custom_designed_border_mDw9eY": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "custom_catering_hdbGJA": {
+      "type": "custom-catering",
+      "blocks": {
+        "slider_media_N8B8Np": {
+          "type": "slider_media",
+          "settings": {
+            "image": "shopify://shop_images/catering_1.jpg"
+          }
+        },
+        "slider_media_W4UAKQ": {
+          "type": "slider_media",
+          "settings": {
+            "image": "shopify://shop_images/catering_2.jpg"
+          }
+        },
+        "slider_media_QCN6Wg": {
+          "type": "slider_media",
+          "settings": {
+            "image": "shopify://shop_images/catering_3.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slider_media_N8B8Np",
+        "slider_media_W4UAKQ",
+        "slider_media_QCN6Wg"
+      ],
+      "name": "Custom Catering Section",
+      "settings": {
+        "slide_interval": 5,
+        "title": "Dakshinayan Catering",
+        "heading_color": "#e8202b",
+        "description": "Some occasions deserve more than just good food, they deserve the warmth of home. Our catering menu in Ahmedabad brings your favourite Dakshinayan dishes to the table, wherever you are. Authentic recipes. Hand-served warmth. Meals that feel home-made..",
+        "btn_text": "Enquire Now",
+        "btn_url": "shopify://pages/catering-services",
+        "color_text": "#191919",
+        "color_bg": "rgba(0,0,0,0)",
+        "hover_text": "#191919",
+        "hover_bg": "#ffcb05",
+        "bg_color": "#faf8f5"
+      }
+    },
+    "custom_designed_border_hcPFfj": {
+      "type": "Custom-designed-border",
+      "disabled": true,
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "custom_faqs_PEYeU9": {
+      "type": "custom-faqs",
+      "disabled": true,
+      "name": "Custom FAQs",
+      "settings": {
+        "title": "FAQs",
+        "heading_color": "#e8202b",
+        "faq_list": [
+          "do-you-use-preservatives-or-artificial-additives",
+          "how-should-i-store-the-batter-after-delivery",
+          "are-your-products-vegetarian",
+          "what-is-the-shelf-life-of-your-products",
+          "how-can-i-contact-customer-support"
+        ]
+      }
+    },
+    "custom_designed_border_VtFcym": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "1771578216af2d1718": {
+      "type": "apps",
+      "blocks": {
+        "gsc_instagram_feed_instafeed_aLDdAy": {
+          "type": "shopify://apps/gsc-instagram-feed/blocks/instafeed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
+          "settings": {
+            "widget_id": "GSC-AwHRgojMrxoqalO"
+          }
+        }
+      },
+      "block_order": [
+        "gsc_instagram_feed_instafeed_aLDdAy"
+      ],
+      "custom_css": [],
+      "settings": {
+        "include_margins": false
+      }
+    },
+    "instagram_button_YzdHYP": {
+      "type": "instagram-button",
+      "name": "Instagram CTA",
+      "settings": {
+        "button_label": "Follow Us",
+        "text_color": "#191919",
+        "bg_color": "#f1ead7",
+        "hover_text": "#191919",
+        "hover_bg": "#ffcb05"
+      }
+    },
+    "custom_designed_border_XNrTkM": {
+      "type": "Custom-designed-border",
+      "name": "Custom designed border",
+      "settings": {}
+    },
+    "zomato_section_paJ9My": {
+      "type": "zomato-section",
+      "name": "Zomato Section",
+      "settings": {
+        "title": "Comfort Food, A Click Away",
+        "description": "Order your favourite Dakshinayan dishes online and enjoy homestyle South Indian flavours served hot, fresh and just the way you love them.",
+        "link": "https://www.zomato.com/ahmedabad/restaurants/dakshinayan?category=1",
+        "heading_color": "#e8202b",
+        "bg_color": "#faf8f5"
+      }
+    }
+  },
+  "order": [
+    "custom_carousel_TVAKjz",
+    "tradition_section_enQ64i",
+    "custom_designed_border_DLx8DK",
+    "featured_collection",
+    "custom_designed_border_rdmBje",
+    "signature_dishes_gq3yh4",
+    "custom_designed_border_fP87Nd",
+    "featured_stores_AtdxGf",
+    "custom_designed_border_mDw9eY",
+    "custom_catering_hdbGJA",
+    "custom_designed_border_hcPFfj",
+    "custom_faqs_PEYeU9",
+    "custom_designed_border_VtFcym",
+    "1771578216af2d1718",
+    "instagram_button_YzdHYP",
+    "custom_designed_border_XNrTkM",
+    "zomato_section_paJ9My"
+  ]
+}

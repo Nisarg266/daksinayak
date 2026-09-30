@@ -1,0 +1,559 @@
+{% comment %}
+  Section: Signature Dishes (Mobile Button Fix + Flow Layout + Reduced Sizes)
+{% endcomment %}
+
+<div class="sd-section container">
+  <div class="sd-header">
+    <h2 class="sd-section-title font-tasman">Our Signature Dishes</h2>
+  </div>
+
+  <div class="sd-slider-wrapper">
+    <button class="sd-arrow sd-arrow-left" id="sd-prev-btn" disabled aria-label="Previous">
+      <img src="{{ 'carousel-arrow-left.svg' | asset_url }}" width="24" height="32" alt="Previous">
+    </button>
+
+    <div class="sd-viewport">
+      <div class="sd-track" id="sd-track">
+        {%- for block in section.blocks -%}
+          <div class="sd-card" data-index="{{ forloop.index0 }}">
+            <div class="sd-image-container">
+              <div class="sd-img-scale-wrapper">
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.title }}"
+                    class="sd-img"
+                    loading="lazy"
+                    width="448"
+                    height="450"
+                  >
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'sd-img placeholder' }}
+                {% endif %}
+              </div>
+            </div>
+            <div class="sd-content">
+              <h3 class="sd-dish-title">{{ block.settings.title }}</h3>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <button class="sd-arrow sd-arrow-right" id="sd-next-btn" aria-label="Next">
+      <img src="{{ 'carousel-arrow-right.svg' | asset_url }}" width="24" height="32" alt="Next">
+    </button>
+  </div>
+
+  <div class="sd-footer">
+    {% render 'custom-cta-button',
+      label: section.settings.btn_text,
+      link: section.settings.menu_link,
+      text_color: section.settings.color_text,
+      bg_color: section.settings.color_bg,
+      hover_text: section.settings.hover_text,
+      hover_bg: section.settings.hover_bg
+    %}
+  </div>
+</div>
+
+{% style %}
+  .sd-section {
+    padding: 80px 0;
+    overflow: hidden;
+    font-family: var(--font-body-family);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sd-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .sd-section-title {
+    color: var(--color-heading);
+    font-size: 56px;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* DESKTOP HEIGHT */
+  .sd-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sd-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+  }
+
+  .sd-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    height: 100%;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .sd-card {
+    position: relative;
+    width: 200px;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 40px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1), margin 1.5s ease, opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+  }
+
+  .sd-card.is-active {
+    width: 350px;
+    opacity: 1;
+    z-index: 10;
+  }
+
+  .sd-card.is-hidden {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  .sd-image-container {
+    width: 100%;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .sd-img-scale-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.45);
+  }
+
+  .sd-card.is-active .sd-img-scale-wrapper {
+    transform: scale(1);
+  }
+
+  .sd-card.is-hidden .sd-img-scale-wrapper {
+    transform: scale(0);
+  }
+
+  .sd-img {
+    width: 350px;
+    height: 350px;
+    object-fit: contain;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), filter 1.5s ease;
+    filter: drop-shadow(0px 0px 0px rgba(0,0,0,0));
+  }
+
+  .sd-card.is-active .sd-img {
+    filter: drop-shadow(0px 0px 16px rgba(0, 0, 0, 0.3));
+  }
+
+  .sd-content {
+    position: absolute;
+    top: calc(50% + 175px + 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .sd-dish-title {
+    font-family: var(--font-body-family);
+    color: var(--color-custom-gray);
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 10px;
+    font-size: 20px;
+    opacity: 0;
+    white-space: nowrap !important;
+    transition: all 0.6s ease;
+  }
+
+  .sd-card.is-active .sd-dish-title {
+    opacity: 1;
+    letter-spacing: 24%;
+    font-size: 32px;
+  }
+
+  .sd-footer {
+    text-align: center;
+    z-index: 20;
+    margin-top: 58px
+  }
+
+  /* Button styles removed (handled by snippet) */
+
+  .sd-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+    padding: 10px;
+    transition: opacity 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .sd-arrow:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
+  .sd-arrow-left { left: 2%; }
+  .sd-arrow-right { right: 2%; }
+
+  @media screen and (max-width: 1024px) {
+    .sd-slider-wrapper { height: 500px; }
+    .sd-image-container { height: 350px; }
+    .sd-img { width: 350px; height: 350px; }
+    .sd-card.is-active { width: 350px; }
+    .sd-card { width: 180px; margin: 0 20px; }
+    .sd-img-scale-wrapper { transform: scale(0.5); }
+    .sd-card.is-active .sd-img-scale-wrapper { transform: scale(1); }
+    .sd-content { top: calc(50% + 175px + 30px); }
+  }
+
+  @media screen and (max-width: 768px) {
+    .sd-section { padding: 0; }
+
+    .sd-section-title { font-size: 28px; }
+
+    /* Reduced Heights */
+    .sd-slider-wrapper { height: 260px; }
+    .sd-image-container { height: 200px; }
+    .sd-img { width: 200px; height: 200px; }
+
+    .sd-card.is-active { width: 200px; }
+    .sd-card { width: 80px; margin: 0 5px; }
+
+    .sd-card.is-active .sd-img-scale-wrapper { transform: scale(1); }
+
+    .sd-dish-title { font-size: 18px; }
+    .sd-card.is-active .sd-dish-title { font-size: 16px; letter-spacing: 3px; white-space: normal !important; }
+
+    .sd-arrow { padding: 5px; }
+    .sd-arrow img { width: 18px; height: 24px; }
+
+    .sd-track, .sd-card, .sd-img-scale-wrapper, .sd-img, .sd-dish-title {
+      transition-duration: 0.6s !important;
+    }
+
+    .sd-card:not(.is-active) { opacity: 0 !important; }
+    .sd-card:not(.is-active) .sd-img-scale-wrapper { transform: scale(0) !important; }
+    .sd-card.is-active .sd-img { filter: none !important; }
+
+    .sd-footer { margin-top: 20px; }
+
+    /* Flow Layout */
+    .sd-card { position: static; }
+    .sd-content {
+      position: static;
+      transform: none;
+      top: auto;
+      left: auto;
+      margin-top: 15px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .sd-img {
+      width: 210px;
+      height: 210px;
+    }
+
+    .sd-section-title {
+      font-size: 36px;
+    }
+
+    .sd-card.is-active .sd-dish-title {
+      font-size: 28px;
+    }
+
+    .sd-slider-wrapper {
+      height: 320px;
+    }
+
+    .sd-footer {
+      margin-top: 40px;
+    }
+
+    .sd-card.is-active .sd-dish-title {
+      font-size: 18px;
+    }
+
+    .sd-content {
+      top: calc(50% + 105px + 30px);
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .sd-img {
+      width: 250px;
+      height: 250px;
+    }
+
+    .sd-section-title {
+      font-size: 40px;
+    }
+
+    .sd-card.is-active .sd-dish-title {
+      font-size: 32px;
+    }
+
+    .sd-slider-wrapper {
+      height: 360px;
+    }
+
+    .sd-footer {
+      margin-top: 40px;
+    }
+
+    .sd-card.is-active .sd-dish-title {
+      font-size: 18px;
+    }
+
+    .sd-content {
+      top: calc(50% + 105px + 30px);
+    }
+  }
+
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('sd-track');
+    const prevBtn = document.getElementById('sd-prev-btn');
+    const nextBtn = document.getElementById('sd-next-btn');
+
+    if (!track) return;
+    const originalCards = Array.from(track.querySelectorAll('.sd-card'));
+    const totalOriginal = originalCards.length;
+    if (totalOriginal === 0) return;
+
+    const CLONES = Math.min(2, totalOriginal);
+
+    for (let i = CLONES - 1; i >= 0; i--) {
+      const clone = originalCards[totalOriginal - CLONES + i].cloneNode(true);
+      track.insertBefore(clone, track.firstChild);
+    }
+    for (let i = 0; i < CLONES; i++) {
+      const clone = originalCards[i].cloneNode(true);
+      track.appendChild(clone);
+    }
+
+    const cards = track.querySelectorAll('.sd-card');
+    let currentIndex = CLONES;
+    let globalRotation = 0;
+    let busy = false;
+
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+
+    function getCardMetrics() {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        return { inactiveWidth: 80, activeWidth: 200, margin: 10 };
+      } else if (width <= 1024) {
+        return { inactiveWidth: 180, activeWidth: 350, margin: 40 };
+      } else {
+        return { inactiveWidth: 200, activeWidth: 350, margin: 80 };
+      }
+    }
+
+    function getDuration() {
+      return window.innerWidth <= 768 ? 650 : 1550;
+    }
+
+    function render() {
+      const m = getCardMetrics();
+      const inactiveStride = m.inactiveWidth + m.margin;
+      const activeStride = m.activeWidth + m.margin;
+
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
+
+      cards.forEach((card, i) => {
+        card.classList.remove('is-active', 'is-hidden');
+        const dist = Math.abs(currentIndex - i);
+        if (i === currentIndex) card.classList.add('is-active');
+        else if (dist > 1) card.classList.add('is-hidden');
+
+        const img = card.querySelector('.sd-img');
+        if (img) img.style.transform = `rotate(${globalRotation}deg)`;
+      });
+
+      const px = currentIndex * inactiveStride + activeStride / 2;
+      track.style.transform = `translateX(-${px}px)`;
+    }
+
+    function killTransitions() {
+      track.style.transition = 'none';
+      cards.forEach(c => {
+        c.style.transition = 'none';
+        const sw = c.querySelector('.sd-img-scale-wrapper');
+        const im = c.querySelector('.sd-img');
+        const t = c.querySelector('.sd-dish-title');
+        if (sw) sw.style.transition = 'none';
+        if (im) im.style.transition = 'none';
+        if (t) t.style.transition = 'none';
+      });
+    }
+
+    function restoreTransitions() {
+      track.style.transition = '';
+      cards.forEach(c => {
+        c.style.transition = '';
+        const sw = c.querySelector('.sd-img-scale-wrapper');
+        const im = c.querySelector('.sd-img');
+        const t = c.querySelector('.sd-dish-title');
+        if (sw) sw.style.transition = '';
+        if (im) im.style.transition = '';
+        if (t) t.style.transition = '';
+      });
+    }
+
+    function jumpTo(idx) {
+      killTransitions();
+      currentIndex = idx;
+      render();
+      void track.offsetWidth;
+      restoreTransitions();
+      busy = false;
+    }
+
+    function go(dir) {
+      if (busy) return;
+      busy = true;
+      currentIndex += dir;
+      globalRotation += dir === 1 ? -45 : 45;
+      render();
+
+      const needsJump = dir === 1
+        ? currentIndex >= CLONES + totalOriginal
+        : currentIndex < CLONES;
+
+      const jumpIdx = dir === 1 ? CLONES : CLONES + totalOriginal - 1;
+
+      setTimeout(() => {
+        if (needsJump) jumpTo(jumpIdx);
+        else busy = false;
+      }, getDuration());
+    }
+
+    nextBtn.addEventListener('click', () => go(1));
+    prevBtn.addEventListener('click', () => go(-1));
+
+    render();
+    window.addEventListener('resize', () => { if (!busy) render(); });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Signature Dishes Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "View Our Menu"
+    },
+    {
+      "type": "url",
+      "id": "menu_link",
+      "label": "Menu Button Link"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text Color",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "hover_text",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_bg",
+      "label": "Hover Background Color",
+      "default": "#191919"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "dish",
+      "name": "Dish",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Dish Image (Transparent PNG)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Dish Title",
+          "default": "Filter Coffee"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Signature Dishes Slider",
+      "blocks": [
+        { "type": "dish", "settings": { "title": "Paratha Kurma" } },
+        { "type": "dish", "settings": { "title": "Set Dosa with Kurma" } },
+        { "type": "dish", "settings": { "title": "Rava Masala Dosa" } },
+        { "type": "dish", "settings": { "title": "Masala Dosa" } },
+        { "type": "dish", "settings": { "title": "Poori Masala" } },
+        { "type": "dish", "settings": { "title": "Molgapodi Idli" } },
+        { "type": "dish", "settings": { "title": "Rava Kesari" } },
+        { "type": "dish", "settings": { "title": "Mix Uttapam" } },
+        { "type": "dish", "settings": { "title": "Filter Coffee" } },
+        { "type": "dish", "settings": { "title": "Appam with Stew" } },
+        { "type": "dish", "settings": { "title": "Medu Vada" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

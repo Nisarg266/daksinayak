@@ -1,0 +1,132 @@
+<div class="insta-cta-section section-{{ section.id }}">
+  <a
+    href="https://instagram.com/_dakshinayan_"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="insta-cta-snippet-btn"
+    style="
+      --btn-text: {{ section.settings.text_color }};
+      --btn-bg: {{ section.settings.bg_color }};
+      --btn-hover-text: {{ section.settings.hover_text }};
+      --btn-hover-bg: {{ section.settings.hover_bg }};
+    "
+  >
+    <span class="insta-cta-label">{{ section.settings.button_label }}</span>
+    <svg class="insta-cta-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.70684 17.5785C5.82572 15.6973 3.87406 13.8925 1.99883 11.9996L12.1451 2L22.1797 12.1583L12.1451 21.9992C11.7924 22.0639 8.2653 18.1428 7.70684 17.5843V17.5785Z" stroke="currentColor" stroke-miterlimit="10"/>
+      <path d="M12.1551 10.4974C10.5033 10.4974 10.4974 13.0664 12.1551 13.0664C13.8129 13.0664 13.8129 10.4974 12.1551 10.4974Z" fill="currentColor"/>
+    </svg>
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Instagram CTA",
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Follow Now" },
+    { "type": "color", "id": "text_color", "label": "Text Color", "default": "#F1EAD7" },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "transparent" },
+    { "type": "color", "id": "hover_text", "label": "Hover Text Color", "default": "#000000" },
+    { "type": "color", "id": "hover_bg", "label": "Hover Background Color", "default": "#F1EAD7" }
+  ],
+  "presets": [
+    {
+      "name": "Instagram CTA"
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+  .insta-cta-section {
+    margin-top: 48px !important;
+    text-align: center;
+  }
+
+  .insta-cta-snippet-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 0px 32px;
+    height: 56px;
+    border: 1px solid var(--btn-text);
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .insta-cta-label {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .insta-cta-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  @media screen and (min-width: 768px){
+    .insta-cta-snippet-btn:hover {
+      background-color: var(--btn-hover-bg);
+      color: var(--btn-hover-text);
+      border-color: var(--btn-hover-bg);
+    }
+
+    .insta-cta-snippet-btn:hover .insta-cta-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .insta-cta-snippet-btn {
+      height: 40px;
+      place-self: center;
+    }
+
+    .insta-cta-label {
+      font-size: 14px;
+    }
+
+    .insta-cta-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1180px) {
+    .insta-cta-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .insta-cta-label {
+      font-size: 16px;
+    }
+
+    .insta-cta-snippet-btn {
+      height: 40px;
+    }
+  }
+
+  @media screen and (min-width: 1181px) and (max-width: 1536px) {
+    .insta-cta-label {
+      font-size: 16px;
+    }
+
+    .insta-cta-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .insta-cta-snippet-btn {
+      height: 48px;
+    }
+  }
+{% endstyle %}

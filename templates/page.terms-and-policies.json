@@ -1,0 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_banner_DgBmyH": {
+      "type": "custom-banner",
+      "name": "Custom Banner",
+      "settings": {
+        "heading": ""
+      }
+    },
+    "policy_content_GAihn3": {
+      "type": "policy-content",
+      "name": "Policy Content",
+      "settings": {
+        "content_width": "small",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_banner_DgBmyH",
+    "policy_content_GAihn3"
+  ]
+}
